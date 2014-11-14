@@ -1,0 +1,26 @@
+<h2>:: what is Kivix?</h2>
+In one sentence: Kivix is minimalistic Java application library for building complex distributed applications.<br/><br/>
+
+Kivix is side product of Jacob accounting application.<br/><br/> 
+
+There were two simple reasons to build Kivix. <br/><br/>
+1. Most options for developing Java (Inter)net application are required to use some kind of container. Be it Servlet, full J2EE stack, or OSGi container. While all of the mentioned containers have their stable place, many application require only light framework / library.<br/><br/>
+2. In the field of distributed computing situation is similar. Most options are quite heavy and require kind of schema parsing and stub generation. Corba, WebServices, etc. But again. Many times requirements are very simple. As simple as "Here are the data, and please use this handler to process them.". XmlRPC is this kind of beast.<br/><br/>
+ 
+Kivix is an attempt to fill the gap by providing very simple, but powerful Java library with simplistic API for building (Inter)net applications. Kivix library is built from the beginning with distributed application development in mind. It means that using Kivix, one can develop distributed applications without any kind of schema parsing, using any kind of protocol. HTTP, Email, FTP, ZeroMQ, AMQP. Format of the data is free as well. Developer can choose between string formats, proprietary binary or protocol buffer format. Distributed features of Kivix library are implemented in a simple, but easy to use and understand way. Developer uses Kivix to implement autonomous, interconnected and interacting nodes. These processes can be run on PC's, servers, mobile devices like Android, Java enabled media devices, etc.<br/><br/>
+
+To be able to start using Kivix out of the box, core distribution contains three important extensions. These extensions make library ready to use for even complex applications .<br/><br/>
+
+1. HTTP server.<br/>
+2. Application templates, which allows developer to organize application logic in flexible modules.<br/>
+3. Own SQL persistence engine, which allows developer to focus on well known and established SQL style query, wrapped into intuitive Java API. Engine is self-contained with small footprint. As such, engine can run on all devices with Java embedded.<br/><br/>
+
+Using above extensions, developer can construct applications deployable on LAN, WAN or INTERNET. Whole Kivix library is very lightweight.<br/><br/>
+
+<b>Architecturally Kivix uses Hexagonal Architecture Design.</b><br/><br/>
+<img class='center' src='hexadesign.jpg' alt='Hexagonal Architecture, Kivix'/>
+<br/><br/><br/>
+
+<b>With Kivix, developer can design complex topologies.</b><br/><br/>
+<img class='center' src='kivix-topology.jpg' alt='Kivix topology'/>
+<br/><br/>
