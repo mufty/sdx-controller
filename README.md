@@ -1,2 +1,2 @@
 # heiko
-SDN controller based on [KYLA](http://gabert.github.io/kyla) ifrastructure
+SDN controller based on [KYLA](http://github.com/gabert/kyla) ifrastructure
