@@ -1,13 +1,10 @@
-package net.gabert.heiko.core;
+package net.gabert.heiko.driver;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by Family on 11. 8. 2015.
- */
-public class OracleDriver implements Driver {
+public class OracleDriver {
     private List<JdbcConnectionConfig> configs = new ArrayList<>();
 
     public void setConfig(JdbcConnectionConfig... config) {

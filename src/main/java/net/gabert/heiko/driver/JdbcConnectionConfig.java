@@ -1,8 +1,5 @@
-package net.gabert.heiko.core;
+package net.gabert.heiko.driver;
 
-/**
- * Created by Family on 11. 8. 2015.
- */
 public class JdbcConnectionConfig {
     private String password;
     private String username;

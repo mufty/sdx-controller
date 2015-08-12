@@ -1,30 +1,32 @@
 package net.gabert.heiko.core;
 
-import net.gabert.kyla.api.Endpoint;
+import net.gabert.heiko.service.MountService;
+import net.gabert.heiko.service.MountServiceLocal;
 
-/**
- * Created by Family on 11. 8. 2015.
- */
-public class Bus implements MountService {
-    public void set(String path, Object val1) {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Bus {
+    private MountService mountService = new MountServiceLocal();
+    private final Map<Class<?>, Object> serviceRegistry = new HashMap<>();
+
+    public Bus() {
+        serviceRegistry.put(MountService.class, new MountServiceLocal());
+    }
+
+    public <T> T getService(Class<? extends T> serviceClass) {
+        return (T) serviceRegistry.get(serviceClass);
+    }
+
+    public void setValue(String path, Object val1) {
 
     }
 
-    public Object read(String path) {
+    public Object getValue(String path) {
         return null;
     }
 
-    public void registerListener(String path, Object listener) {
-
-    }
-
-    @Override
-    public void mount(String mountPoint, AbstractDriver driver) {
-        driver.setMountPoint(mountPoint);
-    }
-
-    @Override
-    public void mount(String mountPoint, Endpoint edpoint) {
+    public void setListener(String path, Object listener) {
 
     }
 }
