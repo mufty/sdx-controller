@@ -1,2 +1,5 @@
 # heiko
-SDE (Software Defined Anything) controller based on [KYLA](http://github.com/gabert/kyla) ifrastructure
+SDX (Software Defined Anything) controller
+
+# kyla
+Messaging infrastructure for heiko controller
