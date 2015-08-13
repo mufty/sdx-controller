@@ -8,16 +8,10 @@
         <groupId>net.gabert.sdx</groupId>
         <artifactId>config</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../config/pom.xml</relativePath>
+        <relativePath>../../config/pom.xml</relativePath>
     </parent>
 
-	<artifactId>kyla</artifactId>
+    <artifactId>kyla-extensions</artifactId>
     <packaging>jar</packaging>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
-        </dependency>
-    </dependencies>
+    
 </project>

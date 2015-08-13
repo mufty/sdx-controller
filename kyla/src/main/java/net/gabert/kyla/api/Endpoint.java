@@ -25,12 +25,12 @@ public abstract class Endpoint {
         return dataSlotId;
     }
 
-    protected Message createMessage(String destinationKey, Object data) {
-        return new Message(destinationKey,
-                this.getDataSlotId(),
-                Security.getUUID(),
-                Security.getUUID(),
-                data);
+    protected Message createMessage(String destinationSlotId, Object data) {
+        return new Message(destinationSlotId,
+                           this.getDataSlotId(),
+                           Security.getUUID(),
+                           Security.getUUID(),
+                           data);
     }
 
     public abstract void handle(Message message);

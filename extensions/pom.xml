@@ -4,17 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.gabert.sdx</groupId>
-	<artifactId>controller</artifactId>
-	<version>1.0-SNAPSHOT</version>
+    <artifactId>extensions</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-	<modules>
-		<module>config</module>
-		<module>heiko</module>
-		<module>kyla</module>
-		<module>extensions</module>
-		<module>util</module>
-		<module>integration-test</module>
-	</modules>
-	
+    <modules>
+        <module>kyla-extensions</module>
+        <module>heiko-extensions</module>
+    </modules>
+
 </project>

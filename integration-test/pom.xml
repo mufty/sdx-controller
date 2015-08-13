@@ -11,13 +11,7 @@
         <relativePath>../config/pom.xml</relativePath>
     </parent>
 
-	<artifactId>kyla</artifactId>
+    <artifactId>integration-test</artifactId>
     <packaging>jar</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
-        </dependency>
-    </dependencies>
 </project>
