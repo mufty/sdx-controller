@@ -1,6 +1,6 @@
 package net.gabert.heiko.core;
 
-import net.gabert.heiko.driver.TestDriver;
+import net.gabert.heiko.mountpoint.TestDriver;
 import net.gabert.heiko.service.MountService;
 import org.junit.Before;
 import org.junit.Test;

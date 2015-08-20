@@ -1,4 +1,4 @@
-package net.gabert.heiko.driver;
+package net.gabert.heiko.mountpoint;
 
 public class JdbcConnectionConfig {
     private String password;

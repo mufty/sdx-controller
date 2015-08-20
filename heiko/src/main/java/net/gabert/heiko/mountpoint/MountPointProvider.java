@@ -1,9 +1,9 @@
-package net.gabert.heiko.driver;
+package net.gabert.heiko.mountpoint;
 
 import net.gabert.heiko.service.MountService;
 import net.gabert.kyla.api.Endpoint;
 
-public abstract class AbstractDriver {
+public abstract class MountPointProvider {
     private String mountPoint;
     private MountService mountService;
 

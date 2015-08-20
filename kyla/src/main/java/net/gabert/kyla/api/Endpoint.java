@@ -17,7 +17,7 @@ public abstract class Endpoint {
         this.dataSlotId = ID_CLASSIFIER + Security.getUUID().toString();
     }
 
-    protected final void send(Message message) {
+    public void send(Message message) {
         busProxy.send(message);
     }
     
@@ -25,7 +25,7 @@ public abstract class Endpoint {
         return dataSlotId;
     }
 
-    protected Message createMessage(String destinationSlotId, Object data) {
+    public Message createMessage(String destinationSlotId, Object data) {
         return new Message(destinationSlotId,
                            this.getDataSlotId(),
                            Security.getUUID(),
