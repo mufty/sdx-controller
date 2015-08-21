@@ -14,7 +14,7 @@
 		<module>kyla</module>
 		<module>extensions</module>
 		<module>util</module>
-		<module>integration-test</module>
+		<module>sample-app</module>
 	</modules>
 	
 </project>

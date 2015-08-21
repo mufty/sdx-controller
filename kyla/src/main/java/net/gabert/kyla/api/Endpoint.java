@@ -1,7 +1,7 @@
 package net.gabert.kyla.api;
 
 import net.gabert.kyla.bus.BusProxy;
-import net.gabert.kyla.util.Security;
+import net.gabert.util.Security;
 
 import java.io.Serializable;
 import java.util.UUID;

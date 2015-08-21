@@ -13,5 +13,16 @@
 
     <artifactId>kyla-extensions</artifactId>
     <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.gabert.sdx</groupId>
+            <artifactId>kyla</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+        </dependency>
+    </dependencies>
     
 </project>

@@ -1,4 +1,4 @@
-package net.gabert.kyla.util;
+package net.gabert.util;
 
 import org.apache.log4j.Logger;
 

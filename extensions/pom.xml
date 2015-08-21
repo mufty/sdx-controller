@@ -10,7 +10,6 @@
 
     <modules>
         <module>kyla-extensions</module>
-        <module>heiko-extensions</module>
     </modules>
 
 </project>

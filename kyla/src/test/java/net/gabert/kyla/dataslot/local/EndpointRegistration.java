@@ -2,7 +2,6 @@ package net.gabert.kyla.dataslot.local;
 
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.kyla.configuration.DefaultConfiguration;
-import net.gabert.kyla.configuration.Provider;
 import net.gabert.kyla.test.stub.BusProxyStub;
 import net.gabert.kyla.test.stub.EndpointStub;
 import org.junit.*;
@@ -14,7 +13,6 @@ public class EndpointRegistration {
     @Before
     public void setUp() {
         DefaultConfiguration cfg = new DefaultConfiguration();
-        cfg.setDataSlotProviderClassName(Provider.LOCAL.providerClassName);
         bus = new BusProxyStub(cfg);
     }
     

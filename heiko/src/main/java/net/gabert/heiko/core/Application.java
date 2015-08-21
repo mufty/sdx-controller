@@ -56,14 +56,14 @@ public abstract class Application {
 
         @Override
         public void handle(Message message) {
-            Exchange exchange = pendingResponses.get(message.getConversationId());
+            Exchange exchange = pendingResponses.remove(message.getConversationId());
             if (exchange != null) {
                 exchange.setResponse(message);
             }
         }
     }
 
-    public class Exchange {
+    private static class Exchange {
         private Endpoint.Message response;
         private final CountDownLatch latch = new CountDownLatch(1);
 

@@ -6,7 +6,7 @@ import net.gabert.kyla.api.Endpoint.Message;
 
 import java.util.concurrent.*;
 
-import static net.gabert.kyla.util.Log.logger;
+import static net.gabert.util.Log.logger;
         
 public class WorkUnitProcessor {
     private static final int POLL_TIMEOUT = 1000;

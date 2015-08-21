@@ -1,4 +1,4 @@
-package net.gabert.kyla.util;
+package net.gabert.util;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;

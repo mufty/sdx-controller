@@ -2,7 +2,6 @@ package net.gabert.kyla.test.stub;
 
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.kyla.bus.BusProxy;
-import net.gabert.kyla.util.Security;
 
 public class EndpointStub extends Endpoint {
     private Message receivedMessage;

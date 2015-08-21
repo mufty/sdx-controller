@@ -1,4 +1,4 @@
-package net.gabert.kyla.util;
+package net.gabert.util;
 
 import java.util.ArrayList;
 import java.util.List;
