@@ -1,9 +1,6 @@
 package net.gabert.util;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,5 +37,10 @@ public abstract class JsonConfigLoader {
                 put(value.getKey(), (T)value.getValue());
             }
         }};
+    }
+
+    protected <T> T fromJson(Class<T> configClass) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, configClass);
     }
 }

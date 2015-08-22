@@ -1,5 +1,6 @@
-package net.gabert.heiko.core;
+package net.gabert.sdx;
 
+import net.gabert.heiko.core.Application;
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.kyla.bus.BusProxy;
 
@@ -11,6 +12,7 @@ public class DemoApplication extends Application {
         super(busProxy);
     }
 
+    @Override
     public void run() {
         Context context = getContext("/a/b/c");
         context.setValue("/x/y/z", 1);

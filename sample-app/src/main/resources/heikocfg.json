@@ -1,8 +1,12 @@
 {
   "aliases" : {"sample": "net.gabert.sdx.mountpoint.SampleMountPoint"},
   "mountPoints" : [
-    {"type": "#{sample}",
+    {"className": "#{sample}",
      "path": "/example/sample",
-     "param1": 42}
+     "initParams": {"param1" : 1}}
+  ],
+  "applications" : [
+    {"className": "net.gabert.sdx.DemoApplication",
+     "initParams": {"param1" : 1}}
   ]
 }

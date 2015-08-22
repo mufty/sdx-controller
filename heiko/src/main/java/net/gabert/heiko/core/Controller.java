@@ -1,19 +1,22 @@
 package net.gabert.heiko.core;
 
-public class Controller {
-    private final HeikoJsonConfiguration config;
+import net.gabert.heiko.configuration.HeikoConfiguration;
+import net.gabert.heiko.configuration.HeikoJsonConfigurationLoader;
 
-    private Controller(HeikoJsonConfiguration config) {
+public class Controller {
+    private final HeikoConfiguration config;
+
+    private Controller(HeikoConfiguration config) {
         this.config = config;
     }
 
     public static Controller boot(String configFileUrl) {
-        HeikoJsonConfiguration config = new HeikoJsonConfiguration(configFileUrl);
-        return new Controller(config);
+        HeikoJsonConfigurationLoader loader = new HeikoJsonConfigurationLoader(configFileUrl);
+        return new Controller(loader.getConfiguration());
     }
 
     public static Controller bootDefaultConfiguration() {
-        HeikoJsonConfiguration config = new HeikoJsonConfiguration();
-        return new Controller(config);
+        HeikoJsonConfigurationLoader loader = new HeikoJsonConfigurationLoader();
+        return new Controller(loader.getConfiguration());
     }
 }

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.*;
 
-public abstract class Application {
+public abstract class Application implements Runnable {
     private final Sender sender;
 
     protected Application(BusProxy busProxy) {
@@ -25,12 +25,12 @@ public abstract class Application {
             this.contextroot = contextRoot;
         }
 
-        protected void setValue(String path, Object value) {
+        public void setValue(String path, Object value) {
             Endpoint.Message msg = sender.createMessage(null, null);
             sender.send(msg);
         }
 
-        protected Object getValue(String path) {
+        public Object getValue(String path) {
             Endpoint.Message request = sender.createMessage(null, null);
             return sender.awaitResponse(request);
         }
