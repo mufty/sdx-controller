@@ -2,9 +2,10 @@ package net.gabert.kyla.configuration;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import net.gabert.kyla.api.Configuration;
 import net.gabert.util.FileReader;
 
-public class JsonConfiguration extends DefaultConfiguration {
+public class JsonConfiguration implements Configuration {
     private static final String DEFAULT_KYLA_CFG = "classpath:kylacfg.json";
     private final JsonObject json;
 
@@ -23,19 +24,16 @@ public class JsonConfiguration extends DefaultConfiguration {
 
     @Override
     public int getWorkersCount() {
-        return json.get("workersCount") != null ? json.get("workersCount").getAsInt()
-                                                : super.getWorkersCount();
+        return json.get("workersCount").getAsInt();
     }
 
     @Override
     public int getWorkQueueHardLimit() {
-        return json.get("workerQueueHardLimit") != null ? json.get("workerQueueHardLimit").getAsInt()
-                                                        : super.getWorkQueueHardLimit();
+        return json.get("workerQueueHardLimit").getAsInt();
     }
 
     @Override
     public String getDataSlotProviderClassName() {
-        return json.get("dataSlotProviderClassName") != null ? json.get("dataSlotProviderClassName").getAsString()
-                                                             : super.getDataSlotProviderClassName();
+        return json.get("dataSlotProviderClassName").getAsString();
     }
 }
