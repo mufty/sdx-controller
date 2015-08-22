@@ -10,15 +10,15 @@ public abstract class Endpoint {
     public static final String ID_CLASSIFIER = "urn:uuid:";
 
     private final String dataSlotId;
-    private final BusProxy busProxy;
+    private final Bus bus;
 
-    protected Endpoint(BusProxy busProxy) {
-        this.busProxy = busProxy;
+    protected Endpoint(Bus bus) {
+        this.bus = bus;
         this.dataSlotId = ID_CLASSIFIER + Security.getUUID().toString();
     }
 
     public void send(Message message) {
-        busProxy.send(message);
+        bus.send(message);
     }
     
     public String getDataSlotId() {

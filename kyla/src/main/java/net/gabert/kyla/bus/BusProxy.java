@@ -23,7 +23,10 @@ public class BusProxy implements Bus {
 
     public BusProxy(KylaConfiguration config) {
         this.workUnitProcessor = new WorkUnitProcessor(config);
+
         this.dataSlotProvider = loadProvider(config.getDataSlotProviderClassName(), workUnitProcessor);
+        LOGGER.info("Dataslot provider: " + this.dataSlotProvider.getClass().getSimpleName());
+
         this.simpleBus = new SimpleBus(dataSlotProvider);
         LOGGER.info(BusProxy.class.getSimpleName() + " created.");
     }

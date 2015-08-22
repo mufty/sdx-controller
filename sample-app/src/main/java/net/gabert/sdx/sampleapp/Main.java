@@ -1,4 +1,4 @@
-package net.gabert.sdx;
+package net.gabert.sdx.sampleapp;
 
 import net.gabert.heiko.core.Controller;
 

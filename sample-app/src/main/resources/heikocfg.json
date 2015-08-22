@@ -1,7 +1,7 @@
 {
   "bus" : {"configUrl" : "classpath:kylacfg.json"},
 
-  "aliases" : {"sample": "net.gabert.sdx.mountpoint.SampleMountPoint"},
+  "aliases" : {"sample": "net.gabert.sdx.sampleapp.SampleMountPoint"},
 
   "mountPoints" : [
     {"className": "#{sample}",
