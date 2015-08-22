@@ -1,10 +1,14 @@
 {
+  "bus" : {"configUrl" : "classpath:kylacfg.json"},
+
   "aliases" : {"sample": "net.gabert.sdx.mountpoint.SampleMountPoint"},
+
   "mountPoints" : [
     {"className": "#{sample}",
      "path": "/example/sample",
      "initParams": {"param1" : 1}}
   ],
+
   "applications" : [
     {"className": "net.gabert.sdx.DemoApplication",
      "initParams": {"param1" : 1}}

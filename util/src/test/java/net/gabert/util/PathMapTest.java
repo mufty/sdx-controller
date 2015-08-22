@@ -10,11 +10,11 @@ public class PathMapTest {
     public void setGetSimple() {
         PathMap<String> pm = new PathMap<>();
         pm.put("/a/b/c", "VAL1");
-        pm.put("/a/b/c/d", "VAL2");
+        pm.put("/d/e/f", "VAL2");
         pm.put("/x/y/z", "VAL3");
 
         assertEquals("VAL1", pm.get("/a/b/c"));
-        assertEquals("VAL2", pm.get("/a/b/c/d"));
+        assertEquals("VAL2", pm.get("/d/e/f"));
         assertEquals("VAL3", pm.get("/x/y/z"));
     }
 

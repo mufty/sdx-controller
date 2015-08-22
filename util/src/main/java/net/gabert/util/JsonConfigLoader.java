@@ -1,11 +1,14 @@
 package net.gabert.util;
 
 import com.google.gson.*;
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class JsonConfigLoader {
+    private static final Logger LOGGER = LogUtil.getLogger();
+
     private final JsonObject json;
 
     protected JsonConfigLoader(String configFileName) {
@@ -15,6 +18,7 @@ public abstract class JsonConfigLoader {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        LOGGER.info("Loaded configuration file from: " + configFileName);
     }
 
     protected int getAsInt(String nodePath) {

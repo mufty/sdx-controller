@@ -5,6 +5,8 @@ import net.gabert.kyla.api.*;
 import net.gabert.kyla.api.Endpoint.Message;
 import net.gabert.kyla.api.DataSlotProvider;
 import net.gabert.kyla.dataslot.WorkUnitProcessor;
+import net.gabert.util.LogUtil;
+import org.apache.log4j.Logger;
 
 import java.lang.reflect.Method;
 
@@ -13,6 +15,8 @@ import java.lang.reflect.Method;
  * @author Robert Gallas
  */
 public class BusProxy implements Bus {
+    private static final Logger LOGGER = LogUtil.getLogger();
+
     protected final DataSlotProvider dataSlotProvider;
     private final WorkUnitProcessor workUnitProcessor;
     private final Bus simpleBus;
@@ -21,6 +25,7 @@ public class BusProxy implements Bus {
         this.workUnitProcessor = new WorkUnitProcessor(config);
         this.dataSlotProvider = loadProvider(config.getDataSlotProviderClassName(), workUnitProcessor);
         this.simpleBus = new SimpleBus(dataSlotProvider);
+        LOGGER.info(BusProxy.class.getSimpleName() + " created.");
     }
 
     private DataSlotProvider loadProvider(String dataSlotProviderConfig, WorkUnitProcessor workUnitProcessor) {
@@ -37,7 +42,9 @@ public class BusProxy implements Bus {
     }
     
     public void start() {
+        LOGGER.info(BusProxy.class.getSimpleName() + " starting.");
         workUnitProcessor.start();
+        LOGGER.info(BusProxy.class.getSimpleName() + " started.");
     }
 
     public void shutdown() {
