@@ -1,7 +1,7 @@
 package net.gabert.heiko.service;
 
 import net.gabert.heiko.mountpoint.MountPointProvider;
-import net.gabert.heiko.util.PathMap;
+import net.gabert.util.PathMap;
 import net.gabert.kyla.api.Endpoint;
 
 public class MountServiceLocal implements MountService {

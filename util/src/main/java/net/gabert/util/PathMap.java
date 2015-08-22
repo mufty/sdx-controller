@@ -1,4 +1,4 @@
-package net.gabert.heiko.util;
+package net.gabert.util;
 
 import java.util.*;
 
