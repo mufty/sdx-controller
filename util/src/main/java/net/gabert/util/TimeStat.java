@@ -24,7 +24,7 @@ public class TimeStat {
     public void printTimesBetweenMarkers() {
         for (int i = 1; i < markers.size(); i++) {
             long delay = markers.get(i).time - markers.get(i-1).time;
-            Log.sout("["+ delay + "ms] " + markers.get(i-1).message +" -> "+markers.get(i).message);
+            LogUtil.sout("[" + delay + "ms] " + markers.get(i - 1).message + " -> " + markers.get(i).message);
         }
     }
 }

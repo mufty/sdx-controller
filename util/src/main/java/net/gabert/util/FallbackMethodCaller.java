@@ -6,7 +6,7 @@ import java.lang.reflect.Proxy;
 import org.apache.log4j.Logger;
 
 public class FallbackMethodCaller implements InvocationHandler {
-    private static final Logger LOGGER = Logger.getLogger(FallbackMethodCaller.class);
+    private static final Logger LOGGER = LogUtil.getLogger();
 
     private final Object source;
     private final Object fallback;

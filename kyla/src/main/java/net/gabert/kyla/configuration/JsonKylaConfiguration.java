@@ -2,18 +2,18 @@ package net.gabert.kyla.configuration;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.gabert.kyla.api.Configuration;
+import net.gabert.kyla.api.KylaConfiguration;
 import net.gabert.util.FileReader;
 
-public class JsonConfiguration implements Configuration {
+public class JsonKylaConfiguration implements KylaConfiguration {
     private static final String DEFAULT_KYLA_CFG = "classpath:kylacfg.json";
     private final JsonObject json;
 
-    public JsonConfiguration () {
+    public JsonKylaConfiguration() {
         this(DEFAULT_KYLA_CFG);
     }
 
-    public JsonConfiguration (String fileName) {
+    public JsonKylaConfiguration(String fileName) {
         try {
             String configContent = FileReader.readFile(fileName);
             this.json = new JsonParser().parse(configContent).getAsJsonObject();

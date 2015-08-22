@@ -3,7 +3,7 @@ package net.gabert.kyla.api;
 /**
  * Interface representing Bus configuration options
  */
-public interface Configuration {
+public interface KylaConfiguration {
     /**
      * @return number of working threads
      */

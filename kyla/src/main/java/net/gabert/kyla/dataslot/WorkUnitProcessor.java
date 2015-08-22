@@ -1,13 +1,11 @@
 package net.gabert.kyla.dataslot;
 
-import net.gabert.kyla.api.Configuration;
+import net.gabert.kyla.api.KylaConfiguration;
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.kyla.api.Endpoint.Message;
 
 import java.util.concurrent.*;
 
-import static net.gabert.util.Log.logger;
-        
 public class WorkUnitProcessor {
     private static final int POLL_TIMEOUT = 1000;
     private static final TimeUnit POLL_TIMEOUT_UNIT = TimeUnit.MILLISECONDS;
@@ -19,9 +17,9 @@ public class WorkUnitProcessor {
 
     private volatile boolean stop = false;
 
-    public WorkUnitProcessor(Configuration configuration) {
-        this.workQueueHardLimit = configuration.getWorkQueueHardLimit();
-        this.workersCount = configuration.getWorkersCount();
+    public WorkUnitProcessor(KylaConfiguration kylaConfiguration) {
+        this.workQueueHardLimit = kylaConfiguration.getWorkQueueHardLimit();
+        this.workersCount = kylaConfiguration.getWorkersCount();
 
         this.workUnits = new ArrayBlockingQueue<>(this.workQueueHardLimit);
         this.executorService = Executors.newFixedThreadPool(this.workersCount);

@@ -1,6 +1,6 @@
 package net.gabert.kyla.dataslot.local;
 
-import net.gabert.kyla.configuration.DefaultConfiguration;
+import net.gabert.kyla.configuration.DefaultKylaConfiguration;
 import net.gabert.kyla.test.stub.BusProxyStub;
 import net.gabert.kyla.test.stub.EndpointStub;
 import org.junit.After;
@@ -15,7 +15,7 @@ public class MessageSend {
 
     @Before
     public void setUp() {
-        DefaultConfiguration cfg = new DefaultConfiguration();
+        DefaultKylaConfiguration cfg = new DefaultKylaConfiguration();
         bus = new BusProxyStub(cfg);
         bus.start();
     }

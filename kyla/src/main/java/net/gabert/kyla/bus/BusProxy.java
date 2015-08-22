@@ -17,7 +17,7 @@ public class BusProxy implements Bus {
     private final WorkUnitProcessor workUnitProcessor;
     private final Bus simpleBus;
 
-    public BusProxy(Configuration config) {
+    public BusProxy(KylaConfiguration config) {
         this.workUnitProcessor = new WorkUnitProcessor(config);
         this.dataSlotProvider = loadProvider(config.getDataSlotProviderClassName(), workUnitProcessor);
         this.simpleBus = new SimpleBus(dataSlotProvider);

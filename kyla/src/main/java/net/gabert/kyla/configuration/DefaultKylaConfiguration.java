@@ -1,9 +1,9 @@
 package net.gabert.kyla.configuration;
 
-import net.gabert.kyla.api.Configuration;
+import net.gabert.kyla.api.KylaConfiguration;
 import net.gabert.kyla.dataslot.local.LocalDataSlotProvider;
 
-public class DefaultConfiguration implements Configuration {
+public class DefaultKylaConfiguration implements KylaConfiguration {
     //DEFAULT VALUES
     private int workersCount = 10;
     @Override

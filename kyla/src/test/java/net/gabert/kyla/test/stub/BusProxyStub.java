@@ -1,12 +1,12 @@
 package net.gabert.kyla.test.stub;
 
-import net.gabert.kyla.api.Configuration;
+import net.gabert.kyla.api.KylaConfiguration;
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.kyla.bus.BusProxy;
 
 public class BusProxyStub extends BusProxy {
-    public BusProxyStub(Configuration configuration) {
-        super(configuration);
+    public BusProxyStub(KylaConfiguration kylaConfiguration) {
+        super(kylaConfiguration);
     }
 
     public boolean isEndpointRegistered(Endpoint endpoint) {
