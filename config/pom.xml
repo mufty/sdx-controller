@@ -24,6 +24,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>net.gabert.sdx</groupId>
+                <artifactId>heiko</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.hazelcast</groupId>
                 <artifactId>hazelcast</artifactId>
                 <version>${hazelcast.version}</version>

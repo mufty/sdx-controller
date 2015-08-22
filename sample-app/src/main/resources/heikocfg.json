@@ -1,0 +1,8 @@
+{
+  "aliases" : {"sample": "net.gabert.sdx.mountpoint.SampleMountPoint"},
+  "mountPoints" : [
+    {"type": "#{sample}",
+     "path": "/example/sample",
+     "param1": 42}
+  ]
+}

@@ -27,6 +27,7 @@ public class FallbackMethodCaller implements InvocationHandler {
                         source.getClass().getSimpleName() +
                         ". Will call " +
                         fallback.getClass().getSimpleName()+".");
+
             return method.invoke(fallback, args);
         }
     }

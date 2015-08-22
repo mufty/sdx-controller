@@ -1,0 +1,44 @@
+package net.gabert.util;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class JsonConfigLoader {
+    private final JsonObject json;
+
+    protected JsonConfigLoader(String configFileName) {
+        try {
+            String configContent = FileReader.readFile(configFileName);
+            this.json = new JsonParser().parse(configContent).getAsJsonObject();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected int getAsInt(String nodePath) {
+        return json.get(nodePath).getAsInt();
+    }
+
+    protected String getAsString(String nodePath) {
+        return json.get(nodePath).getAsString();
+    }
+
+    protected <T> Map<String, T> getMap(final String nodePath) {
+        if (json.get(nodePath) == null) {
+            return new HashMap<>();
+        }
+
+        final JsonObject values = json.get(nodePath).getAsJsonObject();
+
+        return new HashMap<String, T>() {{
+            for (Entry<String, JsonElement> value : values.entrySet() ) {
+                put(value.getKey(), (T)value.getValue());
+            }
+        }};
+    }
+}
