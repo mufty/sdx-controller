@@ -11,18 +11,17 @@
         <relativePath>../../sdx-controller-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>kyla-extensions</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>heiko-impl</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>net.gabert.sdx</groupId>
-            <artifactId>kyla</artifactId>
+            <artifactId>heiko-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
+            <groupId>net.gabert.sdx</groupId>
+            <artifactId>kyla</artifactId>
         </dependency>
     </dependencies>
-    
+
 </project>

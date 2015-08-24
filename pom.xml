@@ -15,6 +15,7 @@
 		<module>extensions</module>
 		<module>util</module>
 		<module>sample-app</module>
+		<module>default-config</module>
 	</modules>
 	
 </project>

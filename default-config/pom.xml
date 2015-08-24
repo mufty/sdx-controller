@@ -8,21 +8,9 @@
         <groupId>net.gabert.sdx</groupId>
         <artifactId>sdx-controller-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../../sdx-controller-parent/pom.xml</relativePath>
+        <relativePath>../sdx-controller-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>kyla-extensions</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>default-config</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>net.gabert.sdx</groupId>
-            <artifactId>kyla</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
-        </dependency>
-    </dependencies>
-    
 </project>

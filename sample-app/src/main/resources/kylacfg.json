@@ -1,3 +1,0 @@
-{"workersCount" : 10,
- "workerQueueHardLimit" : 100,
- "dataSlotProviderClassName": "net.gabert.kyla.dataslot.local.LocalDataSlotProvider"}

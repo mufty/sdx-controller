@@ -6,18 +6,17 @@
 
     <parent>
         <groupId>net.gabert.sdx</groupId>
-        <artifactId>config</artifactId>
+        <artifactId>sdx-controller-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../sdx-controller-parent/pom.xml</relativePath>
     </parent>
 
-	<artifactId>heiko</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>heiko</artifactId>
+    <packaging>pom</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>net.gabert.sdx</groupId>
-            <artifactId>kyla</artifactId>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>heiko-impl</module>
+        <module>heiko-api</module>
+    </modules>
+
 </project>

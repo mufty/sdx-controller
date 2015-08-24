@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.gabert.sdx</groupId>
-    <artifactId>config</artifactId>
+    <artifactId>sdx-controller-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -25,7 +25,27 @@
             </dependency>
             <dependency>
                 <groupId>net.gabert.sdx</groupId>
-                <artifactId>heiko</artifactId>
+                <artifactId>heiko-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.gabert.sdx</groupId>
+                <artifactId>heiko-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.gabert.sdx</groupId>
+                <artifactId>util</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.gabert.sdx</groupId>
+                <artifactId>default-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.gabert.sdx</groupId>
+                <artifactId>sample-app-components</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
