@@ -1,7 +1,6 @@
 package net.gabert.heiko.mountpoint;
 
-import net.gabert.heiko.configuration.MountPointConfig;
-import net.gabert.kyla.api.Bus;
+import net.gabert.heiko.configuration.schema.MountPointConfig;
 import net.gabert.kyla.bus.BusProxy;
 import net.gabert.util.LogUtil;
 import net.gabert.util.PathMap;

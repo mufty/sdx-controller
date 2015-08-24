@@ -1,6 +1,6 @@
 package net.gabert.kyla.test.stub;
 
-import net.gabert.kyla.api.KylaConfiguration;
+import net.gabert.kyla.configuration.KylaConfiguration;
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.kyla.bus.BusProxy;
 

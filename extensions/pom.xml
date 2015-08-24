@@ -8,7 +8,7 @@
         <groupId>net.gabert.sdx</groupId>
         <artifactId>config</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../config/pom.xml</relativePath>
+        <relativePath>../sdx-controller-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>extensions</artifactId>

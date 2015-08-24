@@ -1,8 +1,6 @@
 package net.gabert.heiko.mountpoint;
 
-import net.gabert.heiko.configuration.MountPointConfig;
-import net.gabert.heiko.mountpoint.MountPoint;
-import net.gabert.kyla.api.Endpoint;
+import net.gabert.heiko.configuration.schema.MountPointConfig;
 
 import java.util.List;
 

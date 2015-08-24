@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
 	<modules>
-		<module>config</module>
+		<module>sdx-controller-parent</module>
 		<module>heiko</module>
 		<module>kyla</module>
 		<module>extensions</module>

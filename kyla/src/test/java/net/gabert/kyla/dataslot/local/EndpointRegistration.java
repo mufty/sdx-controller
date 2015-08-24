@@ -1,9 +1,10 @@
 package net.gabert.kyla.dataslot.local;
 
 import net.gabert.kyla.api.Endpoint;
-import net.gabert.kyla.configuration.DefaultKylaConfiguration;
+import net.gabert.kyla.configuration.KylaConfiguration;
 import net.gabert.kyla.test.stub.BusProxyStub;
 import net.gabert.kyla.test.stub.EndpointStub;
+import net.gabert.util.JsonTransformation;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -12,7 +13,7 @@ public class EndpointRegistration {
 
     @Before
     public void setUp() {
-        DefaultKylaConfiguration cfg = new DefaultKylaConfiguration();
+        KylaConfiguration cfg = new JsonTransformation<KylaConfiguration>().fromFile("classpath:kylacfg.json");
         bus = new BusProxyStub(cfg);
     }
     

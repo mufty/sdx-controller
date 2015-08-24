@@ -1,16 +1,14 @@
 package net.gabert.heiko.core;
 
-import net.gabert.heiko.configuration.HeikoConfiguration;
-import net.gabert.heiko.configuration.HeikoJsonConfigurationLoader;
-import net.gabert.heiko.configuration.MountPointConfig;
+import net.gabert.heiko.configuration.ConfigurationLoader;
+import net.gabert.heiko.configuration.schema.HeikoConfiguration;
+import net.gabert.heiko.configuration.schema.MountPointConfig;
 import net.gabert.heiko.mountpoint.MountService;
 import net.gabert.heiko.mountpoint.MountServiceLocal;
-import net.gabert.kyla.api.KylaConfiguration;
+import net.gabert.kyla.configuration.KylaConfiguration;
 import net.gabert.kyla.bus.BusProxy;
-import net.gabert.kyla.configuration.DefaultKylaConfiguration;
-import net.gabert.kyla.configuration.JsonKylaConfiguration;
 import net.gabert.util.Alias;
-import net.gabert.util.FallbackMethodCaller;
+import net.gabert.util.JsonTransformation;
 import net.gabert.util.LogUtil;
 import org.apache.log4j.Logger;
 
@@ -44,16 +42,13 @@ public class Controller {
 
     private void startBus() {
         LOGGER.info("Starting bus.");
-        KylaConfiguration kylaCfg =
-                FallbackMethodCaller.getInstance(KylaConfiguration.class,
-                                                 new JsonKylaConfiguration(this.config.bus.configUrl),
-                                                 new DefaultKylaConfiguration());
+        KylaConfiguration kylaCfg = new JsonTransformation<KylaConfiguration>().fromFile(this.config.bus.configUrl);
         this.bus = new BusProxy(kylaCfg);
         this.bus.start();
     }
 
     private void mountEndpoints() {
-        LOGGER.info("Mounting endpoints.");
+        LOGGER.info("Processing mountpoints.");
 
         MountService mountService = getService(MountService.class);
         mountService.mount(normalize(this.config.mountPoints));
@@ -75,17 +70,18 @@ public class Controller {
         return (T) serviceRegistry.get(serviceClass);
     }
 
+    private static final String DEFAULT_HEIKO_CONFIG_FILE = "classpath:heikocfg.json";
     public static Controller boot() {
-        return boot(new HeikoJsonConfigurationLoader());
+        return boot(DEFAULT_HEIKO_CONFIG_FILE);
     }
 
     public static Controller boot(String configFileUrl) {
-        return boot(new HeikoJsonConfigurationLoader(configFileUrl));
+        return boot(ConfigurationLoader.load(configFileUrl));
     }
 
-    private static Controller boot(HeikoJsonConfigurationLoader loader) {
+    private static Controller boot(HeikoConfiguration heikoConfiguration) {
         LOGGER.info("Booting controller.");
-        Controller controller = new Controller(loader.getConfiguration());
+        Controller controller = new Controller(heikoConfiguration);
         controller.init();
         return controller;
     }

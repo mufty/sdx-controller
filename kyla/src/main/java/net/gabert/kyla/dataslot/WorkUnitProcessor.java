@@ -1,6 +1,6 @@
 package net.gabert.kyla.dataslot;
 
-import net.gabert.kyla.api.KylaConfiguration;
+import net.gabert.kyla.configuration.KylaConfiguration;
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.kyla.api.Endpoint.Message;
 import net.gabert.util.LogUtil;
@@ -22,8 +22,8 @@ public class WorkUnitProcessor {
     private volatile boolean stop = false;
 
     public WorkUnitProcessor(KylaConfiguration kylaConfiguration) {
-        this.workQueueHardLimit = kylaConfiguration.getWorkQueueHardLimit();
-        this.workersCount = kylaConfiguration.getWorkersCount();
+        this.workQueueHardLimit = kylaConfiguration.workQueueHardLimit;
+        this.workersCount = kylaConfiguration.workersCount;
 
         this.workUnits = new ArrayBlockingQueue<>(this.workQueueHardLimit);
         this.executorService = Executors.newFixedThreadPool(this.workersCount);

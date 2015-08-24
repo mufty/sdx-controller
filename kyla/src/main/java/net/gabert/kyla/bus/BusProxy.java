@@ -4,6 +4,7 @@ import net.gabert.kyla.api.*;
 
 import net.gabert.kyla.api.Endpoint.Message;
 import net.gabert.kyla.api.DataSlotProvider;
+import net.gabert.kyla.configuration.KylaConfiguration;
 import net.gabert.kyla.dataslot.WorkUnitProcessor;
 import net.gabert.util.LogUtil;
 import org.apache.log4j.Logger;
@@ -24,7 +25,7 @@ public class BusProxy implements Bus {
     public BusProxy(KylaConfiguration config) {
         this.workUnitProcessor = new WorkUnitProcessor(config);
 
-        this.dataSlotProvider = loadProvider(config.getDataSlotProviderClassName(), workUnitProcessor);
+        this.dataSlotProvider = loadProvider(config.dataSlotProviderClassName, workUnitProcessor);
         LOGGER.info("Dataslot provider: " + this.dataSlotProvider.getClass().getSimpleName());
 
         this.simpleBus = new SimpleBus(dataSlotProvider);

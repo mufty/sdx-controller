@@ -1,7 +1,6 @@
 package net.gabert.sdx;
 
-import net.gabert.heiko.core.Application;
-import net.gabert.kyla.api.Endpoint;
+import net.gabert.heiko.api.Application;
 import net.gabert.kyla.bus.BusProxy;
 
 /**

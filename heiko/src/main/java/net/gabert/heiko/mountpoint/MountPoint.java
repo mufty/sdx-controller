@@ -1,5 +1,6 @@
 package net.gabert.heiko.mountpoint;
 
+import net.gabert.heiko.api.Driver;
 import net.gabert.kyla.api.Bus;
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.util.LogUtil;
@@ -18,11 +19,16 @@ public class MountPoint {
     private Map<String, Object> initParams;
 
     private Endpoint rpcEndpoint;
-    private Endpoint listenerEndpoint;
+
+    private final Driver driver;
+
+    public MountPoint(Driver driver) {
+        this.driver = driver;
+    }
 
     public void setMountPointContextRoot(String mountPointContextRoot) {
         if (this.mountPointContextRoot != null) {
-            LOGGER.fatal("Attempt reset mountPointContextRoot.");
+            LOGGER.fatal("Attempt to reset mountPointContextRoot.");
             throw new IllegalStateException("MountPointContextRoot already set");
         }
 
@@ -31,7 +37,7 @@ public class MountPoint {
 
     public void setBus(Bus bus) {
         if (this.bus != null) {
-            LOGGER.fatal("Attempt reset bus.");
+            LOGGER.fatal("Attempt to reset bus.");
             throw new IllegalStateException("Bus already set");
         }
 
@@ -40,7 +46,7 @@ public class MountPoint {
 
     public void setInitParams(Map<String, Object> initParams) {
         if (this.initParams != null) {
-            LOGGER.fatal("Attempt reset initParams.");
+            LOGGER.fatal("Attempt to reset initParams.");
             throw new IllegalStateException("InitParams already set");
         }
 

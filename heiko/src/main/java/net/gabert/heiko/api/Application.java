@@ -1,4 +1,4 @@
-package net.gabert.heiko.core;
+package net.gabert.heiko.api;
 
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.kyla.bus.BusProxy;
