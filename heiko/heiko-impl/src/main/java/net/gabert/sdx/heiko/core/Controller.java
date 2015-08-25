@@ -37,12 +37,12 @@ public class Controller {
     }
 
     private void initializeServices() {
-        LOGGER.info("Initializing services.");
+        LOGGER.info("--- PHASE --- Initializing services.");
         serviceRegistry.put(MountService.class, new MountServiceLocal(this.busProxy));
     }
 
     private void startBus() {
-        LOGGER.info("Starting busProxy.");
+        LOGGER.info("--- PHASE --- Starting busProxy.");
         KylaConfiguration kylaCfg = new JsonTransformation<KylaConfiguration>().fromFile(this.config.bus.configUrl,
                 KylaConfiguration.class);
         this.busProxy = new BusProxy(kylaCfg);
@@ -50,14 +50,14 @@ public class Controller {
     }
 
     private void mountEndpoints() {
-        LOGGER.info("Processing mountpoints.");
+        LOGGER.info("--- PHASE --- Processing mountpoints.");
 
         MountService mountService = getService(MountService.class);
         mountService.mount(this.config.mountPoints);
     }
 
     private void startApplications() {
-        LOGGER.info("Starting applications.");
+        LOGGER.info("--- PHASE --- Starting applications.");
     }
 
     // ----- BOOTSTRAP -----

@@ -1,12 +1,21 @@
 {
-  "aliases" : {"sample": "net.gabert.sdx.sampleapp.driver.TelescopeDriver"},
+  "aliases" : {"telescopeDriver": "net.gabert.sdx.sampleapp.driver.TelescopeDriver",
+               "housingDriver": "net.gabert.sdx.sampleapp.driver.HousingDriver" },
 
   "bus" : {"configUrl" : "classpath:kylacfg.json"},
 
   "mountPoints" : [
-    {"driverClassName": "#{sample}",
-     "path": "/example/sample",
-     "initParams": {"param1" : 1}}
+    {"driverClassName": "#{telescopeDriver}",
+     "path": "/iot/telescope",
+     "initParams": {"param1" : 1}},
+
+    {"driverClassName": "#{housingDriver}",
+     "path": "/iot/houseA",
+     "initParams": {"param1" : 1}},
+
+    {"driverClassName": "#{housingDriver}",
+      "path": "/iot/houseB",
+      "initParams": {"param1" : 1}}
   ],
 
   "applications" : [
