@@ -19,7 +19,7 @@ public class TelescopeDriver extends Driver {
     }
 
     @Override
-    public Object call(String path, Object... params) {
+    public Object call(String relativePath, Object... params) {
         return null;
     }
 }

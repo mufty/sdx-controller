@@ -3,12 +3,15 @@ package net.gabert.kyla.dataslot.local;
 import net.gabert.kyla.api.*;
 import net.gabert.kyla.api.DataSlotProvider;
 import net.gabert.kyla.dataslot.WorkUnitProcessor;
+import net.gabert.util.LogUtil;
+import org.apache.log4j.Logger;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class LocalDataSlotProvider implements DataSlotProvider {
+    private static final Logger LOGGER = LogUtil.getLogger();
     private final Map<String, DataSlot> localDataSlots;
     private final WorkUnitProcessor workUnitProcessor;
 
@@ -26,7 +29,7 @@ public class LocalDataSlotProvider implements DataSlotProvider {
         String dataSlotId = endpoint.getDataSlotId();
         if (dataSlotId.startsWith(Endpoint.ID_CLASSIFIER) == false) {
             throw new IllegalArgumentException("Endpoint registration dataSlotId must contain " +
-                    "Endpoint.ID_CLASSIFIER");
+                                               "Endpoint.ID_CLASSIFIER");
         }
 
         exclusiveRegistration(endpoint, dataSlotId);
@@ -36,7 +39,7 @@ public class LocalDataSlotProvider implements DataSlotProvider {
     public void registerExclusive(Endpoint endpoint, String dataSlotId) {
         if (dataSlotId.startsWith(Endpoint.ID_CLASSIFIER)) {
             throw new IllegalArgumentException("Exclusive registration with dataSlotId starting with endpoint " +
-                    "classifier not allowed");
+                                               "classifier not allowed");
         }
 
         register(endpoint);
@@ -49,12 +52,14 @@ public class LocalDataSlotProvider implements DataSlotProvider {
                 localDataSlots.put(dataSlotId, new ExclusiveDataSlot(endpoint, dataSlotId, workUnitProcessor));
             } else {
                 throw new IllegalArgumentException("Cannot make exclusive subscription. DataSlot["
-                        + dataSlotId
-                        + "] already created ["
-                        + localDataSlots.get(dataSlotId)
-                        + "]");
+                                                   + dataSlotId
+                                                   + "] already created ["
+                                                   + localDataSlots.get(dataSlotId)
+                                                   + "]");
             }
         }
+
+        LOGGER.info("Endpoint registered for dataSlot: " + endpoint + " -> " + dataSlotId);
     }
 
     @Override

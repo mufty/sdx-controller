@@ -5,6 +5,7 @@ import net.gabert.sdx.heiko.api.Driver;
 import net.gabert.kyla.api.Bus;
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.sdx.heiko.configuration.schema.MountPointConfig;
+import net.gabert.sdx.heiko.core.HeikoMessage;
 import net.gabert.util.LogUtil;
 import org.apache.log4j.Logger;
 
@@ -30,6 +31,7 @@ public class MountPoint {
         this.busProxy = busProxy;
         this.rpcEndpoint = new HeikoRpcEndpoint();
 
+        LOGGER.info("Instantiated Endpoint: " + this.rpcEndpoint);
         busProxy.registerExclusive(this.rpcEndpoint, mountPointContextRoot);
     }
 
@@ -46,18 +48,27 @@ public class MountPoint {
         return mountPointContextRoot;
     }
 
-    private class HeikoRpcEndpoint extends Endpoint {
+    private class HeikoRpcEndpoint extends Endpoint<HeikoMessage> {
 
         protected HeikoRpcEndpoint() {
             super(busProxy);
         }
 
         @Override
-        public void handle(Message message) {
-            Object result = driver.call(null, message.getData());
-            Message reply = message.createReply(result);
+        public void handle(Message<HeikoMessage> message) {
+            Object result = driver.call(message.getData().absolutePath,
+                                        message.getData().payload);
 
-            this.send(reply);
+            HeikoMessage reply = new HeikoMessage<>();
+            reply.absolutePath = message.getData().absolutePath;
+            reply.payload = result;
+
+            this.send(message.createReply(reply));
         }
+    }
+
+    @Override
+    public String toString() {
+        return "["+mountPointContextRoot+" -> "+driver.getClass()+"]";
     }
 }

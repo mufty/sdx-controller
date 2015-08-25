@@ -61,6 +61,7 @@ public class BusProxy implements Bus {
     }
 
     public void registerExclusive(Endpoint endpoint, String dataSlotId) {
+        LOGGER.info("Requested exclusive Endpoint registration: " + endpoint + " -> "+ dataSlotId);
         dataSlotProvider.registerExclusive(endpoint, dataSlotId);
     }
 

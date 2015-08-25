@@ -6,7 +6,7 @@ import net.gabert.util.Security;
 import java.io.Serializable;
 import java.util.UUID;
 
-public abstract class Endpoint {
+public abstract class Endpoint<T> {
     public static final String ID_CLASSIFIER = "urn:uuid:";
 
     private final String dataSlotId;
@@ -17,7 +17,7 @@ public abstract class Endpoint {
         this.dataSlotId = ID_CLASSIFIER + Security.getUUID().toString();
     }
 
-    public void send(Message message) {
+    public void send(Message<T> message) {
         bus.send(message);
     }
     
@@ -25,7 +25,7 @@ public abstract class Endpoint {
         return dataSlotId;
     }
 
-    public <T> Message createMessage(String destinationSlotId, T data) {
+    public <T> Message<T> createMessage(String destinationSlotId, T data) {
         return new Message(destinationSlotId,
                            this.getDataSlotId(),
                            Security.getUUID(),
@@ -33,7 +33,7 @@ public abstract class Endpoint {
                            data);
     }
 
-    public abstract void handle(Message message);
+    public abstract void handle(Message<T> message);
 
     @Override
     public boolean equals(Object o) {
@@ -100,11 +100,11 @@ public abstract class Endpoint {
             return conversationId;
         }
 
-        public Object getData() {
+        public T getData() {
             return data;
         }
 
-        public Message createReply(Object data) {
+        public Message createReply(T data) {
             return new Message(this.sourceSlotId,
                     this.destinationSlotId,
                     Security.getUUID(),

@@ -32,7 +32,7 @@ public class MountServiceLocal implements MountService {
     @Override
     public void mount(MountPointConfig mountPointConfig)  {
         try {
-            LOGGER.info("Initializing mountpoint: " + mountPointConfig.driverClassName);
+            LOGGER.info("Initializing mountpoint: " + mountPointConfig.path);
             MountPoint mountPoint = new MountPoint(busProxy, mountPointConfig);
             mount(mountPoint);
         } catch (Exception e) {
@@ -42,7 +42,7 @@ public class MountServiceLocal implements MountService {
 
     private void mount(MountPoint mountPoint) {
         pathMap.put(mountPoint.getMountPointContextRoot(), mountPoint);
-        LOGGER.info("Mounted: " + mountPoint.getClass().getCanonicalName() + " -> " + mountPoint.getMountPointContextRoot());
+        LOGGER.info("Mounted: " + mountPoint);
     }
 
     @Override
