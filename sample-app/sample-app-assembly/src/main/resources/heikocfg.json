@@ -1,10 +1,10 @@
 {
+  "aliases" : {"sample": "net.gabert.sdx.sampleapp.driver.TelescopeDriver"},
+
   "bus" : {"configUrl" : "classpath:kylacfg.json"},
 
-  "aliases" : {"sample": "net.gabert.sdx.sampleapp.SampleMountPoint"},
-
   "mountPoints" : [
-    {"className": "#{sample}",
+    {"driverClassName": "#{sample}",
      "path": "/example/sample",
      "initParams": {"param1" : 1}}
   ],

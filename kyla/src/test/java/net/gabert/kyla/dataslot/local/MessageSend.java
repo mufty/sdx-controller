@@ -16,7 +16,8 @@ public class MessageSend {
 
     @Before
     public void setUp() {
-        KylaConfiguration cfg = new JsonTransformation<KylaConfiguration>().fromFile("classpath:kylacfg.json");
+        KylaConfiguration cfg = new JsonTransformation<KylaConfiguration>().fromFile("classpath:kylacfg.json",
+                                                                                     KylaConfiguration.class);
         bus = new BusProxyStub(cfg);
         bus.start();
     }

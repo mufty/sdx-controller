@@ -25,7 +25,7 @@ public abstract class Endpoint {
         return dataSlotId;
     }
 
-    public Message createMessage(String destinationSlotId, Object data) {
+    public <T> Message createMessage(String destinationSlotId, T data) {
         return new Message(destinationSlotId,
                            this.getDataSlotId(),
                            Security.getUUID(),
@@ -60,18 +60,18 @@ public abstract class Endpoint {
     /**
      * Structured object representing bus message
      */
-    public static class Message implements Serializable {
+    public static class Message<T> implements Serializable {
         private final String destinationSlotId;
         private final String sourceSlotId;
         private final UUID messageId;
         private final UUID conversationId;
-        private final Object data;
+        private final T data;
 
         private Message(String destinationSlotId,
                         String sourceSlotId,
                         UUID messageId,
                         UUID conversationId,
-                        Object data) {
+                        T data) {
             this.destinationSlotId = destinationSlotId;
             this.sourceSlotId = sourceSlotId;
             this.messageId = Security.getUUID();

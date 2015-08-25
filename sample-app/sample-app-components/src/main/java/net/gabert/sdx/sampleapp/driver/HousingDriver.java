@@ -1,8 +1,9 @@
-package net.gabert.sdx.sampleapp.sampleapp.driver;
+package net.gabert.sdx.sampleapp.driver;
+
 
 import net.gabert.sdx.heiko.api.Driver;
 
-public class TelescopeDriver extends Driver {
+public class HousingDriver extends Driver {
     @Override
     public Object getValue(String path) {
         return null;

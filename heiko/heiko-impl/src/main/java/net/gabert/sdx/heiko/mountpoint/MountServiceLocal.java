@@ -23,24 +23,6 @@ public class MountServiceLocal implements MountService {
     }
 
     @Override
-    public void mount(String mountPointContextRoot, MountPoint mountPoint) {
-        pathMap.put(mountPointContextRoot, mountPoint);
-        LOGGER.info("Mounted: " + mountPoint.getClass().getCanonicalName() + " -> " + mountPointContextRoot);
-    }
-
-    @Override
-    public void mount(MountPointConfig mountPointConfig)  {
-        try {
-            LOGGER.info("Initializing mountpoint: " + mountPointConfig.className);
-            Class<?> clazz = Class.forName(mountPointConfig.className);
-            MountPoint mountPoint = (MountPoint)clazz.getConstructor().newInstance();
-            mount(mountPointConfig.path, mountPoint);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public void mount(List<MountPointConfig> mountPointConfigs) {
         for (MountPointConfig config : mountPointConfigs) {
             mount(config);
@@ -48,12 +30,23 @@ public class MountServiceLocal implements MountService {
     }
 
     @Override
-    public MountPoint getMountPoint(String requestPath) {
-        return pathMap.get(requestPath);
+    public void mount(MountPointConfig mountPointConfig)  {
+        try {
+            LOGGER.info("Initializing mountpoint: " + mountPointConfig.driverClassName);
+            MountPoint mountPoint = new MountPoint(busProxy, mountPointConfig);
+            mount(mountPoint);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void mount(MountPoint mountPoint) {
+        pathMap.put(mountPoint.getMountPointContextRoot(), mountPoint);
+        LOGGER.info("Mounted: " + mountPoint.getClass().getCanonicalName() + " -> " + mountPoint.getMountPointContextRoot());
     }
 
     @Override
-    public String getPathSeparator() {
-        return PATH_SEPARATOR;
+    public MountPoint getMountPoint(String requestPath) {
+        return pathMap.get(requestPath);
     }
 }

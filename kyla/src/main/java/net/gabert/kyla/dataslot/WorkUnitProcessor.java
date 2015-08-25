@@ -17,15 +17,15 @@ public class WorkUnitProcessor {
     private final BlockingQueue<WorkUnit> workUnits;
     private final ExecutorService executorService;
     private final int workersCount;
-    private final int workQueueHardLimit;
+    private final int workerQueueHardLimit;
 
     private volatile boolean stop = false;
 
     public WorkUnitProcessor(KylaConfiguration kylaConfiguration) {
-        this.workQueueHardLimit = kylaConfiguration.workQueueHardLimit;
+        this.workerQueueHardLimit = kylaConfiguration.workerQueueHardLimit;
         this.workersCount = kylaConfiguration.workersCount;
 
-        this.workUnits = new ArrayBlockingQueue<>(this.workQueueHardLimit);
+        this.workUnits = new ArrayBlockingQueue<>(this.workerQueueHardLimit);
         this.executorService = Executors.newFixedThreadPool(this.workersCount);
     }
 

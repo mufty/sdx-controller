@@ -20,7 +20,7 @@ public class Controller {
     private static final Logger LOGGER = LogUtil.getLogger();
 
     private final HeikoConfiguration config;
-    private BusProxy bus;
+    private BusProxy busProxy;
 
     private final Map<Class<?>, Object> serviceRegistry = new HashMap<>();
 
@@ -28,6 +28,7 @@ public class Controller {
         this.config = config;
     }
 
+    // ----- INITIALIZATION -----
     private void init() {
         startBus();
         initializeServices();
@@ -37,39 +38,29 @@ public class Controller {
 
     private void initializeServices() {
         LOGGER.info("Initializing services.");
-        serviceRegistry.put(MountService.class, new MountServiceLocal(this.bus));
+        serviceRegistry.put(MountService.class, new MountServiceLocal(this.busProxy));
     }
 
     private void startBus() {
-        LOGGER.info("Starting bus.");
-        KylaConfiguration kylaCfg = new JsonTransformation<KylaConfiguration>().fromFile(this.config.bus.configUrl);
-        this.bus = new BusProxy(kylaCfg);
-        this.bus.start();
+        LOGGER.info("Starting busProxy.");
+        KylaConfiguration kylaCfg = new JsonTransformation<KylaConfiguration>().fromFile(this.config.bus.configUrl,
+                KylaConfiguration.class);
+        this.busProxy = new BusProxy(kylaCfg);
+        this.busProxy.start();
     }
 
     private void mountEndpoints() {
         LOGGER.info("Processing mountpoints.");
 
         MountService mountService = getService(MountService.class);
-        mountService.mount(normalize(this.config.mountPoints));
-    }
-
-    private List<MountPointConfig> normalize(List<MountPointConfig> mountPoints) {
-        for (MountPointConfig mntConfig : mountPoints) {
-            mntConfig.className = Alias.normalize(mntConfig.className, this.config.aliases);
-        }
-
-        return mountPoints;
+        mountService.mount(this.config.mountPoints);
     }
 
     private void startApplications() {
         LOGGER.info("Starting applications.");
     }
 
-    private <T> T getService(Class<? extends T> serviceClass) {
-        return (T) serviceRegistry.get(serviceClass);
-    }
-
+    // ----- BOOTSTRAP -----
     private static final String DEFAULT_HEIKO_CONFIG_FILE = "classpath:heikocfg.json";
     public static Controller boot() {
         return boot(DEFAULT_HEIKO_CONFIG_FILE);
@@ -84,5 +75,10 @@ public class Controller {
         Controller controller = new Controller(heikoConfiguration);
         controller.init();
         return controller;
+    }
+
+    // ----- UTILITY -----
+    private <T> T getService(Class<? extends T> serviceClass) {
+        return (T) serviceRegistry.get(serviceClass);
     }
 }

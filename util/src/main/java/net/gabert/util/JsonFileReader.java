@@ -3,23 +3,25 @@ package net.gabert.util;
 import com.google.gson.*;
 import org.apache.log4j.Logger;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsonFileReader<T> {
+public class JsonFileReader {
     private static final Logger LOGGER = LogUtil.getLogger();
 
-    private final String configFileUrl;
+    private static final Gson GSON = new Gson();
 
-    public JsonFileReader(String configFileUrl) {
-        this.configFileUrl = configFileUrl;
+    public static <T> T fromString(String jsonString, Class<T> configClass) {
+        return fromJson(jsonString, configClass);
     }
 
-    public T parse(Class<T> configClass) {
-        return fromJson(asJsonObject(configFileUrl), configClass);
+    public static <T> T fromFile(String fileUrl, Class<T> configClass) {
+        return fromJson(asJsonObject(fileUrl), configClass);
     }
 
-    private JsonObject asJsonObject(String configFileName) {
+    private static JsonObject asJsonObject(String configFileName) {
         try {
             String configContent = FileReader.readFile(configFileName);
             JsonObject json = new JsonParser().parse(configContent).getAsJsonObject();
@@ -32,8 +34,11 @@ public class JsonFileReader<T> {
         }
     }
 
-    private T fromJson(JsonObject json, Class<T> configClass) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, configClass);
+    private static <T> T fromJson(JsonObject json, Class<T> configClass) {
+        return GSON.fromJson(json, configClass);
+    }
+
+    private static <T> T fromJson(String jsonString, Class<T> configClass) {
+        return GSON.fromJson(jsonString, configClass);
     }
 }
