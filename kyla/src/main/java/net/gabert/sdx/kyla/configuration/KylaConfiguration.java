@@ -1,4 +1,4 @@
-package net.gabert.kyla.configuration;
+package net.gabert.sdx.kyla.configuration;
 
 /**
  * Interface representing Bus configuration options

@@ -1,10 +1,9 @@
-package net.gabert.kyla.core;
+package net.gabert.sdx.kyla.core;
 
-import net.gabert.kyla.api.DataSlotProvider;
-import net.gabert.kyla.api.Endpoint;
+import net.gabert.sdx.kyla.api.DataSlotProvider;
+import net.gabert.sdx.kyla.api.Endpoint;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.util.List;
 
 public class DataSlotProviderProxy implements DataSlotProvider {

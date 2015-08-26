@@ -1,8 +1,8 @@
 package net.gabert.sdx.heiko.mountpoint;
 
-import net.gabert.kyla.core.BusProxy;
+import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.sdx.heiko.api.Driver;
-import net.gabert.kyla.api.Endpoint;
+import net.gabert.sdx.kyla.api.Endpoint;
 import net.gabert.sdx.heiko.configuration.schema.MountPointConfig;
 import net.gabert.sdx.heiko.core.HeikoMessage;
 import net.gabert.util.LogUtil;

@@ -1,16 +1,15 @@
-package net.gabert.kyla.core;
+package net.gabert.sdx.kyla.core;
 
-import net.gabert.kyla.api.*;
+import net.gabert.sdx.kyla.api.*;
 
-import net.gabert.kyla.api.Endpoint.Message;
-import net.gabert.kyla.api.DataSlotProvider;
-import net.gabert.kyla.configuration.KylaConfiguration;
+import net.gabert.sdx.kyla.api.Endpoint.Message;
+import net.gabert.sdx.kyla.api.DataSlotProvider;
+import net.gabert.sdx.kyla.configuration.KylaConfiguration;
 import net.gabert.util.LogUtil;
 import org.apache.log4j.Logger;
 
 import javax.management.*;
 import java.lang.management.ManagementFactory;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;

@@ -1,6 +1,6 @@
 package net.gabert.sdx.heiko.api;
 
-import net.gabert.kyla.api.Bus;
+import net.gabert.sdx.kyla.api.Bus;
 
 import java.util.Map;
 

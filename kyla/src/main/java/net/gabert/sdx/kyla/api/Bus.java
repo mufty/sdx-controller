@@ -1,6 +1,6 @@
-package net.gabert.kyla.api;
+package net.gabert.sdx.kyla.api;
 
-import net.gabert.kyla.api.Endpoint.Message;
+import net.gabert.sdx.kyla.api.Endpoint.Message;
 
 /**
  * Base interface class enabling sending messages to Bus infrastructure

@@ -1,8 +1,8 @@
-package net.gabert.kyla.dataslot.local;
+package net.gabert.sdx.kyla.dataslot.local;
 
-import net.gabert.kyla.configuration.KylaConfiguration;
-import net.gabert.kyla.core.BusProxy;
-import net.gabert.kyla.test.stub.EndpointStub;
+import net.gabert.sdx.kyla.configuration.KylaConfiguration;
+import net.gabert.sdx.kyla.core.BusProxy;
+import net.gabert.sdx.kyla.stub.EndpointStub;
 import net.gabert.util.JsonTransformation;
 import org.junit.After;
 import org.junit.Before;

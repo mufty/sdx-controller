@@ -1,16 +1,16 @@
-package net.gabert.kyla.dataslot.hazelcast;
+package net.gabert.sdx.kyla.dataslot.hazelcast;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.MapConfig;
 import com.hazelcast.config.NearCacheConfig;
 import com.hazelcast.core.*;
-import net.gabert.kyla.api.DataSlotProvider;
+import net.gabert.sdx.kyla.api.DataSlotProvider;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.gabert.kyla.api.Endpoint;
-import net.gabert.kyla.api.Endpoint.Message;
+import net.gabert.sdx.kyla.api.Endpoint;
+import net.gabert.sdx.kyla.api.Endpoint.Message;
 
 public class HazelcastDataSlotProvider implements DataSlotProvider {
     private final static String ID_DELIMITER= ":";

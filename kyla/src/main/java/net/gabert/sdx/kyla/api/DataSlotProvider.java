@@ -1,6 +1,4 @@
-package net.gabert.kyla.api;
-
-import net.gabert.kyla.api.Endpoint.Message;
+package net.gabert.sdx.kyla.api;
 
 import java.util.List;
 

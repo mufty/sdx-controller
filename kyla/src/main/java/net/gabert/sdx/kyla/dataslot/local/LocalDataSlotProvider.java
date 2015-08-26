@@ -1,7 +1,7 @@
-package net.gabert.kyla.dataslot.local;
+package net.gabert.sdx.kyla.dataslot.local;
 
-import net.gabert.kyla.api.*;
-import net.gabert.kyla.api.DataSlotProvider;
+import net.gabert.sdx.kyla.api.*;
+import net.gabert.sdx.kyla.api.DataSlotProvider;
 import net.gabert.util.LogUtil;
 import org.apache.log4j.Logger;
 

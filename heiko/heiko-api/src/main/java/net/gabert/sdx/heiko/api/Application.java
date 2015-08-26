@@ -1,7 +1,7 @@
 package net.gabert.sdx.heiko.api;
 
-import net.gabert.kyla.api.Endpoint;
-import net.gabert.kyla.core.BusProxy;
+import net.gabert.sdx.kyla.api.Endpoint;
+import net.gabert.sdx.kyla.core.BusProxy;
 
 import java.util.Map;
 import java.util.UUID;

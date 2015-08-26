@@ -1,7 +1,6 @@
-package net.gabert.kyla.dataslot.local;
+package net.gabert.sdx.kyla.dataslot.local;
 
-import net.gabert.kyla.api.Endpoint;
-import java.util.concurrent.CopyOnWriteArrayList;
+import net.gabert.sdx.kyla.api.Endpoint;
 
 public class SharedDataSlot extends DataSlot {
 

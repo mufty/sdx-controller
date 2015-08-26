@@ -1,15 +1,14 @@
-package net.gabert.kyla.dataslot.local;
+package net.gabert.sdx.kyla.dataslot.local;
 
-import net.gabert.kyla.api.Endpoint;
-import net.gabert.kyla.configuration.KylaConfiguration;
-import net.gabert.kyla.core.BusProxy;
-import net.gabert.kyla.test.stub.EndpointStub;
+import net.gabert.sdx.kyla.api.Endpoint;
+import net.gabert.sdx.kyla.configuration.KylaConfiguration;
+import net.gabert.sdx.kyla.core.BusProxy;
+import net.gabert.sdx.kyla.stub.EndpointStub;
 import net.gabert.util.JsonTransformation;
 import org.junit.*;
 
 import javax.management.*;
 import java.lang.management.ManagementFactory;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -81,7 +80,7 @@ public class EndpointRegistration {
             List<String> endpointIds = (List<String>)server.invoke(new ObjectName("net.gabert.sdx.kyla:type=BusMonitor"),
                                                      "queryDataSlotId",
                                                      new String[]{dataSlotId},
-                                                     new String[] {"java.lang.String"});
+                                                     new String[] {dataSlotId.getClass().getCanonicalName()});
             return endpointIds.contains(endpointId);
         } catch (Exception e) {
             throw new RuntimeException(e);

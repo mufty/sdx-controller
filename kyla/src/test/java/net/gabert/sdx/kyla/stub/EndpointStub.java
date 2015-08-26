@@ -1,7 +1,7 @@
-package net.gabert.kyla.test.stub;
+package net.gabert.sdx.kyla.stub;
 
-import net.gabert.kyla.api.Endpoint;
-import net.gabert.kyla.core.BusProxy;
+import net.gabert.sdx.kyla.api.Endpoint;
+import net.gabert.sdx.kyla.core.BusProxy;
 
 public class EndpointStub extends Endpoint {
     private Message receivedMessage;

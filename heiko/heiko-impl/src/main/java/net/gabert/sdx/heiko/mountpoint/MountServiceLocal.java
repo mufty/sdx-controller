@@ -1,7 +1,7 @@
 package net.gabert.sdx.heiko.mountpoint;
 
 import net.gabert.sdx.heiko.configuration.schema.MountPointConfig;
-import net.gabert.kyla.core.BusProxy;
+import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.util.LogUtil;
 import net.gabert.util.PathMap;
 import org.apache.log4j.Logger;

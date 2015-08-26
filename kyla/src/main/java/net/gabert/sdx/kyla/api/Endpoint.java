@@ -1,4 +1,4 @@
-package net.gabert.kyla.api;
+package net.gabert.sdx.kyla.api;
 
 import net.gabert.util.Security;
 
