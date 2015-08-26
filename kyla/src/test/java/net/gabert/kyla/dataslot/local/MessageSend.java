@@ -1,7 +1,7 @@
 package net.gabert.kyla.dataslot.local;
 
 import net.gabert.kyla.configuration.KylaConfiguration;
-import net.gabert.kyla.test.stub.BusProxyStub;
+import net.gabert.kyla.core.BusProxy;
 import net.gabert.kyla.test.stub.EndpointStub;
 import net.gabert.util.JsonTransformation;
 import org.junit.After;
@@ -12,14 +12,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class MessageSend {
-    private BusProxyStub bus;
+    private BusProxy bus;
 
     @Before
     public void setUp() {
         KylaConfiguration cfg = new JsonTransformation<KylaConfiguration>().fromFile("classpath:kylacfg.json",
                                                                                      KylaConfiguration.class);
-        bus = new BusProxyStub(cfg);
-        bus.start();
+        bus = BusProxy.start(cfg);
     }
 
     @After
@@ -38,8 +37,6 @@ public class MessageSend {
         bus.register(ep2);
 
         ep1.sendMessage(ep2.getDataSlotId(), exclusiveMessage);
-
-        bus.await();
 
         assertEquals(exclusiveMessage, ep2.getReceivedMessage().getData());
         assertEquals(ep2.getDataSlotId(), ep2.getReceivedMessage().getDestinationSlotId());

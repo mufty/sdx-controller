@@ -2,20 +2,27 @@ package net.gabert.kyla.dataslot.local;
 
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.kyla.configuration.KylaConfiguration;
-import net.gabert.kyla.test.stub.BusProxyStub;
+import net.gabert.kyla.core.BusProxy;
 import net.gabert.kyla.test.stub.EndpointStub;
 import net.gabert.util.JsonTransformation;
 import org.junit.*;
+
+import javax.management.*;
+import java.lang.management.ManagementFactory;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class EndpointRegistration {
-    private BusProxyStub bus;
+    private BusProxy bus;
+    private MBeanServer server = ManagementFactory.getPlatformMBeanServer();
 
     @Before
     public void setUp() {
         KylaConfiguration cfg = new JsonTransformation<KylaConfiguration>().fromFile("classpath:kylacfg.json",
                                                                                      KylaConfiguration.class);
-        bus = new BusProxyStub(cfg);
+        bus = BusProxy.start(cfg);
     }
     
     @After
@@ -29,7 +36,7 @@ public class EndpointRegistration {
 
         bus.register(ep1);
 
-        assertTrue(bus.isEndpointRegistered(ep1));
+        assertTrue(isEndpointRegistered(ep1));
     }
 
     @Test
@@ -40,8 +47,8 @@ public class EndpointRegistration {
         bus.register(ep1);
         bus.register(ep2);
 
-        assertTrue(bus.isEndpointRegistered(ep1));
-        assertTrue(bus.isEndpointRegistered(ep2));
+        assertTrue(isEndpointRegistered(ep1));
+        assertTrue(isEndpointRegistered(ep2));
     }
 
     @Test
@@ -56,9 +63,29 @@ public class EndpointRegistration {
         bus.register(ep1, dataSlotKey2);
         bus.register(ep1, dataSlotKey3);
 
-        assertTrue(bus.isEndpointRegistered(ep1, dataSlotKey1));
-        assertTrue(bus.isEndpointRegistered(ep1, dataSlotKey2));
-        assertTrue(bus.isEndpointRegistered(ep1, dataSlotKey3));
+        assertTrue(isEndpointRegistered(ep1, dataSlotKey1));
+        assertTrue(isEndpointRegistered(ep1, dataSlotKey2));
+        assertTrue(isEndpointRegistered(ep1, dataSlotKey3));
+    }
+
+    public boolean isEndpointRegistered(Endpoint endpoint) {
+        return  isEndpointRegistered(endpoint, endpoint.getDataSlotId());
+    }
+
+    public boolean isEndpointRegistered(Endpoint endpoint, String dataSlotId) {
+        return  isEndpointRegistered(endpoint.getDataSlotId(), dataSlotId)   ;
+    }
+
+    public boolean isEndpointRegistered(String endpointId, String dataSlotId) {
+        try {
+            List<String> endpointIds = (List<String>)server.invoke(new ObjectName("net.gabert.sdx.kyla:type=BusMonitor"),
+                                                     "queryDataSlotId",
+                                                     new String[]{dataSlotId},
+                                                     new String[] {"java.lang.String"});
+            return endpointIds.contains(endpointId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test(expected = IllegalArgumentException.class)

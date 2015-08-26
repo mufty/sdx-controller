@@ -19,6 +19,10 @@
             <groupId>net.gabert.sdx</groupId>
             <artifactId>util</artifactId>
         </dependency>
+        <dependency>
+            <groupId>net.gabert.sdx</groupId>
+            <artifactId>default-config</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -2,6 +2,8 @@ package net.gabert.kyla.api;
 
 import net.gabert.kyla.api.Endpoint.Message;
 
+import java.util.List;
+
 public interface DataSlotProvider {
     void register(Endpoint endpoint);
 
@@ -9,11 +11,9 @@ public interface DataSlotProvider {
 
     void register(Endpoint endpoint, String dataSlotId);
 
-    void distribute(Message message, String destinationDataSlotId);
-
     boolean slotExists(String dataSlotId);
 
-    boolean endpointRegistered(String dataSlotId, Endpoint endpoint);
+    List<Endpoint> getEndpoints(String dataSlotId);
 
     void shutdown();
 }

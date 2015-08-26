@@ -11,7 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import net.gabert.kyla.api.Endpoint;
 import net.gabert.kyla.api.Endpoint.Message;
-import net.gabert.kyla.dataslot.WorkUnitProcessor;
 
 public class HazelcastDataSlotProvider implements DataSlotProvider {
     private final static String ID_DELIMITER= ":";
@@ -30,11 +29,7 @@ public class HazelcastDataSlotProvider implements DataSlotProvider {
     private final HazelcastInstance hazelcastInstance;
     private final String clusterMemberId;
 
-    private final WorkUnitProcessor workUnitProcessor;
-
-    private HazelcastDataSlotProvider(WorkUnitProcessor workUnitProcessor) {
-        this.workUnitProcessor = workUnitProcessor;
-
+    private HazelcastDataSlotProvider() {
         Config cfg              = new Config();
         addNearCache(cfg);
 
@@ -48,7 +43,7 @@ public class HazelcastDataSlotProvider implements DataSlotProvider {
 
         this.localEndpointRegistrations = new ConcurrentHashMap<>();
 
-        this.clusterMemberTopic.addMessageListener(new TopicListener());
+//        this.clusterMemberTopic.addMessageListener(new TopicListener());
     }
 
     private static void addNearCache(Config config) {
@@ -64,10 +59,6 @@ public class HazelcastDataSlotProvider implements DataSlotProvider {
         mapConfigs.put(EXCLUSIVE_DATASLOTS_ID, mapConfig);
 
         config.setMapConfigs(mapConfigs);
-    }
-
-    public static DataSlotProvider getInstance(WorkUnitProcessor workUnitProcessor) {
-        return new HazelcastDataSlotProvider(workUnitProcessor);
     }
 
     @Override
@@ -126,45 +117,45 @@ public class HazelcastDataSlotProvider implements DataSlotProvider {
         sharedDataSlots.put(dataSlotId, globalEndpointId);
     }
 
-    private class TopicListener implements MessageListener<Message> {
-        @Override
-        public void onMessage(com.hazelcast.core.Message<Message> message) {
-            // Topic listener received message from remote cluster member
-            // Routing was already done by remote cluster member meaning further routing must not occur
-            // Topic listener must consult only local endpoint registration and create workunits
-            Message kylaMessage = message.getMessageObject();
-            // FIXME: wrap kyla message into structure together with destination slot ID;
-            redistribute(kylaMessage, kylaMessage.getDestinationSlotId(), false);
-        }
-    }
+//    private class TopicListener implements MessageListener<Message> {
+//        @Override
+//        public void onMessage(com.hazelcast.core.Message<Message> message) {
+//            // Topic listener received message from remote cluster member
+//            // Routing was already done by remote cluster member meaning further routing must not occur
+//            // Topic listener must consult only local endpoint registration and create workunits
+//            Message kylaMessage = message.getMessageObject();
+//            // FIXME: wrap kyla message into structure together with destination slot ID;
+//            redistribute(kylaMessage, kylaMessage.getDestinationSlotId(), false);
+//        }
+//    }
 
-    @Override
-    public void distribute(Message message, String destinationDataSlotId) {
-        redistribute(message, destinationDataSlotId, true);
-    }
-
-    private void redistribute(Message message, String destinationDataSlotId, boolean routingEnabled) {
-        List<String> globalEndpointIds = resolveGlobalEndpointIds(destinationDataSlotId);
-        redistribute(globalEndpointIds, message, routingEnabled);
-    }
-
-    private void redistribute(List<String> globalEndpointIds, Message message, boolean routingEnabled) {
-        Set<String> remoteTopics = new TreeSet<>();
-
-        for (String globalEndpointId : globalEndpointIds) {
-            String destinationTopicId = getClusterMemberId(globalEndpointId);
-
-            if ( destinationReached(destinationTopicId) ) {
-                createWorkUnit(message, globalEndpointId);
-            } else if ( routingEnabled ){
-                remoteTopics.add(destinationTopicId);
-            }
-        }
-
-        for (String destinationTopicId : remoteTopics) {
-            this.hazelcastInstance.getTopic(destinationTopicId).publish(message);
-        }
-    }
+//    @Override
+//    public void distribute(Message message, String destinationDataSlotId) {
+//        redistribute(message, destinationDataSlotId, true);
+//    }
+//
+//    private void redistribute(Message message, String destinationDataSlotId, boolean routingEnabled) {
+//        List<String> globalEndpointIds = resolveGlobalEndpointIds(destinationDataSlotId);
+//        redistribute(globalEndpointIds, message, routingEnabled);
+//    }
+//
+//    private void redistribute(List<String> globalEndpointIds, Message message, boolean routingEnabled) {
+//        Set<String> remoteTopics = new TreeSet<>();
+//
+//        for (String globalEndpointId : globalEndpointIds) {
+//            String destinationTopicId = getClusterMemberId(globalEndpointId);
+//
+//            if ( destinationReached(destinationTopicId) ) {
+//                createWorkUnit(message, globalEndpointId);
+//            } else if ( routingEnabled ){
+//                remoteTopics.add(destinationTopicId);
+//            }
+//        }
+//
+//        for (String destinationTopicId : remoteTopics) {
+//            this.hazelcastInstance.getTopic(destinationTopicId).publish(message);
+//        }
+//    }
 
     private List<String> resolveGlobalEndpointIds(String destinationDataSlotId) {
         String globalEndpointId = exclusiveDataSlots.get(destinationDataSlotId);
@@ -190,12 +181,6 @@ public class HazelcastDataSlotProvider implements DataSlotProvider {
         return destinationTopicId.equals(clusterMemberId);
     }
 
-    private void createWorkUnit(Message message, String globalEndpointId) {
-        Endpoint ep = getMessageHandler(globalEndpointId);
-
-        workUnitProcessor.createWorkUnit(message, ep);
-    }
-
     private Endpoint getMessageHandler(String globalEndpointId) {
         Endpoint ep = localEndpointRegistrations.get(globalEndpointId);
 
@@ -217,11 +202,10 @@ public class HazelcastDataSlotProvider implements DataSlotProvider {
     @Override
     public boolean slotExists(String dataSlotId) {
         throw new UnsupportedOperationException();
-//        return clusteredDataSlots.containsKey(dataSlotId);
     }
 
     @Override
-    public boolean endpointRegistered(String dataSlotId, Endpoint endpoint) {
-        throw new UnsupportedOperationException("endpointRegistered(...) no supported by " + this.getClass());
+    public List<Endpoint> getEndpoints(String dataSlotId) {
+        return null;
     }
 }

@@ -2,18 +2,15 @@ package net.gabert.sdx.heiko.core;
 
 import net.gabert.sdx.heiko.configuration.ConfigurationLoader;
 import net.gabert.sdx.heiko.configuration.schema.HeikoConfiguration;
-import net.gabert.sdx.heiko.configuration.schema.MountPointConfig;
 import net.gabert.sdx.heiko.mountpoint.MountService;
 import net.gabert.sdx.heiko.mountpoint.MountServiceLocal;
 import net.gabert.kyla.configuration.KylaConfiguration;
-import net.gabert.kyla.bus.BusProxy;
-import net.gabert.util.Alias;
+import net.gabert.kyla.core.BusProxy;
 import net.gabert.util.JsonTransformation;
 import net.gabert.util.LogUtil;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Controller {
@@ -45,8 +42,7 @@ public class Controller {
         LOGGER.info("--- PHASE --- Starting busProxy.");
         KylaConfiguration kylaCfg = new JsonTransformation<KylaConfiguration>().fromFile(this.config.bus.configUrl,
                 KylaConfiguration.class);
-        this.busProxy = new BusProxy(kylaCfg);
-        this.busProxy.start();
+        this.busProxy = BusProxy.start(kylaCfg);
     }
 
     private void mountEndpoints() {
