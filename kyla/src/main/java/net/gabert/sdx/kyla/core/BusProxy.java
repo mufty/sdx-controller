@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 
@@ -50,6 +51,13 @@ public class BusProxy implements Bus {
 
     public void shutdown() {
         executorService.shutdown();
+
+        try {
+            executorService.awaitTermination(10, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         dataSlotProvider.shutdown();
         MBeanServer server = ManagementFactory.getPlatformMBeanServer();
         try {

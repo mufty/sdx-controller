@@ -21,11 +21,6 @@ public class MessageSend {
         bus = BusProxy.start(cfg);
     }
 
-    @After
-    public void tearDown() {
-        bus.shutdown();
-    }
-
     @Test
     public void exclusiveMessageSend() {
         String exclusiveMessage = "EXCLUSIVE_MESSAGE";
@@ -37,6 +32,8 @@ public class MessageSend {
         bus.register(ep2);
 
         ep1.sendMessage(ep2.getDataSlotId(), exclusiveMessage);
+
+        bus.shutdown();
 
         assertEquals(exclusiveMessage, ep2.getReceivedMessage().getData());
         assertEquals(ep2.getDataSlotId(), ep2.getReceivedMessage().getDestinationSlotId());
