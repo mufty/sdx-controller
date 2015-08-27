@@ -6,7 +6,6 @@ import java.util.Map;
 
 public abstract class Driver {
     private Bus bus;
-    private String contextRoot;
     private Map<String, Object> initParams;
 
     protected void publish(String path, Object value) {

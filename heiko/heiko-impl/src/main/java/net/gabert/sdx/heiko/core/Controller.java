@@ -6,13 +6,12 @@ import net.gabert.sdx.heiko.configuration.schema.ApplicationConfig;
 import net.gabert.sdx.heiko.configuration.schema.HeikoConfiguration;
 import net.gabert.sdx.heiko.mountpoint.MountService;
 import net.gabert.sdx.heiko.mountpoint.MountServiceLocal;
-import net.gabert.sdx.kyla.configuration.KylaConfiguration;
 import net.gabert.sdx.kyla.core.BusProxy;
-import net.gabert.util.JsonTransformation;
 import net.gabert.util.LogUtil;
-import net.gabert.util.ObjectFactory;
+import net.gabert.util.ObjectUtil;
 import org.apache.log4j.Logger;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +59,8 @@ public class Controller {
         LOGGER.info("--- PHASE --- Starting applications.");
 
         for (ApplicationConfig appCfg : this.config.applications) {
-            Application appInstance = ObjectFactory.newInstance(appCfg.className);
+            Application appInstance = ObjectUtil.newInstance(appCfg.className);
+            ObjectUtil.injectByValue(appInstance, busProxy);
             applicationRegistry.add(appInstance);
             appInstance.init(appCfg.initParams);
         }

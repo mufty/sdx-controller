@@ -8,7 +8,7 @@ import java.util.UUID;
 import java.util.concurrent.*;
 
 public abstract class Application {
-    private final Sender sender;
+    private Sender sender;
 
     private BusProxy busProxy;
 
@@ -17,6 +17,12 @@ public abstract class Application {
     }
 
     public abstract void init(Map<String, Object> initParams);
+
+    public abstract void close();
+
+    protected Context getContext() {
+        return new Context("");
+    }
 
     protected Context getContext(String contextRoot) {
         return new Context(contextRoot);

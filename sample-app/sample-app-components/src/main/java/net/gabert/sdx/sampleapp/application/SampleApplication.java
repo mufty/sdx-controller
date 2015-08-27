@@ -11,6 +11,13 @@ public class SampleApplication extends Application {
 
     @Override
     public void init(Map<String, Object> initParams) {
-        LOGGER.info("Application started");
+        Context telescope = getContext("/iot/telescope");
+        telescope.setValue("/azimuth", 12);
+        telescope.setValue("/altitude", 25);
+    }
+
+    @Override
+    public void close() {
+
     }
 }
