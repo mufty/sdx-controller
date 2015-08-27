@@ -13,7 +13,6 @@ public class EndpointStub extends Endpoint {
     @Override
     public void handle(Message message) {
         this.receivedMessage = message;
-        System.out.println(this.receivedMessage.getData());
     }
 
     public void sendMessage(String destinationKey, Object messageData) {

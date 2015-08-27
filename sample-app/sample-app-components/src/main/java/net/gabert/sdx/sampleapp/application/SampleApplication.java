@@ -1,7 +1,16 @@
 package net.gabert.sdx.sampleapp.application;
 
-/**
- * Created by Family on 22. 8. 2015.
- */
-public class SampleApplication {
+import net.gabert.sdx.heiko.api.Application;
+import net.gabert.util.LogUtil;
+import org.apache.log4j.Logger;
+
+import java.util.Map;
+
+public class SampleApplication extends Application {
+    private static final Logger LOGGER = LogUtil.getLogger();
+
+    @Override
+    public void init(Map<String, Object> initParams) {
+        LOGGER.info("Application started");
+    }
 }

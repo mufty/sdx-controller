@@ -7,12 +7,16 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.*;
 
-public abstract class Application implements Runnable {
+public abstract class Application {
     private final Sender sender;
 
-    protected Application(BusProxy busProxy) {
-        this.sender = new Sender(busProxy);
+    private BusProxy busProxy;
+
+    protected Application() {
+        this.sender = new Sender();
     }
+
+    public abstract void init(Map<String, Object> initParams);
 
     protected Context getContext(String contextRoot) {
         return new Context(contextRoot);
@@ -43,7 +47,7 @@ public abstract class Application implements Runnable {
     private class Sender extends Endpoint {
         private final Map<UUID, Exchange> pendingResponses = new ConcurrentHashMap<>();
 
-        public Sender(BusProxy busProxy) {
+        public Sender() {
             super(busProxy);
         }
 

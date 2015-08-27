@@ -5,6 +5,7 @@ import net.gabert.sdx.kyla.api.*;
 import net.gabert.sdx.kyla.api.Endpoint.Message;
 import net.gabert.sdx.kyla.api.DataSlotProvider;
 import net.gabert.sdx.kyla.configuration.KylaConfiguration;
+import net.gabert.util.JsonTransformation;
 import net.gabert.util.LogUtil;
 import org.apache.log4j.Logger;
 
@@ -50,17 +51,12 @@ public class BusProxy implements Bus {
     }
 
     public void shutdown() {
-        executorService.shutdown();
-
         try {
+            executorService.shutdown();
             executorService.awaitTermination(10, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+            dataSlotProvider.shutdown();
 
-        dataSlotProvider.shutdown();
-        MBeanServer server = ManagementFactory.getPlatformMBeanServer();
-        try {
+            MBeanServer server = ManagementFactory.getPlatformMBeanServer();
             server.unregisterMBean(new ObjectName("net.gabert.sdx.kyla:type=BusMonitor"));
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -93,7 +89,9 @@ public class BusProxy implements Bus {
         };
     }
 
-    public static BusProxy start(KylaConfiguration kylaCfg) {
+    public static BusProxy start(String kylaConfigUrl) {
+        KylaConfiguration kylaCfg = new JsonTransformation<KylaConfiguration>().fromFile(kylaConfigUrl,
+                                                                                         KylaConfiguration.class);
         return new BusProxy(kylaCfg);
     }
 

@@ -1,5 +1,6 @@
 package net.gabert.sdx.heiko.mountpoint;
 
+import net.gabert.util.ObjectFactory;
 import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.sdx.heiko.api.Driver;
 import net.gabert.sdx.kyla.api.Endpoint;
@@ -25,22 +26,13 @@ public class MountPoint {
 
     public MountPoint(BusProxy busProxy, MountPointConfig mountPointConfig) {
         this.mountPointContextRoot = mountPointConfig.path;
-        this.driver = loadDriver(mountPointConfig);
+        this.driver = ObjectFactory.newInstance(mountPointConfig.driverClassName);
         this.initParams = Collections.unmodifiableMap(mountPointConfig.initParams);
         this.busProxy = busProxy;
         this.rpcEndpoint = new HeikoRpcEndpoint();
 
         LOGGER.info("Instantiated Endpoint: " + this.rpcEndpoint);
         busProxy.registerExclusive(this.rpcEndpoint, mountPointContextRoot);
-    }
-
-    private Driver loadDriver(MountPointConfig mountPointConfig) {
-        try {
-            Class<?> clazz = Class.forName(mountPointConfig.driverClassName);
-            return (Driver) clazz.getConstructor().newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public String getMountPointContextRoot() {

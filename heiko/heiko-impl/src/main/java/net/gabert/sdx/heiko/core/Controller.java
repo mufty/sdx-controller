@@ -1,6 +1,8 @@
 package net.gabert.sdx.heiko.core;
 
+import net.gabert.sdx.heiko.api.Application;
 import net.gabert.sdx.heiko.configuration.ConfigurationLoader;
+import net.gabert.sdx.heiko.configuration.schema.ApplicationConfig;
 import net.gabert.sdx.heiko.configuration.schema.HeikoConfiguration;
 import net.gabert.sdx.heiko.mountpoint.MountService;
 import net.gabert.sdx.heiko.mountpoint.MountServiceLocal;
@@ -8,9 +10,12 @@ import net.gabert.sdx.kyla.configuration.KylaConfiguration;
 import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.util.JsonTransformation;
 import net.gabert.util.LogUtil;
+import net.gabert.util.ObjectFactory;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Controller {
@@ -20,6 +25,7 @@ public class Controller {
     private BusProxy busProxy;
 
     private final Map<Class<?>, Object> serviceRegistry = new HashMap<>();
+    private final List<Application> applicationRegistry = new ArrayList<>();
 
     private Controller(HeikoConfiguration config) {
         this.config = config;
@@ -40,9 +46,7 @@ public class Controller {
 
     private void startBus() {
         LOGGER.info("--- PHASE --- Starting busProxy.");
-        KylaConfiguration kylaCfg = new JsonTransformation<KylaConfiguration>().fromFile(this.config.bus.configUrl,
-                KylaConfiguration.class);
-        this.busProxy = BusProxy.start(kylaCfg);
+        this.busProxy = BusProxy.start(this.config.bus.configUrl);
     }
 
     private void mountEndpoints() {
@@ -54,6 +58,12 @@ public class Controller {
 
     private void startApplications() {
         LOGGER.info("--- PHASE --- Starting applications.");
+
+        for (ApplicationConfig appCfg : this.config.applications) {
+            Application appInstance = ObjectFactory.newInstance(appCfg.className);
+            applicationRegistry.add(appInstance);
+            appInstance.init(appCfg.initParams);
+        }
     }
 
     // ----- BOOTSTRAP -----

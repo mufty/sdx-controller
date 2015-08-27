@@ -19,9 +19,7 @@ public class EndpointRegistration {
 
     @Before
     public void setUp() {
-        KylaConfiguration cfg = new JsonTransformation<KylaConfiguration>().fromFile("classpath:kylacfg.json",
-                                                                                     KylaConfiguration.class);
-        bus = BusProxy.start(cfg);
+        bus = BusProxy.start("classpath:kylacfg.json");
     }
     
     @After
@@ -77,10 +75,11 @@ public class EndpointRegistration {
 
     public boolean isEndpointRegistered(String endpointId, String dataSlotId) {
         try {
-            List<String> endpointIds = (List<String>)server.invoke(new ObjectName("net.gabert.sdx.kyla:type=BusMonitor"),
-                                                     "queryDataSlotId",
-                                                     new String[]{dataSlotId},
-                                                     new String[] {dataSlotId.getClass().getCanonicalName()});
+            List<String> endpointIds =
+                    (List<String>)server.invoke(new ObjectName("net.gabert.sdx.kyla:type=BusMonitor"),
+                                                "queryDataSlotId",
+                                                new String[]{dataSlotId},
+                                                new String[] {dataSlotId.getClass().getCanonicalName()});
             return endpointIds.contains(endpointId);
         } catch (Exception e) {
             throw new RuntimeException(e);

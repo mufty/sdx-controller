@@ -19,7 +19,7 @@
   ],
 
   "applications" : [
-    {"className": "net.gabert.sdx.DemoApplication",
+    {"className": "net.gabert.sdx.sampleapp.application.SampleApplication",
      "initParams": {"param1" : 1}}
   ]
 }
