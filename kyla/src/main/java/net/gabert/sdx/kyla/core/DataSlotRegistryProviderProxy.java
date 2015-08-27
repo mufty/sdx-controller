@@ -1,26 +1,26 @@
 package net.gabert.sdx.kyla.core;
 
-import net.gabert.sdx.kyla.api.DataSlotProvider;
+import net.gabert.sdx.kyla.api.DataSlotRegistryProvider;
 import net.gabert.sdx.kyla.api.Endpoint;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-public class DataSlotProviderProxy implements DataSlotProvider {
-    private final DataSlotProvider provider;
+public class DataSlotRegistryProviderProxy implements DataSlotRegistryProvider {
+    private final DataSlotRegistryProvider provider;
 
-    public DataSlotProviderProxy(String dataSlotProviderClassName) {
+    public DataSlotRegistryProviderProxy(String dataSlotProviderClassName) {
         this.provider = loadProvider(dataSlotProviderClassName);
     }
 
-    private static DataSlotProvider loadProvider(String dataSlotProviderClassName) {
+    private static DataSlotRegistryProvider loadProvider(String dataSlotProviderClassName) {
         try {
             Class<?> clazz = Class.forName(dataSlotProviderClassName);
 
             Constructor<?> constructor = clazz.getConstructor();
-            DataSlotProvider dataSlotProvider = (DataSlotProvider)constructor.newInstance();
+            DataSlotRegistryProvider dataSlotRegistryProvider = (DataSlotRegistryProvider)constructor.newInstance();
 
-            return dataSlotProvider;
+            return dataSlotRegistryProvider;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

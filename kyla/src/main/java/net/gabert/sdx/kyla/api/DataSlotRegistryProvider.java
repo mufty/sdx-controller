@@ -2,7 +2,7 @@ package net.gabert.sdx.kyla.api;
 
 import java.util.List;
 
-public interface DataSlotProvider {
+public interface DataSlotRegistryProvider {
     void register(Endpoint endpoint);
 
     void registerExclusive(Endpoint endpoint, String dataSlotId);

@@ -3,7 +3,7 @@ package net.gabert.sdx.kyla.core;
 import net.gabert.sdx.kyla.api.*;
 
 import net.gabert.sdx.kyla.api.Endpoint.Message;
-import net.gabert.sdx.kyla.api.DataSlotProvider;
+import net.gabert.sdx.kyla.api.DataSlotRegistryProvider;
 import net.gabert.sdx.kyla.configuration.KylaConfiguration;
 import net.gabert.util.JsonTransformation;
 import net.gabert.util.LogUtil;
@@ -26,12 +26,12 @@ public class BusProxy implements Bus {
 
     private final ExecutorService executorService;
 
-    private final DataSlotProvider dataSlotProvider;
+    private final DataSlotRegistryProvider dataSlotRegistryProvider;
 
     private BusProxy(KylaConfiguration config) {
         this.executorService = Executors.newFixedThreadPool(config.workersCount);
 
-        this.dataSlotProvider = new DataSlotProviderProxy(config.dataSlotProviderClassName);
+        this.dataSlotRegistryProvider = new DataSlotRegistryProviderProxy(config.dataSlotProviderClassName);
 
         try {
             registerMBean();
@@ -39,7 +39,7 @@ public class BusProxy implements Bus {
             throw new RuntimeException(e);
         }
 
-        LOGGER.info("Dataslot provider: " + this.dataSlotProvider.getClass().getSimpleName());
+        LOGGER.info("Dataslot provider: " + this.dataSlotRegistryProvider.getClass().getSimpleName());
 
         LOGGER.info(BusProxy.class.getSimpleName() + " created.");
     }
@@ -54,7 +54,7 @@ public class BusProxy implements Bus {
         try {
             executorService.shutdown();
             executorService.awaitTermination(10, TimeUnit.SECONDS);
-            dataSlotProvider.shutdown();
+            dataSlotRegistryProvider.shutdown();
 
             MBeanServer server = ManagementFactory.getPlatformMBeanServer();
             server.unregisterMBean(new ObjectName("net.gabert.sdx.kyla:type=BusMonitor"));
@@ -64,20 +64,20 @@ public class BusProxy implements Bus {
     }
 
     public void register(Endpoint endpoint) {
-        dataSlotProvider.register(endpoint);
+        dataSlotRegistryProvider.register(endpoint);
     }
 
     public void registerExclusive(Endpoint endpoint, String dataSlotId) {
         LOGGER.info("Requested exclusive Endpoint registration: " + endpoint + " -> "+ dataSlotId);
-        dataSlotProvider.registerExclusive(endpoint, dataSlotId);
+        dataSlotRegistryProvider.registerExclusive(endpoint, dataSlotId);
     }
 
     public void register(Endpoint endpoint, String dataSlotId) {
-        dataSlotProvider.register(endpoint, dataSlotId);
+        dataSlotRegistryProvider.register(endpoint, dataSlotId);
     }
 
     public void send(Message message) {
-        for ( Endpoint ep : dataSlotProvider.getEndpoints(message.getDestinationSlotId()) ) {
+        for ( Endpoint ep : dataSlotRegistryProvider.getEndpoints(message.getDestinationSlotId()) ) {
             this.executorService.submit(createTask(ep, message));
         }
     }
@@ -99,7 +99,7 @@ public class BusProxy implements Bus {
         @Override
         public List<String> queryDataSlotId(final String dataSlotId) {
             return new ArrayList<String>() {{
-                for(Endpoint ep : dataSlotProvider.getEndpoints(dataSlotId)) {
+                for(Endpoint ep : dataSlotRegistryProvider.getEndpoints(dataSlotId)) {
                     add(ep.getDataSlotId());
                 }
             }};
