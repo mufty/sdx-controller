@@ -2,6 +2,7 @@ package net.gabert.sdx.heiko.core;
 
 import net.gabert.sdx.heiko.api.Service;
 import net.gabert.sdx.heiko.configuration.ConfigurationLoader;
+import net.gabert.sdx.heiko.configuration.schema.DriverConfig;
 import net.gabert.sdx.heiko.configuration.schema.ServiceConfig;
 import net.gabert.sdx.heiko.configuration.schema.HeikoConfiguration;
 import net.gabert.sdx.heiko.mountpoint.MountService;
@@ -23,7 +24,6 @@ public class Controller {
     private BusProxy busProxy;
 
     private final Map<Class<?>, Object> heikoServiceRegistry = new HashMap<>();
-    private final List<Service> serviceRegistry = new ArrayList<>();
 
     private Controller(HeikoConfiguration config) {
         this.config = config;
@@ -34,11 +34,11 @@ public class Controller {
         startBus();
         initializeServices();
         mountEndpoints();
-        startApplications();
+        startServices();
     }
 
     private void initializeServices() {
-        LOGGER.info("--- PHASE --- Initializing services.");
+        LOGGER.info("--- PHASE --- Initializing heiko services.");
         heikoServiceRegistry.put(MountService.class, new MountServiceLocal(this.busProxy));
     }
 
@@ -51,17 +51,17 @@ public class Controller {
         LOGGER.info("--- PHASE --- Processing mountpoints.");
 
         MountService mountService = getService(MountService.class);
-        mountService.mount(this.config.mountPoints);
+        for (DriverConfig driver : this.config.drivers) {
+            mountService.mount(driver);
+        }
     }
 
-    private void startApplications() {
+    private void startServices() {
         LOGGER.info("--- PHASE --- Starting services.");
 
-        for (ServiceConfig appCfg : this.config.services) {
-            Service appInstance = ObjectUtil.newInstance(appCfg.className);
-            ObjectUtil.injectByValue(appInstance, busProxy);
-            serviceRegistry.add(appInstance);
-            appInstance.init(appCfg.initParams);
+        MountService mountService = getService(MountService.class);
+        for (ServiceConfig serviceCfg : this.config.services) {
+            mountService.mount(serviceCfg);
         }
     }
 

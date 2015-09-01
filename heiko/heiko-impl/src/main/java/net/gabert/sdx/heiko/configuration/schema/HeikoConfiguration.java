@@ -8,7 +8,7 @@ public class HeikoConfiguration {
 
     public Map<String, String> aliases;
 
-    public List<MountPointConfig> mountPoints;
+    public List<DriverConfig> drivers;
 
     public List<ServiceConfig> services;
 }

@@ -4,7 +4,7 @@
 
   "bus" : {"configUrl" : "classpath:kylacfg.json"},
 
-  "mountPoints" : [
+  "drivers" : [
     {"driverClassName": "#{telescopeDriver}",
      "path": "/iot/telescope",
      "initParams": {"param1" : 1}},
@@ -19,7 +19,8 @@
   ],
 
   "services" : [
-    {"className": "net.gabert.sdx.sampleapp.service.SampleService",
+    {"serviceClassName": "net.gabert.sdx.sampleapp.service.SampleService",
+     "path": "/service/sampleService",
      "initParams": {"param1" : 1}}
   ]
 }

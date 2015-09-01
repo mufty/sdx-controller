@@ -13,7 +13,8 @@ public abstract class Service {
     private BusProxy busProxy;
 
     protected Service() {
-        this.sender = new Sender();
+//        this.sender = new Sender();
+//        busProxy.register(this.sender);
     }
 
     public abstract void init(Map<String, Object> initParams);
