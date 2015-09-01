@@ -41,9 +41,7 @@ public abstract class MountPoint extends HeikoEndpoint {
         return "[" +
                 mountPointContextRoot +
                 " -> " +
-                getImplementationClass() +
+                "HC:FOOO" +
                 "]";
     }
-
-    protected abstract Class getImplementationClass();
 }

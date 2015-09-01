@@ -16,7 +16,6 @@ import java.util.concurrent.CountDownLatch;
 
 public class ServiceMountPoint extends MountPoint {
     private final Service service;
-
     private final Map<UUID, Exchange> pendingResponses = new ConcurrentHashMap<>();
 
     public ServiceMountPoint(BusProxy busProxy, ServiceConfig serviceConfig) {
@@ -33,15 +32,16 @@ public class ServiceMountPoint extends MountPoint {
         service.init(getInitParams());
     }
 
+    @Override
+    public void handle(Message message) {
+        Exchange exchange = pendingResponses.remove(message.getConversationId());
+        if (exchange != null) {
+            exchange.setResponse(message);
+        }
+    }
+
     public Object getValue(String absolutePath) {
-        MountService mountService  = Controller.getService(MountService.class);
-        String dataSlotId = mountService.getMountPoint(absolutePath).getMountPointContextRoot();
-
-        HeikoMessage heikoMessage = new HeikoMessage();
-        heikoMessage.absolutePath = absolutePath;
-        heikoMessage.type = HeikoMessage.Type.GET;
-
-        Message<HeikoMessage> kylaMessage = createMessage(dataSlotId, heikoMessage);
+        Message<HeikoMessage> kylaMessage = createKylaMessage(absolutePath, null, HeikoMessage.Type.GET);
 
         Exchange exchange = new Exchange();
         pendingResponses.put(kylaMessage.getConversationId(), exchange);
@@ -51,25 +51,21 @@ public class ServiceMountPoint extends MountPoint {
     }
 
     public void setValue(String absolutePath, Object value) {
-        MountService mountService  = Controller.getService(MountService.class);
-        String dataSlotId = mountService.getMountPoint(absolutePath).getMountPointContextRoot();
-
-        HeikoMessage heikoMessage = new HeikoMessage();
-        heikoMessage.absolutePath = absolutePath;
-        heikoMessage.payload = value;
-        heikoMessage.type = HeikoMessage.Type.SET;
-
-        Message<HeikoMessage> kylaMessage = createMessage(dataSlotId, heikoMessage);
+        Message<HeikoMessage> kylaMessage = createKylaMessage(absolutePath, value, HeikoMessage.Type.SET);
 
         this.send(kylaMessage);
     }
 
-    @Override
-    public void handle(Message message) {
-        Exchange exchange = pendingResponses.remove(message.getConversationId());
-        if (exchange != null) {
-            exchange.setResponse(message);
-        }
+    private Message<HeikoMessage> createKylaMessage(String absolutePath, Object payload, HeikoMessage.Type type) {
+        MountService mountService = Controller.getService(MountService.class);
+        String dataSlotId = mountService.getMountPoint(absolutePath).getMountPointContextRoot();
+
+        HeikoMessage heikoMessage = new HeikoMessage();
+        heikoMessage.absolutePath = absolutePath;
+        heikoMessage.payload = payload;
+        heikoMessage.type = type;
+
+        return createMessage(dataSlotId, heikoMessage);
     }
 
     private static class Exchange {
@@ -91,11 +87,5 @@ public class ServiceMountPoint extends MountPoint {
             this.response = (HeikoMessage)response.getData();
             latch.countDown();
         }
-    }
-
-
-    @Override
-    protected Class getImplementationClass() {
-        return service.getClass();
     }
 }

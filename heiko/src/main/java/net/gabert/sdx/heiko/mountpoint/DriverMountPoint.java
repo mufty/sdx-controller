@@ -72,9 +72,4 @@ public class DriverMountPoint extends MountPoint {
 
         this.send(message.createReply(reply));
     }
-
-    @Override
-    protected Class getImplementationClass() {
-        return driver.getClass();
-    }
 }
