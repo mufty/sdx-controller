@@ -10,5 +10,5 @@ public class HeikoConfiguration {
 
     public List<MountPointConfig> mountPoints;
 
-    public List<ApplicationConfig> applications;
+    public List<ServiceConfig> services;
 }

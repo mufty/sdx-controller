@@ -18,8 +18,8 @@
       "initParams": {"param1" : 1}}
   ],
 
-  "applications" : [
-    {"className": "net.gabert.sdx.sampleapp.application.SampleApplication",
+  "services" : [
+    {"className": "net.gabert.sdx.sampleapp.service.SampleService",
      "initParams": {"param1" : 1}}
   ]
 }

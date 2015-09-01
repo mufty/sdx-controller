@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.*;
 
-public abstract class Application {
+public abstract class Service {
     private Sender sender;
 
     private BusProxy busProxy;
 
-    protected Application() {
+    protected Service() {
         this.sender = new Sender();
     }
 

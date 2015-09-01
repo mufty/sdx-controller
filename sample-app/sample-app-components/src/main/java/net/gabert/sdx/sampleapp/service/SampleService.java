@@ -1,12 +1,12 @@
-package net.gabert.sdx.sampleapp.application;
+package net.gabert.sdx.sampleapp.service;
 
-import net.gabert.sdx.heiko.api.Application;
+import net.gabert.sdx.heiko.api.Service;
 import net.gabert.util.LogUtil;
 import org.apache.log4j.Logger;
 
 import java.util.Map;
 
-public class SampleApplication extends Application {
+public class SampleService extends Service {
     private static final Logger LOGGER = LogUtil.getLogger();
 
     @Override

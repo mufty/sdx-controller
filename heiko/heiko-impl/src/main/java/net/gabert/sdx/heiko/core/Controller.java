@@ -1,8 +1,8 @@
 package net.gabert.sdx.heiko.core;
 
-import net.gabert.sdx.heiko.api.Application;
+import net.gabert.sdx.heiko.api.Service;
 import net.gabert.sdx.heiko.configuration.ConfigurationLoader;
-import net.gabert.sdx.heiko.configuration.schema.ApplicationConfig;
+import net.gabert.sdx.heiko.configuration.schema.ServiceConfig;
 import net.gabert.sdx.heiko.configuration.schema.HeikoConfiguration;
 import net.gabert.sdx.heiko.mountpoint.MountService;
 import net.gabert.sdx.heiko.mountpoint.MountServiceLocal;
@@ -11,7 +11,6 @@ import net.gabert.util.LogUtil;
 import net.gabert.util.ObjectUtil;
 import org.apache.log4j.Logger;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,8 +22,8 @@ public class Controller {
     private final HeikoConfiguration config;
     private BusProxy busProxy;
 
-    private final Map<Class<?>, Object> serviceRegistry = new HashMap<>();
-    private final List<Application> applicationRegistry = new ArrayList<>();
+    private final Map<Class<?>, Object> heikoServiceRegistry = new HashMap<>();
+    private final List<Service> serviceRegistry = new ArrayList<>();
 
     private Controller(HeikoConfiguration config) {
         this.config = config;
@@ -40,7 +39,7 @@ public class Controller {
 
     private void initializeServices() {
         LOGGER.info("--- PHASE --- Initializing services.");
-        serviceRegistry.put(MountService.class, new MountServiceLocal(this.busProxy));
+        heikoServiceRegistry.put(MountService.class, new MountServiceLocal(this.busProxy));
     }
 
     private void startBus() {
@@ -56,12 +55,12 @@ public class Controller {
     }
 
     private void startApplications() {
-        LOGGER.info("--- PHASE --- Starting applications.");
+        LOGGER.info("--- PHASE --- Starting services.");
 
-        for (ApplicationConfig appCfg : this.config.applications) {
-            Application appInstance = ObjectUtil.newInstance(appCfg.className);
+        for (ServiceConfig appCfg : this.config.services) {
+            Service appInstance = ObjectUtil.newInstance(appCfg.className);
             ObjectUtil.injectByValue(appInstance, busProxy);
-            applicationRegistry.add(appInstance);
+            serviceRegistry.add(appInstance);
             appInstance.init(appCfg.initParams);
         }
     }
@@ -85,6 +84,6 @@ public class Controller {
 
     // ----- UTILITY -----
     private <T> T getService(Class<? extends T> serviceClass) {
-        return (T) serviceRegistry.get(serviceClass);
+        return (T) heikoServiceRegistry.get(serviceClass);
     }
 }
