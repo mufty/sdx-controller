@@ -41,12 +41,13 @@ public class ServiceMountPoint extends MountPoint {
     }
 
     public void setValue(String absolutePath, Object value) {
+        MountService mountService  = Controller.getService(MountService.class);
+        String dataSlotId = mountService.getMountPoint(absolutePath).getMountPointContextRoot();
+
         HeikoMessage message = new HeikoMessage();
         message.absolutePath = absolutePath;
         message.payload = value;
-
-        MountService mountService  = Controller.getService(MountService.class);
-        String dataSlotId = mountService.getMountPoint(absolutePath).getMountPointContextRoot();
+        message.type = HeikoMessage.Type.SET;
 
         this.send(createMessage(dataSlotId, message));
     }

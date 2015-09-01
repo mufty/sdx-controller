@@ -30,16 +30,48 @@ public class DriverMountPoint extends MountPoint {
 
     @Override
     public void handle(Message<HeikoMessage> message) {
-        Object result = driver.call(message.getData().absolutePath,
-                                    message.getData().payload);
+        HeikoMessage heikoMessage = message.getData();
 
+        switch (heikoMessage.type) {
+            case SET: handleSetValue(message);
+                      break;
+            case GET: handleGetValue(message);
+                      break;
+            case CALL: handleCall(message);
+                      break;
+        }
+    }
+
+    private void handleSetValue(Message<HeikoMessage> message) {
+        HeikoMessage heikoMessage = message.getData();
+        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
+
+        driver.setValue(contextRelativePath, heikoMessage.payload);
+    }
+
+    private void handleGetValue(Message<HeikoMessage> message) {
+        HeikoMessage heikoMessage = message.getData();
+        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
+
+        Object result = driver.getValue(contextRelativePath);
         HeikoMessage reply = new HeikoMessage<>();
-        reply.absolutePath = message.getData().absolutePath;
+        reply.absolutePath = heikoMessage.absolutePath;
         reply.payload = result;
 
         this.send(message.createReply(reply));
     }
 
+    private void handleCall(Message<HeikoMessage> message) {
+        HeikoMessage heikoMessage = message.getData();
+        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
+
+        Object result = driver.call(contextRelativePath, heikoMessage.payload);
+        HeikoMessage reply = new HeikoMessage<>();
+        reply.absolutePath = heikoMessage.absolutePath;
+        reply.payload = result;
+
+        this.send(message.createReply(reply));
+    }
 
     @Override
     protected Class getImplementationClass() {

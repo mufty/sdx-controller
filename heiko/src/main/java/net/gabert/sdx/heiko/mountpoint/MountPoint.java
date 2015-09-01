@@ -6,7 +6,7 @@ import net.gabert.sdx.kyla.core.BusProxy;
 
 import java.util.Map;
 
-public abstract class MountPoint extends Endpoint<HeikoMessage> {
+public abstract class MountPoint extends HeikoEndpoint {
     private final String mountPointContextRoot;
     private final Map<String, Object> initParams;
     private final BusProxy busProxy;
@@ -26,6 +26,10 @@ public abstract class MountPoint extends Endpoint<HeikoMessage> {
 
     public String getMountPointContextRoot() {
         return mountPointContextRoot;
+    }
+
+    protected String getContextRelativePath(String absolutePath) {
+        return absolutePath.replace(getMountPointContextRoot(), "");
     }
 
     protected Map<String, Object> getInitParams() {
