@@ -14,6 +14,9 @@ public class SampleService extends Service {
         Context telescope = getContext("/iot/telescope");
         telescope.setValue("/azimuth", 12);
         telescope.setValue("/altitude", 25);
+
+        System.out.println(telescope.getValue("/azimuth"));
+        System.out.println(telescope.getValue("/altitude"));
     }
 
     @Override

@@ -33,23 +33,35 @@ public class ServiceMountPoint extends MountPoint {
         service.init(getInitParams());
     }
 
-    public Message awaitResponse(Message request) {
+    public Object getValue(String absolutePath) {
+        MountService mountService  = Controller.getService(MountService.class);
+        String dataSlotId = mountService.getMountPoint(absolutePath).getMountPointContextRoot();
+
+        HeikoMessage heikoMessage = new HeikoMessage();
+        heikoMessage.absolutePath = absolutePath;
+        heikoMessage.type = HeikoMessage.Type.GET;
+
+        Message<HeikoMessage> kylaMessage = createMessage(dataSlotId, heikoMessage);
+
         Exchange exchange = new Exchange();
-        pendingResponses.put(request.getConversationId(), exchange);
-        send(request);
-        return exchange.getResponse();
+        pendingResponses.put(kylaMessage.getConversationId(), exchange);
+        this.send(kylaMessage);
+
+        return exchange.getResponse().payload;
     }
 
     public void setValue(String absolutePath, Object value) {
         MountService mountService  = Controller.getService(MountService.class);
         String dataSlotId = mountService.getMountPoint(absolutePath).getMountPointContextRoot();
 
-        HeikoMessage message = new HeikoMessage();
-        message.absolutePath = absolutePath;
-        message.payload = value;
-        message.type = HeikoMessage.Type.SET;
+        HeikoMessage heikoMessage = new HeikoMessage();
+        heikoMessage.absolutePath = absolutePath;
+        heikoMessage.payload = value;
+        heikoMessage.type = HeikoMessage.Type.SET;
 
-        this.send(createMessage(dataSlotId, message));
+        Message<HeikoMessage> kylaMessage = createMessage(dataSlotId, heikoMessage);
+
+        this.send(kylaMessage);
     }
 
     @Override
@@ -61,10 +73,10 @@ public class ServiceMountPoint extends MountPoint {
     }
 
     private static class Exchange {
-        private Endpoint.Message response;
+        private HeikoMessage response;
         private final CountDownLatch latch = new CountDownLatch(1);
 
-        public Endpoint.Message getResponse() {
+        public HeikoMessage getResponse() {
             try {
                 latch.await();
             } catch (InterruptedException e) {
@@ -76,7 +88,7 @@ public class ServiceMountPoint extends MountPoint {
         }
 
         public synchronized void setResponse(Endpoint.Message response) {
-            this.response = response;
+            this.response = (HeikoMessage)response.getData();
             latch.countDown();
         }
     }

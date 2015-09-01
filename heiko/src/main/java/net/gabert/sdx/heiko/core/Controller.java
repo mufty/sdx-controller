@@ -78,6 +78,11 @@ public class Controller {
         return controller;
     }
 
+    // ----- SHUTDOWN -----
+    public void shutDown() {
+        this.busProxy.shutdown();
+    }
+
     // ----- UTILITY -----
     public static <T> T getService(Class<? extends T> serviceClass) {
         return (T) HEIKO_SERVICE_REGISTRY.get(serviceClass);

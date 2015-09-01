@@ -3,26 +3,35 @@ package net.gabert.sdx.sampleapp.driver;
 import net.gabert.sdx.heiko.api.Driver;
 
 public class TelescopeDriver extends Driver {
+    private int azimuth;
+    private int altitude;
+
     @Override
     public Object getValue(String path) {
-        System.out.println(">>>>> GET " + path);
+        if (path.equals("/azimuth")) {
+            return this.azimuth;
+        } else if (path.equals("/altitude")) {
+            return this.altitude;
+        }
         return null;
     }
 
     @Override
     public void setValue(String path, Object value) {
-        System.out.println(">>>>> SET " + path);
+        if (path.equals("/azimuth")) {
+            this.azimuth = (int)value;
+        } else if (path.equals("/altitude")) {
+            this.altitude = (int)value;
+        }
 
     }
 
     @Override
     public void onListenerRegistered(String path) {
-        System.out.println(">>>>> OLR " + path);
     }
 
     @Override
     public Object call(String path, Object... params) {
-        System.out.println(">>>>> CALL " + path);
         return null;
     }
 }

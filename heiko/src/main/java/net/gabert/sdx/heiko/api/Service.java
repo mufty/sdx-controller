@@ -34,8 +34,8 @@ public abstract class Service {
         }
 
         public Object getValue(String path) {
-            Endpoint.Message request = mountPoint.createMessage(null, null);
-            return mountPoint.awaitResponse(request);
+            String absolutePath = contextroot + path;
+            return mountPoint.getValue(absolutePath);
         }
 
         protected void setListener(String path, ValueListener value) {
