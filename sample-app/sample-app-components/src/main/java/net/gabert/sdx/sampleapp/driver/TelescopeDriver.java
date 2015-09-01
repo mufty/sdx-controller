@@ -6,24 +6,17 @@ public class TelescopeDriver extends Driver {
     private int azimuth;
     private int altitude;
 
+    private final SimpleValueHolder db = new SimpleValueHolder("/azimuth", "/altitude");
+
     @Override
     public Object getValue(String path) {
-        if (path.equals("/azimuth")) {
-            return this.azimuth;
-        } else if (path.equals("/altitude")) {
-            return this.altitude;
-        }
-        return null;
+        return db.getValue(path);
+
     }
 
     @Override
     public void setValue(String path, Object value) {
-        if (path.equals("/azimuth")) {
-            this.azimuth = (int)value;
-        } else if (path.equals("/altitude")) {
-            this.altitude = (int)value;
-        }
-
+        db.setValue(path, value);
     }
 
     @Override

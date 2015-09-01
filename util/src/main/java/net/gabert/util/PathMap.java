@@ -31,7 +31,7 @@ public class PathMap<V> implements Map<String, V> {
         public V getValue(String[] path) {
             String nextPath = path[0];
 
-            if (!pathTree.containsKey(nextPath)) { return null; };
+            if (!pathTree.containsKey(nextPath)) { return null; }
 
             PathElement nextElement = pathTree.get(nextPath);
 

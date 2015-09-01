@@ -18,9 +18,8 @@ public class DataSlotRegistryProviderProxy implements DataSlotRegistryProvider {
             Class<?> clazz = Class.forName(dataSlotProviderClassName);
 
             Constructor<?> constructor = clazz.getConstructor();
-            DataSlotRegistryProvider dataSlotRegistryProvider = (DataSlotRegistryProvider)constructor.newInstance();
 
-            return dataSlotRegistryProvider;
+            return (DataSlotRegistryProvider)constructor.newInstance();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -2,7 +2,7 @@ package net.gabert.sdx.heiko.core;
 
 public class HeikoMessage<T> {
     public static enum Type {
-        GET, SET, CALL;
+        GET, SET, CALL
     }
 
     public String absolutePath;
