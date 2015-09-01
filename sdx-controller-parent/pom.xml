@@ -25,12 +25,7 @@
             </dependency>
             <dependency>
                 <groupId>net.gabert.sdx</groupId>
-                <artifactId>heiko-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.gabert.sdx</groupId>
-                <artifactId>heiko-impl</artifactId>
+                <artifactId>heiko</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

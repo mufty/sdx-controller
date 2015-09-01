@@ -4,6 +4,7 @@ import net.gabert.sdx.heiko.configuration.schema.DriverConfig;
 import net.gabert.sdx.heiko.configuration.schema.ServiceConfig;
 import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.util.LogUtil;
+import net.gabert.util.ObjectUtil;
 import net.gabert.util.PathMap;
 import org.apache.log4j.Logger;
 
@@ -29,10 +30,10 @@ public class MountServiceLocal implements MountService {
     @Override
     public void mount(DriverConfig driverConfig)  {
         try {
-            LOGGER.info("Initializing mountpoint: " + driverConfig.path);
+            LOGGER.info("Initializing driver: " + driverConfig.path);
             DriverMountPoint driverMountPoint = new DriverMountPoint(busProxy, driverConfig);
             mount(driverMountPoint);
-            mountPointRegistry.add(driverMountPoint);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +45,6 @@ public class MountServiceLocal implements MountService {
             LOGGER.info("Initializing service: " + serviceConfig.path);
             ServiceMountPoint serviceMountPoint = new ServiceMountPoint(busProxy, serviceConfig);
             mount(serviceMountPoint);
-            mountPointRegistry.add(serviceMountPoint);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -52,6 +52,8 @@ public class MountServiceLocal implements MountService {
 
     private void mount(MountPoint mountPoint) {
         pathMap.put(mountPoint.getMountPointContextRoot(), mountPoint);
+        mountPointRegistry.add(mountPoint);
+        mountPoint.init();
         LOGGER.info("Mounted: " + mountPoint);
     }
 

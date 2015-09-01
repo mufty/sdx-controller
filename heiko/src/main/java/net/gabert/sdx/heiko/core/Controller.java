@@ -1,6 +1,5 @@
 package net.gabert.sdx.heiko.core;
 
-import net.gabert.sdx.heiko.api.Service;
 import net.gabert.sdx.heiko.configuration.ConfigurationLoader;
 import net.gabert.sdx.heiko.configuration.schema.DriverConfig;
 import net.gabert.sdx.heiko.configuration.schema.ServiceConfig;
@@ -9,12 +8,9 @@ import net.gabert.sdx.heiko.mountpoint.MountService;
 import net.gabert.sdx.heiko.mountpoint.MountServiceLocal;
 import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.util.LogUtil;
-import net.gabert.util.ObjectUtil;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Controller {
@@ -23,7 +19,7 @@ public class Controller {
     private final HeikoConfiguration config;
     private BusProxy busProxy;
 
-    private final Map<Class<?>, Object> heikoServiceRegistry = new HashMap<>();
+    private static final Map<Class<?>, Object> HEIKO_SERVICE_REGISTRY = new HashMap<>();
 
     private Controller(HeikoConfiguration config) {
         this.config = config;
@@ -39,7 +35,7 @@ public class Controller {
 
     private void initializeServices() {
         LOGGER.info("--- PHASE --- Initializing heiko services.");
-        heikoServiceRegistry.put(MountService.class, new MountServiceLocal(this.busProxy));
+        HEIKO_SERVICE_REGISTRY.put(MountService.class, new MountServiceLocal(this.busProxy));
     }
 
     private void startBus() {
@@ -83,7 +79,7 @@ public class Controller {
     }
 
     // ----- UTILITY -----
-    private <T> T getService(Class<? extends T> serviceClass) {
-        return (T) heikoServiceRegistry.get(serviceClass);
+    public static <T> T getService(Class<? extends T> serviceClass) {
+        return (T) HEIKO_SERVICE_REGISTRY.get(serviceClass);
     }
 }

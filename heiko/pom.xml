@@ -12,11 +12,12 @@
     </parent>
 
     <artifactId>heiko</artifactId>
-    <packaging>pom</packaging>
 
-    <modules>
-        <module>heiko-impl</module>
-        <module>heiko-api</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>net.gabert.sdx</groupId>
+            <artifactId>kyla</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

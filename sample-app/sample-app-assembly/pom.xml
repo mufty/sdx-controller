@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>net.gabert.sdx</groupId>
-            <artifactId>heiko-impl</artifactId>
+            <artifactId>heiko</artifactId>
         </dependency>
         <dependency>
             <groupId>net.gabert.sdx</groupId>

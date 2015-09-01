@@ -1,15 +1,16 @@
 package net.gabert.sdx.heiko.api;
 
+import net.gabert.sdx.heiko.mountpoint.DriverMountPoint;
 import net.gabert.sdx.kyla.api.Bus;
 
 import java.util.Map;
 
 public abstract class Driver {
-    private Bus bus;
+    private DriverMountPoint mountPoint;
     private Map<String, Object> initParams;
 
     protected void publish(String path, Object value) {
-        this.bus.send(null);
+        mountPoint.send(null);
     }
 
     public abstract Object getValue(String path);
