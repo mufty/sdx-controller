@@ -8,6 +8,10 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class JsonFileReader {
     private static final Logger LOGGER = LogUtil.getLogger();
 

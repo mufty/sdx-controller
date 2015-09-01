@@ -1,11 +1,13 @@
 package net.gabert.sdx.heiko.api;
 
-import net.gabert.sdx.heiko.core.HeikoMessage;
 import net.gabert.sdx.heiko.mountpoint.ServiceMountPoint;
-import net.gabert.sdx.kyla.api.Endpoint;
 
 import java.util.Map;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public abstract class Service {
     private ServiceMountPoint mountPoint;
 

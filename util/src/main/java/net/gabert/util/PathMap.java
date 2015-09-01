@@ -2,6 +2,10 @@ package net.gabert.util;
 
 import java.util.*;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class PathMap<V> implements Map<String, V> {
     private static class PathElement<V> {
         private final String elementName;

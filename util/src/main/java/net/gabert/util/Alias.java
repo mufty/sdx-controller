@@ -6,6 +6,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public final class Alias {
     private final static String ALIAS_PATTERN_STRING = "#\\{(.*?)\\}";
     private final static Pattern ALIAS_PATTERN = Pattern.compile(ALIAS_PATTERN_STRING);

@@ -1,5 +1,9 @@
 package net.gabert.util;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class JsonTransformation<T> implements Transformation<T> {
 
     @Override

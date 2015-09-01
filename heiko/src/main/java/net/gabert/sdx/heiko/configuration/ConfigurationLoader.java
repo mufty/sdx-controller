@@ -11,6 +11,10 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class ConfigurationLoader {
     private static Map<String, Transformation<HeikoConfiguration>> configLoaders = new HashMap<>();
 

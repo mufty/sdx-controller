@@ -5,6 +5,10 @@ import net.gabert.sdx.kyla.api.Bus;
 
 import java.util.Map;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public abstract class Driver {
     private DriverMountPoint mountPoint;
     private Map<String, Object> initParams;

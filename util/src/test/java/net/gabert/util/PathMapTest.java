@@ -1,10 +1,13 @@
 package net.gabert.util;
 
-import net.gabert.util.PathMap;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class PathMapTest {
     @Test
     public void setGetSimple() {

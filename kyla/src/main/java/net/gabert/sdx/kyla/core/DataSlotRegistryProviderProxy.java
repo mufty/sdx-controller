@@ -6,6 +6,10 @@ import net.gabert.sdx.kyla.api.Endpoint;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class DataSlotRegistryProviderProxy implements DataSlotRegistryProvider {
     private final DataSlotRegistryProvider provider;
 

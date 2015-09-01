@@ -5,6 +5,10 @@ import net.gabert.util.Security;
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public abstract class Endpoint<T> {
     public static final String ID_CLASSIFIER = "urn:uuid:";
 

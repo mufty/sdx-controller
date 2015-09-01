@@ -12,6 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.gabert.sdx.kyla.api.Endpoint;
 import net.gabert.sdx.kyla.api.Endpoint.Message;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class HazelcastDataSlotRegistryProvider implements DataSlotRegistryProvider {
     private final static String ID_DELIMITER= ":";
 

@@ -6,6 +6,10 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public final class FileReader {
     public static String readFile(String aFileName) throws IOException, URISyntaxException {
         return aFileName.startsWith("classpath:") ? FileReader.readClasspathFile(aFileName)

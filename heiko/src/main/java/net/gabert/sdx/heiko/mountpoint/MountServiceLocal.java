@@ -11,6 +11,10 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class MountServiceLocal implements MountService {
     private static final Logger LOGGER = LogUtil.getLogger();
 

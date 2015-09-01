@@ -4,6 +4,10 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public final class LogUtil {
     private static final String SOUT_PREFIX = "SYSOUT-> ";
 

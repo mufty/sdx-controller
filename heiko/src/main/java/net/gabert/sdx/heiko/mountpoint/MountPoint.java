@@ -1,11 +1,13 @@
 package net.gabert.sdx.heiko.mountpoint;
 
-import net.gabert.sdx.heiko.core.HeikoMessage;
-import net.gabert.sdx.kyla.api.Endpoint;
 import net.gabert.sdx.kyla.core.BusProxy;
 
 import java.util.Map;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public abstract class MountPoint extends HeikoEndpoint {
     private final String mountPointContextRoot;
     private final Map<String, Object> initParams;

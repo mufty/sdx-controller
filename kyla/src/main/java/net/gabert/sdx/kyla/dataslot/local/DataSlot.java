@@ -5,6 +5,10 @@ import net.gabert.sdx.kyla.api.Endpoint;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public abstract class DataSlot {
     protected final CopyOnWriteArrayList<Endpoint> endpoints = new CopyOnWriteArrayList<>();
 

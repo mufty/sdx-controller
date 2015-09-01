@@ -3,6 +3,10 @@ package net.gabert.util;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class TimeStat {
     private static class Marker {
         public final String message;

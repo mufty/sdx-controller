@@ -10,6 +10,10 @@ import org.apache.log4j.Logger;
 
 import java.util.Collections;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class DriverMountPoint extends MountPoint {
     private static final Logger LOGGER = LogUtil.getLogger();
 

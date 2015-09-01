@@ -4,6 +4,10 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.*;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public final class Security {
     private static final SecureRandom RND_GENERATOR = new SecureRandom();
     

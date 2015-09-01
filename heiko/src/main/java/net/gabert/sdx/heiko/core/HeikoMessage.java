@@ -1,5 +1,9 @@
 package net.gabert.sdx.heiko.core;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class HeikoMessage<T> {
     public static enum Type {
         GET, SET, CALL

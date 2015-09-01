@@ -14,6 +14,10 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class ServiceMountPoint extends MountPoint {
     private final Service service;
     private final Map<UUID, Exchange> pendingResponses = new ConcurrentHashMap<>();

@@ -10,6 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class LocalDataSlotRegistryProvider implements DataSlotRegistryProvider {
     private static final Logger LOGGER = LogUtil.getLogger();
     private final Map<String, DataSlot> dataSlots = Collections.synchronizedMap(new HashMap<String, DataSlot>());

@@ -2,6 +2,10 @@ package net.gabert.util;
 
 import java.lang.reflect.Field;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public final class ObjectUtil {
     public static <T> T newInstance(String objectClassName) {
         try {

@@ -13,6 +13,10 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class EndpointRegistration {
     private BusProxy bus;
     private MBeanServer server = ManagementFactory.getPlatformMBeanServer();

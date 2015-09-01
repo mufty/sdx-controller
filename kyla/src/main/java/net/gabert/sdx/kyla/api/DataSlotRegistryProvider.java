@@ -2,6 +2,10 @@ package net.gabert.sdx.kyla.api;
 
 import java.util.List;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public interface DataSlotRegistryProvider {
     void register(Endpoint endpoint);
 

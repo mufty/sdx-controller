@@ -2,6 +2,8 @@ package net.gabert.sdx.kyla.configuration;
 
 /**
  * Interface representing Bus configuration options
+ *
+ * @author Robert Gallas
  */
 public class KylaConfiguration {
     /**

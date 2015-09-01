@@ -2,6 +2,10 @@ package net.gabert.sdx.sampleapp.driver;
 
 import net.gabert.sdx.heiko.api.Driver;
 
+/**
+ *
+ * @author Robert Gallas
+ */
 public class TelescopeDriver extends Driver {
     private int azimuth;
     private int altitude;

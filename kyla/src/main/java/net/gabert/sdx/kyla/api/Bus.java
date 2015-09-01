@@ -4,6 +4,8 @@ import net.gabert.sdx.kyla.api.Endpoint.Message;
 
 /**
  * Base interface class enabling sending messages to Bus infrastructure
+ *
+ * @author Robert Gallas
  */
 public interface Bus {
 
