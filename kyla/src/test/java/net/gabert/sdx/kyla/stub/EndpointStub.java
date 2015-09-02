@@ -3,12 +3,15 @@ package net.gabert.sdx.kyla.stub;
 import net.gabert.sdx.kyla.api.Endpoint;
 import net.gabert.sdx.kyla.core.BusProxy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Robert Gallas
  */
 public class EndpointStub extends Endpoint {
-    private Message receivedMessage;
+    private List<Message> receivedMessage = new ArrayList<>();
 
     public EndpointStub(BusProxy busProxy) {
         super(busProxy);
@@ -16,7 +19,7 @@ public class EndpointStub extends Endpoint {
 
     @Override
     public void handle(Message message) {
-        this.receivedMessage = message;
+        this.receivedMessage.add(message);
     }
 
     public void sendMessage(String destinationKey, Object messageData) {
@@ -24,7 +27,7 @@ public class EndpointStub extends Endpoint {
         super.send(msg);
     }
 
-    public Message getReceivedMessage() {
+    public List<Message> getReceivedMessages() {
         return receivedMessage;
     }
 }

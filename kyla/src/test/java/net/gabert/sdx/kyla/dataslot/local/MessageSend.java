@@ -1,5 +1,6 @@
 package net.gabert.sdx.kyla.dataslot.local;
 
+import net.gabert.sdx.kyla.api.Endpoint;
 import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.sdx.kyla.stub.EndpointStub;
 import org.junit.Before;
@@ -35,13 +36,11 @@ public class MessageSend {
 
         bus.shutdown();
 
-        assertNull(ep1.getReceivedMessage());
-        assertNull(ep2.getReceivedMessage());
-        assertNotNull(ep3.getReceivedMessage());
+        assertReceivedMessagesSize(0, ep1);
+        assertReceivedMessagesSize(0, ep2);
+        assertReceivedMessagesSize(1, ep3);
 
-        assertEquals(message, ep3.getReceivedMessage().getData());
-        assertEquals(ep3.getDataSlotId(), ep3.getReceivedMessage().getDestinationSlotId());
-        assertEquals(ep1.getDataSlotId(), ep3.getReceivedMessage().getSourceSlotId());
+        assertDelivery(message, ep3.getDataSlotId(), ep1, ep3);
     }
 
     @Test
@@ -60,13 +59,11 @@ public class MessageSend {
 
         bus.shutdown();
 
-        assertNull(ep1.getReceivedMessage());
-        assertNull(ep2.getReceivedMessage());
-        assertNotNull(ep3.getReceivedMessage());
+        assertReceivedMessagesSize(0, ep1);
+        assertReceivedMessagesSize(0, ep2);
+        assertReceivedMessagesSize(1, ep3);
 
-        assertEquals(message, ep3.getReceivedMessage().getData());
-        assertEquals("DATA_SLOT_3", ep3.getReceivedMessage().getDestinationSlotId());
-        assertEquals(ep1.getDataSlotId(), ep3.getReceivedMessage().getSourceSlotId());
+        assertDelivery(message, "DATA_SLOT_3", ep1, ep3);
     }
 
     @Test
@@ -85,15 +82,22 @@ public class MessageSend {
 
         bus.shutdown();
 
-        assertNull(ep1.getReceivedMessage());
-        assertNotNull(ep2.getReceivedMessage());
-        assertNotNull(ep3.getReceivedMessage());
+        assertReceivedMessagesSize(0, ep1);
+        assertReceivedMessagesSize(1, ep2);
+        assertReceivedMessagesSize(1, ep3);
 
-        assertEquals(message, ep2.getReceivedMessage().getData());
-        assertEquals(message, ep3.getReceivedMessage().getData());
-        assertEquals("SHARED_DATA_SLOT", ep2.getReceivedMessage().getDestinationSlotId());
-        assertEquals(ep1.getDataSlotId(), ep2.getReceivedMessage().getSourceSlotId());
-        assertEquals("SHARED_DATA_SLOT", ep3.getReceivedMessage().getDestinationSlotId());
-        assertEquals(ep1.getDataSlotId(), ep3.getReceivedMessage().getSourceSlotId());
+        assertDelivery(message, "SHARED_DATA_SLOT", ep1, ep2);
+        assertDelivery(message, "SHARED_DATA_SLOT", ep1, ep3);
+    }
+
+    private static void assertReceivedMessagesSize(int expectedSize, EndpointStub ep) {
+        assertEquals(expectedSize, ep.getReceivedMessages().size());
+    }
+
+    private static void assertDelivery(String message, String dataSlotId, EndpointStub source, EndpointStub destination) {
+        Endpoint.Message receivedMessage = destination.getReceivedMessages().get(0);
+        assertEquals(message, receivedMessage.getData());
+        assertEquals(dataSlotId, receivedMessage.getDestinationSlotId());
+        assertEquals(source.getDataSlotId(), receivedMessage.getSourceSlotId());
     }
 }
