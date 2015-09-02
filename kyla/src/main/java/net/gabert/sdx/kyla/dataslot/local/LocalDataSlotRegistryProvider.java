@@ -3,7 +3,7 @@ package net.gabert.sdx.kyla.dataslot.local;
 import net.gabert.sdx.kyla.api.*;
 import net.gabert.sdx.kyla.api.DataSlotRegistryProvider;
 import net.gabert.util.LogUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public class LocalDataSlotRegistryProvider implements DataSlotRegistryProvider {
             }
         }
 
-        LOGGER.info("Endpoint registered for dataSlot: " + endpoint + " -> " + dataSlotId);
+        LOGGER.info("Endpoint registered for dataSlot: {} -> {}", endpoint, dataSlotId);
     }
 
     @Override

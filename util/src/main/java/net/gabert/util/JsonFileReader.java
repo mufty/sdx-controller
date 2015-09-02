@@ -1,12 +1,7 @@
 package net.gabert.util;
 
 import com.google.gson.*;
-import org.apache.log4j.Logger;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
+import org.slf4j.Logger;
 
 /**
  *
@@ -30,7 +25,7 @@ public class JsonFileReader {
             String configContent = FileReader.readFile(configFileName);
             JsonObject json = new JsonParser().parse(configContent).getAsJsonObject();
 
-            LOGGER.info("Loaded configuration file from: " + configFileName);
+            LOGGER.info("Loaded configuration file from: {}", configFileName);
 
             return json;
         } catch (Exception e) {

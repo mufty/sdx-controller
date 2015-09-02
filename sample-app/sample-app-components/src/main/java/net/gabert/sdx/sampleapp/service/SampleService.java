@@ -2,7 +2,7 @@ package net.gabert.sdx.sampleapp.service;
 
 import net.gabert.sdx.heiko.api.Service;
 import net.gabert.util.LogUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import java.util.Map;
 

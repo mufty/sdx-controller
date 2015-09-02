@@ -1,6 +1,7 @@
 package net.gabert.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -26,6 +27,6 @@ public final class LogUtil {
 
     public static Logger getLogger() {
         StackTraceElement caller = Thread.currentThread().getStackTrace()[2];
-        return Logger.getLogger(caller.getClassName());
+        return LoggerFactory.getLogger(caller.getClassName());
     }
 }

@@ -7,7 +7,7 @@ import net.gabert.sdx.kyla.api.DataSlotRegistryProvider;
 import net.gabert.sdx.kyla.configuration.KylaConfiguration;
 import net.gabert.util.JsonTransformation;
 import net.gabert.util.LogUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import javax.management.*;
 import java.lang.management.ManagementFactory;
@@ -39,9 +39,9 @@ public class BusProxy implements Bus {
             throw new RuntimeException(e);
         }
 
-        LOGGER.info("Dataslot provider: " + this.dataSlotRegistryProvider.getClass().getSimpleName());
+        LOGGER.info("Dataslot provider: {}", this.dataSlotRegistryProvider.getClass().getSimpleName());
 
-        LOGGER.info(BusProxy.class.getSimpleName() + " created.");
+        LOGGER.info("{} created.", BusProxy.class.getSimpleName());
     }
 
     private void registerMBean() throws Exception {
@@ -68,7 +68,7 @@ public class BusProxy implements Bus {
     }
 
     public void registerExclusive(Endpoint endpoint, String dataSlotId) {
-        LOGGER.info("Requested exclusive Endpoint registration: " + endpoint + " -> "+ dataSlotId);
+        LOGGER.info("Requested exclusive Endpoint registration: {} -> {}", endpoint, dataSlotId);
         dataSlotRegistryProvider.registerExclusive(endpoint, dataSlotId);
     }
 

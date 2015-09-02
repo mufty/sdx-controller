@@ -6,7 +6,7 @@ import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.util.LogUtil;
 import net.gabert.util.ObjectUtil;
 import net.gabert.util.PathMap;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class MountServiceLocal implements MountService {
     @Override
     public void mount(DriverConfig driverConfig)  {
         try {
-            LOGGER.info("Initializing driver: " + driverConfig.path);
+            LOGGER.info("Initializing driver: {}", driverConfig.path);
             DriverMountPoint driverMountPoint = new DriverMountPoint(busProxy, driverConfig);
             mount(driverMountPoint);
 
@@ -46,7 +46,7 @@ public class MountServiceLocal implements MountService {
     @Override
     public void mount(ServiceConfig serviceConfig) {
         try {
-            LOGGER.info("Initializing service: " + serviceConfig.path);
+            LOGGER.info("Initializing service: {}", serviceConfig.path);
             ServiceMountPoint serviceMountPoint = new ServiceMountPoint(busProxy, serviceConfig);
             mount(serviceMountPoint);
         } catch (Exception e) {
@@ -58,7 +58,7 @@ public class MountServiceLocal implements MountService {
         pathMap.put(mountPoint.getMountPointContextRoot(), mountPoint);
         mountPointRegistry.add(mountPoint);
         mountPoint.init();
-        LOGGER.info("Mounted: " + mountPoint);
+        LOGGER.info("Mounted: {}", mountPoint);
     }
 
     @Override

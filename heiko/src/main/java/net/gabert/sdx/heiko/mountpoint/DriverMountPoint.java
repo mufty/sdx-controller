@@ -6,7 +6,7 @@ import net.gabert.sdx.heiko.api.Driver;
 import net.gabert.sdx.heiko.configuration.schema.DriverConfig;
 import net.gabert.sdx.heiko.core.HeikoMessage;
 import net.gabert.util.LogUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import java.util.Collections;
 
