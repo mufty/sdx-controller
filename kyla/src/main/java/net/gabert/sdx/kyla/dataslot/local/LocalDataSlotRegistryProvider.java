@@ -25,7 +25,6 @@ public class LocalDataSlotRegistryProvider implements DataSlotRegistryProvider {
 
     @Override
     public void registerExclusive(Endpoint endpoint, String dataSlotId) {
-        exclusiveRegistration(endpoint, endpoint.getDataSlotId());
         exclusiveRegistration(endpoint, dataSlotId);
     }
 
