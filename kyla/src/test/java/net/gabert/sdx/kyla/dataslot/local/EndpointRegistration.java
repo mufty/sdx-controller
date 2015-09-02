@@ -1,10 +1,8 @@
 package net.gabert.sdx.kyla.dataslot.local;
 
 import net.gabert.sdx.kyla.api.Endpoint;
-import net.gabert.sdx.kyla.configuration.KylaConfiguration;
 import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.sdx.kyla.stub.EndpointStub;
-import net.gabert.util.JsonTransformation;
 import org.junit.*;
 
 import javax.management.*;
@@ -60,9 +58,9 @@ public class EndpointRegistration {
 
         Endpoint ep1 = new EndpointStub(bus);
 
-        bus.register(ep1, dataSlotKey1);
-        bus.register(ep1, dataSlotKey2);
-        bus.register(ep1, dataSlotKey3);
+        bus.registerShared(ep1, dataSlotKey1);
+        bus.registerShared(ep1, dataSlotKey2);
+        bus.registerShared(ep1, dataSlotKey3);
 
         assertTrue(isEndpointRegistered(ep1, dataSlotKey1));
         assertTrue(isEndpointRegistered(ep1, dataSlotKey2));
@@ -101,7 +99,7 @@ public class EndpointRegistration {
     public void registrationWithClassifierPrefix() {
         Endpoint ep1 = new EndpointStub(bus);
 
-        bus.register(ep1, Endpoint.ID_CLASSIFIER + "EP1");
+        bus.registerShared(ep1, Endpoint.ID_CLASSIFIER + "EP1");
     }
 
     @Test(expected = IllegalArgumentException.class)
