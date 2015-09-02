@@ -11,7 +11,9 @@ public interface DataSlotRegistryProvider {
 
     void registerExclusive(Endpoint endpoint, String dataSlotId);
 
-    void register(Endpoint endpoint, String dataSlotId);
+    void registerShared(Endpoint endpoint, String dataSlotId);
+
+    void registerParallel(Endpoint endpoint, String dataSlotId);
 
     boolean slotExists(String dataSlotId);
 

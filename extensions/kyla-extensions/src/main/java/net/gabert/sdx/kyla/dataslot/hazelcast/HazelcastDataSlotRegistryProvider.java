@@ -109,7 +109,7 @@ public class HazelcastDataSlotRegistryProvider implements DataSlotRegistryProvid
     }
 
     @Override
-    public synchronized void register(Endpoint endpoint, String dataSlotId) {
+    public synchronized void registerShared(Endpoint endpoint, String dataSlotId) {
         String globalEndpointId = clusterMemberId + ID_DELIMITER + endpoint.getDataSlotId();
 
         String endpointDataSlot = endpoint.getDataSlotId();
@@ -119,6 +119,11 @@ public class HazelcastDataSlotRegistryProvider implements DataSlotRegistryProvid
 
         localEndpointRegistrations.putIfAbsent(globalEndpointId, endpoint);
         sharedDataSlots.put(dataSlotId, globalEndpointId);
+    }
+
+    @Override
+    public void registerParallel(Endpoint endpoint, String dataSlotId) {
+        throw new UnsupportedOperationException();
     }
 
 //    private class TopicListener implements MessageListener<Message> {

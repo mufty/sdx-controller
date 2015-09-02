@@ -33,8 +33,8 @@ public class DataSlotRegistryProviderProxy implements DataSlotRegistryProvider {
     public void register(Endpoint endpoint) {
         String dataSlotId = endpoint.getDataSlotId();
         if (dataSlotId.startsWith(Endpoint.ID_CLASSIFIER) == false) {
-            throw new IllegalArgumentException("Endpoint registration dataSlotId must contain " +
-                                               "Endpoint.ID_CLASSIFIER");
+            throw new IllegalArgumentException("Endpoint registration dataSlotId must start with " +
+                                               Endpoint.ID_CLASSIFIER);
         }
 
         provider.register(endpoint);
@@ -51,13 +51,23 @@ public class DataSlotRegistryProviderProxy implements DataSlotRegistryProvider {
     }
 
     @Override
-    public void register(Endpoint endpoint, String dataSlotId) {
+    public void registerShared(Endpoint endpoint, String dataSlotId) {
         if (dataSlotId.startsWith(Endpoint.ID_CLASSIFIER)) {
-            throw new IllegalArgumentException("Registration with dataSlotId starting with endpoint " +
+            throw new IllegalArgumentException("Shared registration with dataSlotId starting with endpoint " +
                                                "classifier not allowed");
         }
 
-        provider.register(endpoint, dataSlotId);
+        provider.registerShared(endpoint, dataSlotId);
+    }
+
+    @Override
+    public void registerParallel(Endpoint endpoint, String dataSlotId) {
+        if (dataSlotId.startsWith(Endpoint.ID_CLASSIFIER)) {
+            throw new IllegalArgumentException("Parallel registration with dataSlotId starting with endpoint " +
+                                               "classifier not allowed");
+        }
+
+        provider.registerParallel(endpoint, dataSlotId);
     }
 
     @Override

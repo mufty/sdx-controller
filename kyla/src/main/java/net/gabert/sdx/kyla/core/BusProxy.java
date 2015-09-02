@@ -73,7 +73,7 @@ public class BusProxy implements Bus {
     }
 
     public void register(Endpoint endpoint, String dataSlotId) {
-        dataSlotRegistryProvider.register(endpoint, dataSlotId);
+        dataSlotRegistryProvider.registerShared(endpoint, dataSlotId);
     }
 
     public void send(Message message) {

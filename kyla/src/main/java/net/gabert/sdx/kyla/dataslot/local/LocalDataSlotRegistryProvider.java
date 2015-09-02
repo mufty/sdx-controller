@@ -46,7 +46,7 @@ public class LocalDataSlotRegistryProvider implements DataSlotRegistryProvider {
     }
 
     @Override
-    public void register(Endpoint endpoint, String dataSlotId) {
+    public void registerShared(Endpoint endpoint, String dataSlotId) {
         synchronized (dataSlots) {
             if (dataSlots.containsKey(dataSlotId) == false) {
                 dataSlots.put(dataSlotId, new SharedDataSlot(dataSlotId));
@@ -55,6 +55,11 @@ public class LocalDataSlotRegistryProvider implements DataSlotRegistryProvider {
 
         DataSlot dataSlot = dataSlots.get(dataSlotId);
         dataSlot.register(endpoint);
+    }
+
+    @Override
+    public void registerParallel(Endpoint endpoint, String dataSlotId) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
