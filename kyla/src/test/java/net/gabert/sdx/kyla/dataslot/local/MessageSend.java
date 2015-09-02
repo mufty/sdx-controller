@@ -90,6 +90,32 @@ public class MessageSend {
         assertDelivery(message, "SHARED_DATA_SLOT", ep1, ep3);
     }
 
+    @Test
+    public void parallelMessageSend() {
+        String message1 = "PARALLEL_MESSAGE_1";
+        String message2 = "PARALLEL_MESSAGE_2";
+
+        EndpointStub ep1 = new EndpointStub(bus);
+        EndpointStub ep2 = new EndpointStub(bus);
+        EndpointStub ep3 = new EndpointStub(bus);
+
+        bus.register(ep1);
+        bus.registerParallel(ep2, "PARALLEL_DATA_SLOT");
+        bus.registerParallel(ep3, "PARALLEL_DATA_SLOT");
+
+        ep1.sendMessage("PARALLEL_DATA_SLOT", message1);
+        ep1.sendMessage("PARALLEL_DATA_SLOT", message2);
+
+        bus.shutdown();
+
+        assertReceivedMessagesSize(0, ep1);
+        assertReceivedMessagesSize(1, ep2);
+        assertReceivedMessagesSize(1, ep3);
+
+        assertDelivery(message1, "PARALLEL_DATA_SLOT", ep1, ep2);
+        assertDelivery(message2, "PARALLEL_DATA_SLOT", ep1, ep3);
+    }
+
     private static void assertReceivedMessagesSize(int expectedSize, EndpointStub ep) {
         assertEquals(expectedSize, ep.getReceivedMessages().size());
     }

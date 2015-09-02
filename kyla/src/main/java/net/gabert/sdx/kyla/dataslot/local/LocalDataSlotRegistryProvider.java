@@ -59,7 +59,14 @@ public class LocalDataSlotRegistryProvider implements DataSlotRegistryProvider {
 
     @Override
     public void registerParallel(Endpoint endpoint, String dataSlotId) {
-        throw new UnsupportedOperationException();
+        synchronized (dataSlots) {
+            if (dataSlots.containsKey(dataSlotId) == false) {
+                dataSlots.put(dataSlotId, new ParallelDataSlot(dataSlotId));
+            }
+        }
+
+        DataSlot dataSlot = dataSlots.get(dataSlotId);
+        dataSlot.register(endpoint);
     }
 
     @Override
