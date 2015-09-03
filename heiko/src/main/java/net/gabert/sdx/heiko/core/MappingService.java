@@ -27,7 +27,7 @@ public class MappingService {
         mountPathReducer.put(mountPath, mountPath);
         mountPathToDtaSlotId.put(mountPath, dataSlotId);
 
-        LOGGER.info("Mapped: {} -> {}",mountPath, dataSlotId);
+        LOGGER.info("Mapped: {} -> {}", mountPath, dataSlotId);
     }
 
     public String resolveMountPath(String absolutePath) {

@@ -31,6 +31,7 @@ public class ServiceMountPoint extends MountPoint {
         super(Collections.unmodifiableMap(serviceConfig.initParams),
               busProxy);
 
+        LOGGER.info("Initializing service: {}", getDataSlotId());
         this.service = ObjectUtil.newInstance(serviceConfig.serviceClassName);
     }
 

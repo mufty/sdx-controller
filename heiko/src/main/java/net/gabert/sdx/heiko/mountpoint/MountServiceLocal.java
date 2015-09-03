@@ -39,7 +39,6 @@ public class MountServiceLocal implements MountService {
     @Override
     public void mount(DriverConfig driverConfig)  {
         try {
-            LOGGER.info("Initializing device: {}", driverConfig.path);
             DriverMountPoint driverMountPoint = new DriverMountPoint(busProxy, driverConfig);
             mount(deviceTemplate, driverMountPoint);
         } catch (Exception e) {
@@ -50,7 +49,6 @@ public class MountServiceLocal implements MountService {
     @Override
     public void mount(ServiceConfig serviceConfig) {
         try {
-            LOGGER.info("Initializing service: {}", serviceConfig.path);
             ServiceMountPoint serviceMountPoint = new ServiceMountPoint(busProxy, serviceConfig);
             mount(serviceTemplate, serviceMountPoint);
         } catch (Exception e) {
@@ -60,7 +58,6 @@ public class MountServiceLocal implements MountService {
 
     private void mount(String mountTemplate, MountPoint mountPoint) {
         mountPoint.init();
-        LOGGER.info("MountPoint initialized: {}", mountPoint);
 
         String mountPath = Alias.normalize(mountTemplate, "id", mountPoint.getDataSlotId());
         Controller.getService(MappingService.class).map(mountPath, mountPoint.getDataSlotId());
