@@ -16,7 +16,7 @@ public final class ObjectUtil {
         }
     }
 
-    public static <T> void injectByValue(Object target, Object value) {
+    public static <T> void injectByType(Object target, Object value) {
         setValue(getFieldByClassName(target, value.getClass()),
                  target,
                  value);

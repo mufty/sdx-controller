@@ -6,7 +6,7 @@ import java.util.*;
  *
  * @author Robert Gallas
  */
-public class PathMap<V> implements Map<String, V> {
+public class PathMap<V> {
     private static class PathElement<V> {
         private final String elementName;
         private V value;
@@ -63,7 +63,6 @@ public class PathMap<V> implements Map<String, V> {
         this.pathDelimiter = pathDelimiter;
     }
 
-    @Override
     public V put(String key, V value) {
         String[] path = pathExplode(key);
 
@@ -72,7 +71,6 @@ public class PathMap<V> implements Map<String, V> {
         return value;
     }
 
-    @Override
     public V get(Object key) {
         String[] path = pathExplode((String)key);
 
@@ -90,55 +88,5 @@ public class PathMap<V> implements Map<String, V> {
         }
 
         return normalizedPath.split(pathDelimiter);
-    }
-
-    @Override
-    public int size() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean containsKey(Object key) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean containsValue(Object value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public V remove(Object key) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void putAll(Map<? extends String, ? extends V> m) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<String> keySet() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Collection<V> values() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<Entry<String, V>> entrySet() {
-        throw new UnsupportedOperationException();
     }
 }

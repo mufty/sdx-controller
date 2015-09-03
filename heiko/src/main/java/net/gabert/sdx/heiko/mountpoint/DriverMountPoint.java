@@ -2,7 +2,7 @@ package net.gabert.sdx.heiko.mountpoint;
 
 import net.gabert.util.ObjectUtil;
 import net.gabert.sdx.kyla.core.BusProxy;
-import net.gabert.sdx.heiko.api.Driver;
+import net.gabert.sdx.heiko.spi.Driver;
 import net.gabert.sdx.heiko.configuration.schema.DriverConfig;
 import net.gabert.sdx.heiko.core.HeikoMessage;
 import net.gabert.util.LogUtil;
@@ -29,19 +29,20 @@ public class DriverMountPoint extends MountPoint {
 
     public void init() {
         super.init();
-        ObjectUtil.injectByValue(driver, this);
+        ObjectUtil.injectByType(driver, this);
     }
 
     @Override
-    public void handle(Message<HeikoMessage> message) {
-        HeikoMessage heikoMessage = message.getData();
+    public void handle(Message<HeikoMessage> kylaMessage) {
+        LOGGER.trace("IN <= {MountpointId: {}, KylaMessage: {}} ", getDataSlotId(), kylaMessage);
+        HeikoMessage heikoMessage = kylaMessage.getData();
 
         switch (heikoMessage.type) {
-            case SET: handleSetValue(message);
+            case SET: handleSetValue(kylaMessage);
                       break;
-            case GET: handleGetValue(message);
+            case GET: handleGetValue(kylaMessage);
                       break;
-            case CALL: handleCall(message);
+            case CALL: handleCall(kylaMessage);
                       break;
         }
     }
@@ -73,6 +74,7 @@ public class DriverMountPoint extends MountPoint {
         HeikoMessage reply = new HeikoMessage<>();
         reply.absolutePath = heikoMessage.absolutePath;
         reply.payload = result;
+        reply.type = HeikoMessage.Type.REPLY;
 
         this.send(message.createReply(reply));
     }

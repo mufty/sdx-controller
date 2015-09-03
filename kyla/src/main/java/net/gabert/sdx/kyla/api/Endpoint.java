@@ -84,7 +84,14 @@ public abstract class Endpoint<T> {
 
         @Override
         public String toString() {
-            return messageId.toString() + " : " + data;
+            StringBuilder sb = new StringBuilder();
+            sb.append("{messageId: ").append(messageId.toString()).append(", ");
+            sb.append("conversationId: ").append(conversationId.toString()).append(", ");
+            sb.append("sourceSlotId: ").append(sourceSlotId).append(", ");
+            sb.append("destinationSlotId: ").append(destinationSlotId.toString()).append(", ");
+            sb.append("data: ").append(data).append("}");
+
+            return sb.toString();
         }
 
         public String getDestinationSlotId() {

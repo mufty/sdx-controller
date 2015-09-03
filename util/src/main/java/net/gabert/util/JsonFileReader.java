@@ -12,20 +12,20 @@ public class JsonFileReader {
 
     private static final Gson GSON = new Gson();
 
-    public static <T> T fromString(String jsonString, Class<T> configClass) {
-        return fromJson(jsonString, configClass);
+    public static <T> T fromString(String jsonString, Class<T> mappedClass) {
+        return fromJson(jsonString, mappedClass);
     }
 
-    public static <T> T fromFile(String fileUrl, Class<T> configClass) {
-        return fromJson(asJsonObject(fileUrl), configClass);
+    public static <T> T fromFile(String fileUrl, Class<T> mappedClass) {
+        return fromJson(asJsonObject(fileUrl), mappedClass);
     }
 
-    private static JsonObject asJsonObject(String configFileName) {
+    public static JsonObject asJsonObject(String jsonFileUrl) {
         try {
-            String configContent = FileReader.readFile(configFileName);
+            String configContent = FileReader.readFile(jsonFileUrl);
             JsonObject json = new JsonParser().parse(configContent).getAsJsonObject();
 
-            LOGGER.info("Loaded configuration file from: {}", configFileName);
+            LOGGER.info("Loaded configuration file from: {}", jsonFileUrl);
 
             return json;
         } catch (Exception e) {
@@ -33,11 +33,11 @@ public class JsonFileReader {
         }
     }
 
-    private static <T> T fromJson(JsonObject json, Class<T> configClass) {
-        return GSON.fromJson(json, configClass);
+    public static <T> T fromJson(JsonObject json, Class<T> mappedClass) {
+        return GSON.fromJson(json, mappedClass);
     }
 
-    private static <T> T fromJson(String jsonString, Class<T> configClass) {
-        return GSON.fromJson(jsonString, configClass);
+    public static <T> T fromJson(String jsonString, Class<T> mappedClass) {
+        return GSON.fromJson(jsonString, mappedClass);
     }
 }

@@ -23,6 +23,7 @@ public abstract class MountPoint extends HeikoEndpoint {
     }
 
     public void init() {
+        busProxy.register(this);
         busProxy.registerExclusive(this, mountPointContextRoot);
     }
 

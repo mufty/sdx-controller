@@ -1,7 +1,7 @@
 package net.gabert.sdx.sampleapp.driver;
 
 
-import net.gabert.sdx.heiko.api.Driver;
+import net.gabert.sdx.heiko.spi.Driver;
 
 /**
  *

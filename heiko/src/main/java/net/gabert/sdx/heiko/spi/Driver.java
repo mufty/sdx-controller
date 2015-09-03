@@ -1,4 +1,4 @@
-package net.gabert.sdx.heiko.api;
+package net.gabert.sdx.heiko.spi;
 
 import net.gabert.sdx.heiko.mountpoint.DriverMountPoint;
 import net.gabert.sdx.kyla.api.Bus;
