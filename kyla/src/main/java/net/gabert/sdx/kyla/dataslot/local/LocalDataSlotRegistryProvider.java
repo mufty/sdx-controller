@@ -41,7 +41,7 @@ public class LocalDataSlotRegistryProvider implements DataSlotRegistryProvider {
             }
         }
 
-        LOGGER.info("Endpoint registered for dataSlot: {} -> {}", endpoint, dataSlotId);
+        LOGGER.info("Endpoint exclusive registration: {}", dataSlotId);
     }
 
     @Override

@@ -37,11 +37,14 @@ public final class Alias {
                 throw new NullPointerException("Value for alias [" + aliasName + "] not found.");
             }
 
-            normalizedString = normalizedString.replace(adaptAlias(aliasName),
-                                                        aliasValue);
+            normalizedString = normalize(normalizedString, aliasName, aliasValue);
         }
 
         return normalizedString;
+    }
+
+    public static String normalize(String aliasedString, String aliasName, String aliasValue) {
+        return aliasedString.replace(adaptAlias(aliasName), aliasValue);
     }
 
     private static String adaptAlias(String aliasName) {

@@ -2,14 +2,15 @@ package net.gabert.sdx.heiko.mountpoint;
 
 import net.gabert.sdx.heiko.configuration.schema.DriverConfig;
 import net.gabert.sdx.heiko.configuration.schema.ServiceConfig;
+import net.gabert.sdx.heiko.core.Controller;
+import net.gabert.sdx.heiko.core.MappingService;
 import net.gabert.sdx.kyla.core.BusProxy;
-import net.gabert.util.LogUtil;
-import net.gabert.util.ObjectUtil;
-import net.gabert.util.PathMap;
+import net.gabert.util.*;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  *
@@ -18,26 +19,29 @@ import java.util.List;
 public class MountServiceLocal implements MountService {
     private static final Logger LOGGER = LogUtil.getLogger();
 
-    private static final String PATH_SEPARATOR = "/";
-
-    private final List<MountPoint> mountPointRegistry = new ArrayList<>();
-
-    private final PathMap<MountPoint> pathMap = new PathMap<>(PATH_SEPARATOR);
+    private final String deviceTemplate;
+    private final String serviceTemplate;
+    private final String connectorTemplate;
 
     private final BusProxy busProxy;
 
     public MountServiceLocal(BusProxy busProxy) {
         this.busProxy = busProxy;
+        Properties prop = PropertiesLoader.fromClassPath("system.templates.properties");
+
+        deviceTemplate = (String)prop.get("device.template");
+        serviceTemplate = (String)prop.get("service.template");
+        connectorTemplate = (String)prop.get("connector.template");
+
         LOGGER.info(this.getClass().getSimpleName() + " initialized.");
     }
 
     @Override
     public void mount(DriverConfig driverConfig)  {
         try {
-            LOGGER.info("Initializing driver: {}", driverConfig.path);
+            LOGGER.info("Initializing device: {}", driverConfig.path);
             DriverMountPoint driverMountPoint = new DriverMountPoint(busProxy, driverConfig);
-            mount(driverMountPoint);
-
+            mount(deviceTemplate, driverMountPoint);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -48,21 +52,20 @@ public class MountServiceLocal implements MountService {
         try {
             LOGGER.info("Initializing service: {}", serviceConfig.path);
             ServiceMountPoint serviceMountPoint = new ServiceMountPoint(busProxy, serviceConfig);
-            mount(serviceMountPoint);
+            mount(serviceTemplate, serviceMountPoint);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void mount(MountPoint mountPoint) {
-        pathMap.put(mountPoint.getMountPointContextRoot(), mountPoint);
-        mountPointRegistry.add(mountPoint);
+    private void mount(String mountTemplate, MountPoint mountPoint) {
         mountPoint.init();
-        LOGGER.info("Mounted: {}", mountPoint);
-    }
+        LOGGER.info("MountPoint initialized: {}", mountPoint);
 
-    @Override
-    public MountPoint getMountPoint(String requestPath) {
-        return pathMap.get(requestPath);
+        String mountPath = Alias.normalize(mountTemplate, "id", mountPoint.getDataSlotId());
+        Controller.getService(MappingService.class).map(mountPath, mountPoint.getDataSlotId());
+
+        mountPoint.start();
+        LOGGER.info("MountPoint started: {}", mountPoint);
     }
 }

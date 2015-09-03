@@ -24,11 +24,11 @@ public class ServiceMountPoint extends MountPoint {
     private static final Logger LOGGER = LogUtil.getLogger();
 
     private final Service service;
-    private final Map<UUID, Exchange> pendingResponses = new ConcurrentHashMap<>();
+
+    private static final Map<UUID, Exchange> PENDING_RPC_RESPONSES = new ConcurrentHashMap<>();
 
     public ServiceMountPoint(BusProxy busProxy, ServiceConfig serviceConfig) {
-        super(serviceConfig.path,
-              Collections.unmodifiableMap(serviceConfig.initParams),
+        super(Collections.unmodifiableMap(serviceConfig.initParams),
               busProxy);
 
         this.service = ObjectUtil.newInstance(serviceConfig.serviceClassName);
@@ -37,12 +37,16 @@ public class ServiceMountPoint extends MountPoint {
     public void init() {
         super.init();
         ObjectUtil.injectByType(service, this);
+    }
+
+    @Override
+    public void start() {
         service.init(getInitParams());
     }
 
     @Override
     public void handle(Message message) {
-        Exchange exchange = pendingResponses.remove(message.getConversationId());
+        Exchange exchange = PENDING_RPC_RESPONSES.remove(message.getConversationId());
         if (exchange != null) {
             exchange.setResponse(message);
         }
@@ -69,16 +73,17 @@ public class ServiceMountPoint extends MountPoint {
 
     private Exchange createExchange(Message kylaMessage) {
         Exchange exchange = new Exchange();
-        pendingResponses.put(kylaMessage.getConversationId(), exchange);
+        PENDING_RPC_RESPONSES.put(kylaMessage.getConversationId(), exchange);
 
         return  exchange;
     }
 
     private Message<HeikoMessage> toKylaMessage(HeikoMessage heikoMessage) {
         MountService mountService = Controller.getService(MountService.class);
-        String dataSlotId = mountService.getMountPoint(heikoMessage.absolutePath).getMountPointContextRoot();
-
-        return createMessage(dataSlotId, heikoMessage);
+//        String dataSlotId = mountService.getMountPoint(heikoMessage.absolutePath).getMountPointContextRoot();
+//
+//        return createMessage(dataSlotId, heikoMessage);
+        return null;
     }
 
     private static class Exchange {

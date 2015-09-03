@@ -12,6 +12,4 @@ public interface MountService {
     void mount(DriverConfig driverConfig);
 
     void mount(ServiceConfig serviceConfig);
-
-    MountPoint getMountPoint(String requestPath);
 }

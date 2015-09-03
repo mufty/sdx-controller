@@ -20,8 +20,7 @@ public class DriverMountPoint extends MountPoint {
     private final Driver driver;
 
     public DriverMountPoint(BusProxy busProxy, DriverConfig driverConfig) {
-        super(driverConfig.path,
-              Collections.unmodifiableMap(driverConfig.initParams),
+        super(Collections.unmodifiableMap(driverConfig.initParams),
               busProxy);
 
         this.driver = ObjectUtil.newInstance(driverConfig.driverClassName);
@@ -31,6 +30,9 @@ public class DriverMountPoint extends MountPoint {
         super.init();
         ObjectUtil.injectByType(driver, this);
     }
+
+    @Override
+    public void start() {}
 
     @Override
     public void handle(Message<HeikoMessage> kylaMessage) {
@@ -49,33 +51,33 @@ public class DriverMountPoint extends MountPoint {
 
     private void handleSetValue(Message<HeikoMessage> message) {
         HeikoMessage heikoMessage = message.getData();
-        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
-
-        driver.setValue(contextRelativePath, heikoMessage.payload);
+//        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
+//
+//        driver.setValue(contextRelativePath, heikoMessage.payload);
     }
 
     private void handleGetValue(Message<HeikoMessage> message) {
         HeikoMessage heikoMessage = message.getData();
-        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
+//        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
 
-        Object result = driver.getValue(contextRelativePath);
-        HeikoMessage reply = new HeikoMessage<>();
-        reply.absolutePath = heikoMessage.absolutePath;
-        reply.payload = result;
-
-        this.send(message.createReply(reply));
+//        Object result = driver.getValue(contextRelativePath);
+//        HeikoMessage reply = new HeikoMessage<>();
+//        reply.absolutePath = heikoMessage.absolutePath;
+//        reply.payload = result;
+//
+//        this.send(message.createReply(reply));
     }
 
     private void handleCall(Message<HeikoMessage> message) {
-        HeikoMessage heikoMessage = message.getData();
-        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
-
-        Object result = driver.call(contextRelativePath, heikoMessage.payload);
-        HeikoMessage reply = new HeikoMessage<>();
-        reply.absolutePath = heikoMessage.absolutePath;
-        reply.payload = result;
-        reply.type = HeikoMessage.Type.REPLY;
-
-        this.send(message.createReply(reply));
+//        HeikoMessage heikoMessage = message.getData();
+//        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
+//
+//        Object result = driver.call(contextRelativePath, heikoMessage.payload);
+//        HeikoMessage reply = new HeikoMessage<>();
+//        reply.absolutePath = heikoMessage.absolutePath;
+//        reply.payload = result;
+//        reply.type = HeikoMessage.Type.REPLY;
+//
+//        this.send(message.createReply(reply));
     }
 }

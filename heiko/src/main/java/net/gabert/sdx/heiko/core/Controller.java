@@ -40,6 +40,7 @@ public class Controller {
     private void initializeServices() {
         LOGGER.info("--- PHASE --- Initializing heiko services.");
         HEIKO_SERVICE_REGISTRY.put(MountService.class, new MountServiceLocal(this.busProxy));
+        HEIKO_SERVICE_REGISTRY.put(MappingService.class, new MappingService());
     }
 
     private void startBus() {
