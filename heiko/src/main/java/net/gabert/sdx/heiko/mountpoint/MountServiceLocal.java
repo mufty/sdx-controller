@@ -17,8 +17,6 @@ import java.util.Properties;
  * @author Robert Gallas
  */
 public class MountServiceLocal implements MountService {
-    private static final Logger LOGGER = LogUtil.getLogger();
-
     private final String deviceTemplate;
     private final String serviceTemplate;
     private final String connectorTemplate;
@@ -34,8 +32,6 @@ public class MountServiceLocal implements MountService {
         deviceTemplate = (String)prop.get("device.template");
         serviceTemplate = (String)prop.get("service.template");
         connectorTemplate = (String)prop.get("connector.template");
-
-        LOGGER.info(this.getClass().getSimpleName() + " initialized.");
     }
 
     @Override

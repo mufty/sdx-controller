@@ -2,6 +2,8 @@ package net.gabert.sdx.kyla.core;
 
 import net.gabert.sdx.kyla.api.DataSlotRegistryProvider;
 import net.gabert.sdx.kyla.api.Endpoint;
+import net.gabert.util.LogUtil;
+import org.slf4j.Logger;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -11,10 +13,13 @@ import java.util.List;
  * @author Robert Gallas
  */
 public class DataSlotRegistryProviderProxy implements DataSlotRegistryProvider {
+    private static final Logger LOGGER = LogUtil.getLogger();
+
     private final DataSlotRegistryProvider provider;
 
     public DataSlotRegistryProviderProxy(String dataSlotProviderClassName) {
         this.provider = loadProvider(dataSlotProviderClassName);
+        LOGGER.info("Dataslot provider: {}", this.provider.getClass().getSimpleName());
     }
 
     private static DataSlotRegistryProvider loadProvider(String dataSlotProviderClassName) {

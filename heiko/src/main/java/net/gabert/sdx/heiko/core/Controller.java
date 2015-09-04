@@ -32,17 +32,21 @@ public class Controller {
     // ----- INITIALIZATION -----
     private void init() {
         startBus();
-        initializeServices();
+        initializeHeikoServices();
         mountDevices();
         mountServices();
         createStaticMappings();
         startMountPoints();
     }
 
-    private void initializeServices() {
+    private void initializeHeikoServices() {
         LOGGER.info("PHASE[1]: Initialize HEIKO services.");
+
         HEIKO_SERVICE_REGISTRY.put(MountService.class, new MountServiceLocal(this.busProxy));
+        LOGGER.info("{} initialized.", HEIKO_SERVICE_REGISTRY.get(MountService.class).getClass().getSimpleName());
+
         HEIKO_SERVICE_REGISTRY.put(MappingService.class, new MappingService());
+        LOGGER.info("{} initialized.", HEIKO_SERVICE_REGISTRY.get(MappingService.class).getClass().getSimpleName());
     }
 
     private void startBus() {

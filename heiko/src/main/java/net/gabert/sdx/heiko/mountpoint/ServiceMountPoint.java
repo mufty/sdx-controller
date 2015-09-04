@@ -31,7 +31,7 @@ public class ServiceMountPoint extends MountPoint {
     private ServiceMountPoint(BusProxy busProxy, ServiceConfig serviceConfig) {
         super(busProxy);
 
-        LOGGER.info("Initializing service: {}", getDataSlotId());
+        LOGGER.info("Initializing service: {}", getPlainDataSlotId());
         this.service = ObjectUtil.newInstance(serviceConfig.serviceClassName);
         this.initParams = Collections.unmodifiableMap(serviceConfig.initParams);
     }
@@ -39,7 +39,7 @@ public class ServiceMountPoint extends MountPoint {
     private ServiceMountPoint(String dataSlotId, BusProxy busProxy, ServiceConfig serviceConfig) {
         super(dataSlotId, busProxy);
 
-        LOGGER.info("Initializing service: {}", getDataSlotId());
+        LOGGER.info("Initializing service: {}", getPlainDataSlotId());
         this.service = ObjectUtil.newInstance(serviceConfig.serviceClassName);
         this.initParams = Collections.unmodifiableMap(serviceConfig.initParams);
     }
@@ -68,7 +68,7 @@ public class ServiceMountPoint extends MountPoint {
         Message kylaMessage = toKylaMessage(absolutePath,
                                             toHeikoMessage(absolutePath, type, payload));
 
-        LOGGER.trace("OUT => {MountpointId: {}, KylaMessage: {}} ", getDataSlotId(), kylaMessage);
+        LOGGER.trace("OUT => {MountPointId: {}, KylaMessage: {}} ", getDataSlotId(), kylaMessage);
 
         send(kylaMessage);
     }
@@ -78,7 +78,7 @@ public class ServiceMountPoint extends MountPoint {
                                             toHeikoMessage(absolutePath, type,  payload));
         Exchange exchange = Exchange.createExchange(kylaMessage);
 
-        LOGGER.trace("OUT => {MountpointId: {}, KylaMessage: {}} ", getDataSlotId(), kylaMessage);
+        LOGGER.trace("OUT => {MountPointId: {}, KylaMessage: {}} ", getDataSlotId(), kylaMessage);
 
         send(kylaMessage);
 

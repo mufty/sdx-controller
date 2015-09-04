@@ -39,8 +39,6 @@ public class BusProxy implements Bus {
             throw new RuntimeException(e);
         }
 
-        LOGGER.info("Dataslot provider: {}", this.dataSlotRegistryProvider.getClass().getSimpleName());
-
         LOGGER.info("{} created.", BusProxy.class.getSimpleName());
     }
 
