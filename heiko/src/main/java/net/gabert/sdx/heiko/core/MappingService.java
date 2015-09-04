@@ -40,7 +40,7 @@ public class MappingService {
         return mountPathToDtaSlotId.get(mountPointPath);
     }
 
-    public String resolveContextRelativePath(String absolutePath) {
+    public String getMountPointRelativePath(String absolutePath) {
         String mountPointPath = mountPathReducer.get(absolutePath);
         return absolutePath.replace(mountPointPath, "");
     }

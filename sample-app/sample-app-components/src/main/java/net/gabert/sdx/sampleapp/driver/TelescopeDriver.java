@@ -14,7 +14,7 @@ public class TelescopeDriver extends Driver {
     private int azimuth;
     private int altitude;
 
-    private final SimpleValueHolder db = new SimpleValueHolder("/azimuth", "/altitude");
+    private final SimpleDB db = new SimpleDB("/azimuth", "/altitude");
 
     @Override
     public Object getValue(String path) {

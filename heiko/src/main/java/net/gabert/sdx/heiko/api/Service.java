@@ -38,28 +38,17 @@ public abstract class Service {
         public void setValue(String contextRelativePath, Object value) {
             LOGGER.debug("SET Value: {}{} -> {}", contextroot, contextRelativePath, value);
 
-            HeikoMessage heikoMessage = toHeikoMessage(contextRelativePath,
-                                                       HeikoMessage.Type.SET,
-                                                       value);
-            mountPoint.send(heikoMessage);
+            mountPoint.send(toAbsolutePath(contextRelativePath),
+                            HeikoMessage.Type.SET,
+                            value);
         }
 
         public Object getValue(String contextRelativePath) {
             LOGGER.debug("GET Value: {}{}", contextroot, contextRelativePath);
 
-            HeikoMessage heikoMessage = toHeikoMessage(contextRelativePath,
-                                                       HeikoMessage.Type.GET,
-                                                       null);
-            return mountPoint.rpc(heikoMessage).payload;
-        }
-
-        private HeikoMessage toHeikoMessage(String contextRelativePath, HeikoMessage.Type type, Object payload) {
-            HeikoMessage heikoMessage = new HeikoMessage();
-            heikoMessage.absolutePath = toAbsolutePath(contextRelativePath);
-            heikoMessage.type = type;
-            heikoMessage.payload = payload;
-
-            return heikoMessage;
+            return mountPoint.rpc(toAbsolutePath(contextRelativePath),
+                                  HeikoMessage.Type.GET,
+                                  null).payload;
         }
 
         private String toAbsolutePath(String contextRelativePath) {

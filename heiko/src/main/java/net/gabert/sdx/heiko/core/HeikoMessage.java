@@ -9,7 +9,7 @@ public class HeikoMessage<T> {
         GET, SET, CALL, REPLY
     }
 
-    public String absolutePath;
+    public String mountPointRelativePath;
     public T payload;
     public Type type;
 
@@ -17,7 +17,7 @@ public class HeikoMessage<T> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{type: ").append(type).append(", ");
-        sb.append("absolutePath: ").append(absolutePath).append(", ");
+        sb.append("mountPointRelativePath: ").append(mountPointRelativePath).append(", ");
         sb.append("payload: ").append(payload).append("}");
 
         return sb.toString();

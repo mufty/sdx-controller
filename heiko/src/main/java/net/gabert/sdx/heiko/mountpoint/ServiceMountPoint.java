@@ -1,7 +1,6 @@
 package net.gabert.sdx.heiko.mountpoint;
 
 import net.gabert.sdx.heiko.api.Service;
-import net.gabert.sdx.heiko.configuration.schema.DriverConfig;
 import net.gabert.sdx.heiko.configuration.schema.ServiceConfig;
 import net.gabert.sdx.heiko.core.Controller;
 import net.gabert.sdx.heiko.core.HeikoMessage;
@@ -70,17 +69,19 @@ public class ServiceMountPoint extends MountPoint {
         }
     }
 
-    public void send(HeikoMessage heikoMessage) {
-        Message kylaMessage = toKylaMessage(heikoMessage);
+    public void send(String absolutePath, HeikoMessage.Type type, Object payload) {
+        Message kylaMessage = toKylaMessage(absolutePath,
+                                            toHeikoMessage(absolutePath, type,  payload));
 
         LOGGER.trace("OUT => {MountpointId: {}, KylaMessage: {}} ", getDataSlotId(), kylaMessage);
 
         send(kylaMessage);
     }
 
-    public HeikoMessage rpc(HeikoMessage heikoRequest) {
-        Message kylaMessage = toKylaMessage(heikoRequest);
-        Exchange exchange = createExchange(kylaMessage);
+    public HeikoMessage rpc(String absolutePath, HeikoMessage.Type type, Object payload) {
+        Message kylaMessage = toKylaMessage(absolutePath,
+                                            toHeikoMessage(absolutePath, type,  payload));
+        Exchange exchange = Exchange.createExchange(kylaMessage);
 
         LOGGER.trace("OUT => {MountpointId: {}, KylaMessage: {}} ", getDataSlotId(), kylaMessage);
 
@@ -89,15 +90,18 @@ public class ServiceMountPoint extends MountPoint {
         return exchange.getResponse();
     }
 
-    private Exchange createExchange(Message kylaMessage) {
-        Exchange exchange = new Exchange();
-        PENDING_RPC_RESPONSES.put(kylaMessage.getConversationId(), exchange);
+    private HeikoMessage toHeikoMessage(String absolutePath, HeikoMessage.Type type, Object payload) {
+        HeikoMessage heikoMessage = new HeikoMessage();
+        heikoMessage.mountPointRelativePath = Controller.getService(MappingService.class)
+                                                        .getMountPointRelativePath(absolutePath);
+        heikoMessage.type = type;
+        heikoMessage.payload = payload;
 
-        return  exchange;
+        return heikoMessage;
     }
 
-    private Message<HeikoMessage> toKylaMessage(HeikoMessage heikoMessage) {
-        String dataSlotId = Controller.getService(MappingService.class).resolveDataSlotId(heikoMessage.absolutePath);
+    private Message<HeikoMessage> toKylaMessage(String absolutePath, HeikoMessage heikoMessage) {
+        String dataSlotId = Controller.getService(MappingService.class).resolveDataSlotId(absolutePath);
 
         return createMessage(dataSlotId, heikoMessage);
     }
@@ -121,5 +125,13 @@ public class ServiceMountPoint extends MountPoint {
             heikoResponse = (HeikoMessage)kylaResponse.getData();
             latch.countDown();
         }
+
+        private static Exchange createExchange(Message kylaMessage) {
+            Exchange exchange = new Exchange();
+            PENDING_RPC_RESPONSES.put(kylaMessage.getConversationId(), exchange);
+
+            return  exchange;
+        }
+
     }
 }

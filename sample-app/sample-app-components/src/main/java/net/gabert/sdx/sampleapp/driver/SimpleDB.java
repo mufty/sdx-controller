@@ -7,20 +7,20 @@ import java.util.Map;
  *
  * @author Robert Gallas
  */
-public class SimpleValueHolder {
+public class SimpleDB {
     private Map<String, Object> map = new HashMap<>();
 
-    public SimpleValueHolder(String... keys) {
+    public SimpleDB(String... keys) {
         for (String key : keys) {
             map.put(key, null);
         }
     }
 
-    public void setValue(String key, Object value) {
+    public synchronized void setValue(String key, Object value) {
         map.replace(key, value);
     }
 
-    public Object getValue(String key) {
+    public synchronized Object getValue(String key) {
         return map.get(key);
     }
 }
