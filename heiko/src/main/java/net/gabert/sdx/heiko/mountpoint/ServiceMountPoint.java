@@ -1,6 +1,7 @@
 package net.gabert.sdx.heiko.mountpoint;
 
 import net.gabert.sdx.heiko.api.Service;
+import net.gabert.sdx.heiko.configuration.schema.DriverConfig;
 import net.gabert.sdx.heiko.configuration.schema.ServiceConfig;
 import net.gabert.sdx.heiko.core.Controller;
 import net.gabert.sdx.heiko.core.HeikoMessage;
@@ -25,14 +26,29 @@ public class ServiceMountPoint extends MountPoint {
 
     private final Service service;
 
+    private final Map<String, Object> initParams;
+
     private static final Map<UUID, Exchange> PENDING_RPC_RESPONSES = new ConcurrentHashMap<>();
 
-    public ServiceMountPoint(BusProxy busProxy, ServiceConfig serviceConfig) {
-        super(Collections.unmodifiableMap(serviceConfig.initParams),
-              busProxy);
+    private ServiceMountPoint(BusProxy busProxy, ServiceConfig serviceConfig) {
+        super(busProxy);
 
         LOGGER.info("Initializing service: {}", getDataSlotId());
         this.service = ObjectUtil.newInstance(serviceConfig.serviceClassName);
+        this.initParams = Collections.unmodifiableMap(serviceConfig.initParams);
+    }
+
+    private ServiceMountPoint(String dataSlotId, BusProxy busProxy, ServiceConfig serviceConfig) {
+        super(dataSlotId, busProxy);
+
+        LOGGER.info("Initializing service: {}", getDataSlotId());
+        this.service = ObjectUtil.newInstance(serviceConfig.serviceClassName);
+        this.initParams = Collections.unmodifiableMap(serviceConfig.initParams);
+    }
+
+    public static ServiceMountPoint newInstance(BusProxy busProxy, ServiceConfig serviceConfig) {
+        return serviceConfig.id == null ? new ServiceMountPoint(busProxy, serviceConfig)
+                                        : new ServiceMountPoint(serviceConfig.id, busProxy, serviceConfig);
     }
 
     public void init() {
@@ -42,7 +58,7 @@ public class ServiceMountPoint extends MountPoint {
 
     @Override
     public void start() {
-        service.init(getInitParams());
+        service.init(initParams);
     }
 
     @Override

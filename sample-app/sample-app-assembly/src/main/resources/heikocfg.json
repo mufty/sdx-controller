@@ -5,23 +5,26 @@
   "bus" : {"configUrl" : "classpath:kylacfg.json"},
 
   "drivers" : [
-    {"driverClassName": "#{telescopeDriver}",
+    {"driverClassName": "${telescopeDriver}",
+     "id": "tdID" ,
      "initParams": {"param1" : 1}},
 
-    {"driverClassName": "#{housingDriver}",
+    {"driverClassName": "${housingDriver}",
+     "id": "hdID1" ,
      "initParams": {"param1" : 1}},
 
-    {"driverClassName": "#{housingDriver}",
-      "path": "/iot/houseB",
+    {"driverClassName": "${housingDriver}",
+      "id": "hdID2" ,
       "initParams": {"param1" : 1}}
   ],
 
   "services" : [
     {"serviceClassName": "net.gabert.sdx.sampleapp.service.SampleService",
+     "id": "ssID",
      "initParams": {"param1" : 1}}
-  ]
+  ],
 
   "mappings" : [
-    "/system/devices/a", "/iot/telescopes/palo-alto"
+    "/system/devices/tdID", "/iot/telescopes/palo-alto"
   ]
 }

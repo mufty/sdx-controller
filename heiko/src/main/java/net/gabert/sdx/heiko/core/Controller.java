@@ -33,8 +33,8 @@ public class Controller {
     private void init() {
         startBus();
         initializeServices();
-        mountEndpoints();
-        startServices();
+        mountDevices();
+//        startServices();
     }
 
     private void initializeServices() {
@@ -48,8 +48,8 @@ public class Controller {
         this.busProxy = BusProxy.start(this.config.bus.configUrl);
     }
 
-    private void mountEndpoints() {
-        LOGGER.info("--- PHASE --- Processing mountpoints.");
+    private void mountDevices() {
+        LOGGER.info("--- PHASE --- Processing devices.");
 
         MountService mountService = getService(MountService.class);
         for (DriverConfig driver : this.config.drivers) {

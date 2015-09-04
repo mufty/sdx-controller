@@ -39,7 +39,7 @@ public class MountServiceLocal implements MountService {
     @Override
     public void mount(DriverConfig driverConfig)  {
         try {
-            DriverMountPoint driverMountPoint = new DriverMountPoint(busProxy, driverConfig);
+            DriverMountPoint driverMountPoint = DriverMountPoint.newInstance(busProxy, driverConfig);
             mount(deviceTemplate, driverMountPoint);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -49,7 +49,7 @@ public class MountServiceLocal implements MountService {
     @Override
     public void mount(ServiceConfig serviceConfig) {
         try {
-            ServiceMountPoint serviceMountPoint = new ServiceMountPoint(busProxy, serviceConfig);
+            ServiceMountPoint serviceMountPoint = ServiceMountPoint.newInstance(busProxy, serviceConfig);
             mount(serviceTemplate, serviceMountPoint);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -59,7 +59,7 @@ public class MountServiceLocal implements MountService {
     private void mount(String mountTemplate, MountPoint mountPoint) {
         mountPoint.init();
 
-        String mountPath = Alias.normalize(mountTemplate, "id", mountPoint.getDataSlotId());
+        String mountPath = Alias.normalize(mountTemplate, "id", mountPoint.getPlainDataSlotId());
         Controller.getService(MappingService.class).map(mountPath, mountPoint.getDataSlotId());
 
         mountPoint.start();

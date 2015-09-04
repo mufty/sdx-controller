@@ -8,5 +8,6 @@ import java.util.Map;
  */
 public class DriverConfig {
     public String driverClassName;
+    public String id;
     public Map<String, Object> initParams;
 }

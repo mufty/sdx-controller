@@ -33,7 +33,7 @@ public class DataSlotRegistryProviderProxy implements DataSlotRegistryProvider {
     public void register(Endpoint endpoint) {
         String dataSlotId = endpoint.getDataSlotId();
         if (dataSlotId.startsWith(Endpoint.ID_CLASSIFIER) == false) {
-            throw new IllegalArgumentException("Endpoint registration dataSlotId must start with " +
+            throw new IllegalArgumentException("Endpoint dataSlotId must start with " +
                                                Endpoint.ID_CLASSIFIER);
         }
 

@@ -30,6 +30,11 @@ public class MappingService {
         LOGGER.info("Mapped: {} -> {}", mountPath, dataSlotId);
     }
 
+    public void link(String existingMountPath, String newMountPath) {
+        String dataSlotId = resolveDataSlotId(existingMountPath);
+        map(newMountPath, dataSlotId);
+    }
+
     public String resolveMountPath(String absolutePath) {
         return mountPathReducer.get(absolutePath);
     }

@@ -1,5 +1,7 @@
 package net.gabert.sdx.heiko.mountpoint;
 
+import net.gabert.sdx.heiko.core.HeikoMessage;
+import net.gabert.sdx.kyla.api.Endpoint;
 import net.gabert.sdx.kyla.core.BusProxy;
 
 import java.util.Map;
@@ -8,14 +10,17 @@ import java.util.Map;
  *
  * @author Robert Gallas
  */
-public abstract class MountPoint extends HeikoEndpoint {
-    private final Map<String, Object> initParams;
+public abstract class MountPoint extends Endpoint<HeikoMessage> {
     private final BusProxy busProxy;
 
-    public MountPoint(Map<String, Object> initParams,
-                      BusProxy busProxy) {
+    public MountPoint(BusProxy busProxy) {
         super(busProxy);
-        this.initParams = initParams;
+        this.busProxy = busProxy;
+    }
+
+    public MountPoint(String dataslotId,
+                      BusProxy busProxy) {
+        super(dataslotId, busProxy);
         this.busProxy = busProxy;
     }
 
@@ -24,8 +29,4 @@ public abstract class MountPoint extends HeikoEndpoint {
     }
 
     public abstract void start();
-
-    protected Map<String, Object> getInitParams() {
-        return initParams;
-    }
 }

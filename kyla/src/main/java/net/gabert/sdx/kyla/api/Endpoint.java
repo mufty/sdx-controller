@@ -16,8 +16,21 @@ public abstract class Endpoint<T> {
     private final Bus bus;
 
     protected Endpoint(Bus bus) {
+        this(getDefaultDataSlotId(), bus);
+    }
+
+    protected Endpoint(String dataSlotId, Bus bus) {
         this.bus = bus;
-        this.dataSlotId = ID_CLASSIFIER + Security.getUUID().toString();
+        this.dataSlotId = dataSlotId.startsWith(ID_CLASSIFIER) ? dataSlotId
+                                                               : attachClassifier(dataSlotId);
+    }
+
+    private static String getDefaultDataSlotId() {
+        return attachClassifier(Security.getUUID().toString());
+    }
+
+    private static String attachClassifier(String dataSlotId) {
+        return ID_CLASSIFIER + dataSlotId;
     }
 
     public void send(Message<T> message) {
@@ -26,6 +39,10 @@ public abstract class Endpoint<T> {
     
     public String getDataSlotId() {
         return dataSlotId;
+    }
+
+    public String getPlainDataSlotId() {
+        return dataSlotId.replace(ID_CLASSIFIER, "");
     }
 
     public <T> Message<T> createMessage(String destinationSlotId, T data) {

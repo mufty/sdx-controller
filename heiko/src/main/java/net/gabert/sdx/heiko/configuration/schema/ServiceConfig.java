@@ -8,5 +8,6 @@ import java.util.Map;
  */
 public class ServiceConfig {
     public String serviceClassName;
+    public String id;
     public Map<String, Object> initParams;
 }

@@ -17,14 +17,29 @@ import java.util.Collections;
 public class DriverMountPoint extends MountPoint {
     private static final Logger LOGGER = LogUtil.getLogger();
 
+    //TODO: Collections.unmodifiableMap(driverConfig.initParams)
     private final Driver driver;
 
-    public DriverMountPoint(BusProxy busProxy, DriverConfig driverConfig) {
-        super(Collections.unmodifiableMap(driverConfig.initParams),
-              busProxy);
+    private DriverMountPoint(String dataSlotId,
+                             BusProxy busProxy,
+                             DriverConfig driverConfig) {
+        super(dataSlotId, busProxy);
+
+        LOGGER.info("Initializing device: {}", getPlainDataSlotId());
+        this.driver = ObjectUtil.newInstance(driverConfig.driverClassName);
+    }
+
+    private DriverMountPoint(BusProxy busProxy,
+                             DriverConfig driverConfig) {
+        super(busProxy);
 
         LOGGER.info("Initializing device: {}", getDataSlotId());
         this.driver = ObjectUtil.newInstance(driverConfig.driverClassName);
+    }
+
+    public static DriverMountPoint newInstance(BusProxy busProxy, DriverConfig driverConfig) {
+        return driverConfig.id == null ? new DriverMountPoint(busProxy, driverConfig)
+                                       : new DriverMountPoint(driverConfig.id, busProxy, driverConfig);
     }
 
     public void init() {
