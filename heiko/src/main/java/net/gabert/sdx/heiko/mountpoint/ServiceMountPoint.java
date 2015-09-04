@@ -28,8 +28,6 @@ public class ServiceMountPoint extends MountPoint {
 
     private final Map<String, Object> initParams;
 
-    private static final Map<UUID, Exchange> PENDING_RPC_RESPONSES = new ConcurrentHashMap<>();
-
     private ServiceMountPoint(BusProxy busProxy, ServiceConfig serviceConfig) {
         super(busProxy);
 
@@ -62,16 +60,13 @@ public class ServiceMountPoint extends MountPoint {
     }
 
     @Override
-    public void handle(Message message) {
-        Exchange exchange = PENDING_RPC_RESPONSES.remove(message.getConversationId());
-        if (exchange != null) {
-            exchange.setResponse(message);
-        }
+    public void handle(Message kylaMessage) {
+        Exchange.possiblySetResponse(kylaMessage);
     }
 
     public void send(String absolutePath, HeikoMessage.Type type, Object payload) {
         Message kylaMessage = toKylaMessage(absolutePath,
-                                            toHeikoMessage(absolutePath, type,  payload));
+                                            toHeikoMessage(absolutePath, type, payload));
 
         LOGGER.trace("OUT => {MountpointId: {}, KylaMessage: {}} ", getDataSlotId(), kylaMessage);
 
@@ -104,34 +99,5 @@ public class ServiceMountPoint extends MountPoint {
         String dataSlotId = Controller.getService(MappingService.class).resolveDataSlotId(absolutePath);
 
         return createMessage(dataSlotId, heikoMessage);
-    }
-
-    private static class Exchange {
-        private HeikoMessage heikoResponse;
-        private final CountDownLatch latch = new CountDownLatch(1);
-
-        public HeikoMessage getResponse() {
-            try {
-                latch.await();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            synchronized (this) {
-                return heikoResponse;
-            }
-        }
-
-        public synchronized void setResponse(Endpoint.Message kylaResponse) {
-            heikoResponse = (HeikoMessage)kylaResponse.getData();
-            latch.countDown();
-        }
-
-        private static Exchange createExchange(Message kylaMessage) {
-            Exchange exchange = new Exchange();
-            PENDING_RPC_RESPONSES.put(kylaMessage.getConversationId(), exchange);
-
-            return  exchange;
-        }
-
     }
 }

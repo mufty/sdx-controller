@@ -25,7 +25,7 @@ public class DriverMountPoint extends MountPoint {
                              DriverConfig driverConfig) {
         super(dataSlotId, busProxy);
 
-        LOGGER.info("Initializing device: {}", getPlainDataSlotId());
+        LOGGER.info("Initializing device: {}", getDataSlotId());
         this.driver = ObjectUtil.newInstance(driverConfig.driverClassName);
     }
 
