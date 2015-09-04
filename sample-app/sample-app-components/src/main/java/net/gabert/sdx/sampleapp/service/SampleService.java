@@ -15,7 +15,7 @@ import static net.gabert.util.LogUtil.sout;
 public class SampleService extends Service {
     @Override
     public void init(Map<String, Object> initParams) {
-        Context telescope = getContext("/iot/telescope");
+        Context telescope = getContext("/iot/telescopes/palo-alto");
         telescope.setValue("/azimuth", 12);
         telescope.setValue("/altitude", 25);
 

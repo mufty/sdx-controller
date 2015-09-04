@@ -34,22 +34,24 @@ public class Controller {
         startBus();
         initializeServices();
         mountDevices();
-//        startServices();
+        mountServices();
+        createStaticMappings();
+        startMountPoints();
     }
 
     private void initializeServices() {
-        LOGGER.info("--- PHASE --- Initializing heiko services.");
+        LOGGER.info("PHASE[1]: Initialize HEIKO services.");
         HEIKO_SERVICE_REGISTRY.put(MountService.class, new MountServiceLocal(this.busProxy));
         HEIKO_SERVICE_REGISTRY.put(MappingService.class, new MappingService());
     }
 
     private void startBus() {
-        LOGGER.info("--- PHASE --- Starting busProxy.");
+        LOGGER.info("PHASE[2]: Start KYLA.");
         this.busProxy = BusProxy.start(this.config.bus.configUrl);
     }
 
     private void mountDevices() {
-        LOGGER.info("--- PHASE --- Processing devices.");
+        LOGGER.info("PHASE[3]: Mount devices.");
 
         MountService mountService = getService(MountService.class);
         for (DriverConfig driver : this.config.drivers) {
@@ -57,13 +59,25 @@ public class Controller {
         }
     }
 
-    private void startServices() {
-        LOGGER.info("--- PHASE --- Starting services.");
+    private void mountServices() {
+        LOGGER.info("PHASE[4]: Mount services.");
 
         MountService mountService = getService(MountService.class);
         for (ServiceConfig serviceCfg : this.config.services) {
             mountService.mount(serviceCfg);
         }
+    }
+
+    private void createStaticMappings() {
+        LOGGER.info("PHASE[5]: Create static mappings.");
+        for (Map.Entry<String, String> mapping : this.config.mappings.entrySet()) {
+            Controller.getService(MappingService.class).link(mapping.getKey(), mapping.getValue());
+        }
+    }
+
+    private void startMountPoints() {
+        LOGGER.info("PHASE[6]: Start mount points.");
+        getService(MountService.class).startMontPoints();
     }
 
     // ----- BOOTSTRAP -----

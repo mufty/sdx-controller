@@ -12,4 +12,6 @@ public interface MountService {
     void mount(DriverConfig driverConfig);
 
     void mount(ServiceConfig serviceConfig);
+
+    void startMontPoints();
 }

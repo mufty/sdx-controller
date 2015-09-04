@@ -24,7 +24,7 @@
      "initParams": {"param1" : 1}}
   ],
 
-  "mappings" : [
-    "/system/devices/tdID", "/iot/telescopes/palo-alto"
-  ]
+  "mappings" : {
+    "/system/devices/tdID": "/iot/telescopes/palo-alto"
+  }
 }

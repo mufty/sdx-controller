@@ -35,11 +35,13 @@ public class MappingService {
         map(newMountPath, dataSlotId);
     }
 
-    public String resolveMountPath(String absolutePath) {
-        return mountPathReducer.get(absolutePath);
+    public String resolveDataSlotId(String absolutePath) {
+        String mountPointPath = mountPathReducer.get(absolutePath);
+        return mountPathToDtaSlotId.get(mountPointPath);
     }
 
-    public String resolveDataSlotId(String mountPath) {
-        return mountPathToDtaSlotId.get(mountPath);
+    public String resolveContextRelativePath(String absolutePath) {
+        String mountPointPath = mountPathReducer.get(absolutePath);
+        return absolutePath.replace(mountPointPath, "");
     }
 }

@@ -5,6 +5,7 @@ import net.gabert.sdx.heiko.configuration.schema.DriverConfig;
 import net.gabert.sdx.heiko.configuration.schema.ServiceConfig;
 import net.gabert.sdx.heiko.core.Controller;
 import net.gabert.sdx.heiko.core.HeikoMessage;
+import net.gabert.sdx.heiko.core.MappingService;
 import net.gabert.sdx.kyla.api.Endpoint;
 import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.util.LogUtil;
@@ -96,11 +97,9 @@ public class ServiceMountPoint extends MountPoint {
     }
 
     private Message<HeikoMessage> toKylaMessage(HeikoMessage heikoMessage) {
-        MountService mountService = Controller.getService(MountService.class);
-//        String dataSlotId = mountService.getMountPoint(heikoMessage.absolutePath).getMountPointContextRoot();
-//
-//        return createMessage(dataSlotId, heikoMessage);
-        return null;
+        String dataSlotId = Controller.getService(MappingService.class).resolveDataSlotId(heikoMessage.absolutePath);
+
+        return createMessage(dataSlotId, heikoMessage);
     }
 
     private static class Exchange {

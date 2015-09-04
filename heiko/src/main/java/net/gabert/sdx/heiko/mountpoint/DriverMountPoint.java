@@ -1,5 +1,7 @@
 package net.gabert.sdx.heiko.mountpoint;
 
+import net.gabert.sdx.heiko.core.Controller;
+import net.gabert.sdx.heiko.core.MappingService;
 import net.gabert.util.ObjectUtil;
 import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.sdx.heiko.spi.Driver;
@@ -67,33 +69,37 @@ public class DriverMountPoint extends MountPoint {
 
     private void handleSetValue(Message<HeikoMessage> message) {
         HeikoMessage heikoMessage = message.getData();
-//        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
-//
-//        driver.setValue(contextRelativePath, heikoMessage.payload);
+        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
+
+        driver.setValue(contextRelativePath, heikoMessage.payload);
     }
 
     private void handleGetValue(Message<HeikoMessage> message) {
         HeikoMessage heikoMessage = message.getData();
-//        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
+        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
 
-//        Object result = driver.getValue(contextRelativePath);
-//        HeikoMessage reply = new HeikoMessage<>();
-//        reply.absolutePath = heikoMessage.absolutePath;
-//        reply.payload = result;
-//
-//        this.send(message.createReply(reply));
+        Object result = driver.getValue(contextRelativePath);
+        HeikoMessage reply = new HeikoMessage<>();
+        reply.absolutePath = heikoMessage.absolutePath;
+        reply.payload = result;
+
+        this.send(message.createReply(reply));
     }
 
     private void handleCall(Message<HeikoMessage> message) {
-//        HeikoMessage heikoMessage = message.getData();
-//        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
-//
-//        Object result = driver.call(contextRelativePath, heikoMessage.payload);
-//        HeikoMessage reply = new HeikoMessage<>();
-//        reply.absolutePath = heikoMessage.absolutePath;
-//        reply.payload = result;
-//        reply.type = HeikoMessage.Type.REPLY;
-//
-//        this.send(message.createReply(reply));
+        HeikoMessage heikoMessage = message.getData();
+        String contextRelativePath = getContextRelativePath(heikoMessage.absolutePath);
+
+        Object result = driver.call(contextRelativePath, heikoMessage.payload);
+        HeikoMessage reply = new HeikoMessage<>();
+        reply.absolutePath = heikoMessage.absolutePath;
+        reply.payload = result;
+        reply.type = HeikoMessage.Type.REPLY;
+
+        this.send(message.createReply(reply));
+    }
+
+    private String getContextRelativePath(String absolutePath) {
+        return Controller.getService(MappingService.class).resolveContextRelativePath(absolutePath);
     }
 }

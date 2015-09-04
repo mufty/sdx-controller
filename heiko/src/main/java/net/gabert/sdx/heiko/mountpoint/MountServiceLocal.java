@@ -23,6 +23,8 @@ public class MountServiceLocal implements MountService {
     private final String serviceTemplate;
     private final String connectorTemplate;
 
+    private List<MountPoint> mountPointRegistry = new ArrayList<>();
+
     private final BusProxy busProxy;
 
     public MountServiceLocal(BusProxy busProxy) {
@@ -56,13 +58,20 @@ public class MountServiceLocal implements MountService {
         }
     }
 
+    @Override
+    public void startMontPoints() {
+        for (MountPoint mp : mountPointRegistry) {
+            mp.start();
+        }
+    }
+
     private void mount(String mountTemplate, MountPoint mountPoint) {
         mountPoint.init();
 
         String mountPath = Alias.normalize(mountTemplate, "id", mountPoint.getPlainDataSlotId());
         Controller.getService(MappingService.class).map(mountPath, mountPoint.getDataSlotId());
-
-        mountPoint.start();
-        LOGGER.info("MountPoint started: {}", mountPoint);
+        mountPointRegistry.add(mountPoint);
+//        mountPoint.start();
+//        LOGGER.info("MountPoint started: {}", mountPoint);
     }
 }
