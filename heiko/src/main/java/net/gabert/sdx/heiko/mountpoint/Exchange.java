@@ -1,5 +1,6 @@
 package net.gabert.sdx.heiko.mountpoint;
 
+import net.gabert.sdx.heiko.api.Service;
 import net.gabert.sdx.heiko.core.HeikoMessage;
 import net.gabert.sdx.kyla.api.Endpoint;
 
@@ -15,7 +16,14 @@ public class Exchange {
     private static final Map<UUID, Exchange> PENDING_RPC_RESPONSES = new ConcurrentHashMap<>();
 
     private HeikoMessage heikoResponse;
+
+    private Service.Callback callback;
+
     private final CountDownLatch latch = new CountDownLatch(1);
+
+    private Exchange(Service.Callback callback) {
+        this.callback = callback;
+    }
 
     public HeikoMessage getResponse() {
         try {
@@ -24,20 +32,31 @@ public class Exchange {
             throw new RuntimeException(e);
         }
         synchronized (this) {
-            return heikoResponse;
+            return this.heikoResponse;
         }
     }
 
-    private synchronized void setResponse(Endpoint.Message kylaResponse) {
-        heikoResponse = (HeikoMessage)kylaResponse.getData();
+    private void setResponse(Endpoint.Message kylaResponse) {
+        this.heikoResponse = (HeikoMessage)kylaResponse.getData();
         latch.countDown();
+
+        if (callback != null) {
+            callback.done(this.heikoResponse.payload);
+        }
     }
 
     public static Exchange createExchange(Endpoint.Message kylaMessage) {
-        Exchange exchange = new Exchange();
+        Exchange exchange = new Exchange(null);
         PENDING_RPC_RESPONSES.put(kylaMessage.getConversationId(), exchange);
 
-        return  exchange;
+        return exchange;
+    }
+
+    public static Exchange createExchange(Endpoint.Message kylaMessage, Service.Callback callback) {
+        Exchange exchange = new Exchange(callback);
+        PENDING_RPC_RESPONSES.put(kylaMessage.getConversationId(), exchange);
+
+        return exchange;
     }
 
     public static void possiblySetResponse(Endpoint.Message possibleKylaResponse) {

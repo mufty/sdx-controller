@@ -28,6 +28,10 @@ public abstract class Service {
         return new Context(contextRoot);
     }
 
+    public static interface Callback {
+        void done(Object reponse);
+    }
+
     protected class Context {
         private final String contextroot;
 
@@ -38,9 +42,26 @@ public abstract class Service {
         public void setValue(String contextRelativePath, Object value) {
             LOGGER.debug("SET Value: {}{} -> {}", contextroot, contextRelativePath, value);
 
+            mountPoint.rpc(toAbsolutePath(contextRelativePath),
+                           HeikoMessage.Type.SET,
+                           value);
+        }
+
+        public void setValueAsync(String contextRelativePath, Object value) {
+            LOGGER.debug("SET Value Async: {}{} -> {}", contextroot, contextRelativePath, value);
+
             mountPoint.send(toAbsolutePath(contextRelativePath),
-                            HeikoMessage.Type.SET,
+                            HeikoMessage.Type.SET_ASYNC,
                             value);
+        }
+
+        public void setValueAsync(String contextRelativePath, Object value, Callback callback) {
+            LOGGER.debug("SET Value Async: {}{} -> {}", contextroot, contextRelativePath, value);
+
+            mountPoint.rpc(toAbsolutePath(contextRelativePath),
+                           HeikoMessage.Type.SET,
+                           value,
+                           callback);
         }
 
         public Object getValue(String contextRelativePath) {

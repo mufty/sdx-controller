@@ -52,12 +52,14 @@ public class DriverMountPoint extends MountPoint {
 
     @Override
     public void handle(Message<HeikoMessage> kylaMessage) {
-        LOGGER.trace("IN <= {MountpointId: {}, KylaMessage: {}} ", getDataSlotId(), kylaMessage);
+        LOGGER.trace("IN <= {MountPointId: {}, KylaMessage: {}} ", getDataSlotId(), kylaMessage);
         HeikoMessage heikoMessage = kylaMessage.getData();
 
         switch (heikoMessage.type) {
             case SET: handleSetValue(kylaMessage);
                       break;
+            case SET_ASYNC: handleSetValueAsync(kylaMessage);
+                            break;
             case GET: handleGetValue(kylaMessage);
                       break;
             case CALL: handleCall(kylaMessage);
@@ -65,34 +67,45 @@ public class DriverMountPoint extends MountPoint {
         }
     }
 
-    private void handleSetValue(Message<HeikoMessage> message) {
-        HeikoMessage heikoMessage = message.getData();
+    private void handleSetValue(Message<HeikoMessage> kylaMessage) {
+        HeikoMessage heikoMessage = kylaMessage.getData();
+        String contextRelativePath = heikoMessage.mountPointRelativePath;
+
+        driver.setValue(contextRelativePath, heikoMessage.payload);
+
+        reply(kylaMessage, null);
+    }
+
+    private void handleSetValueAsync(Message<HeikoMessage> kylaMessage) {
+        HeikoMessage heikoMessage = kylaMessage.getData();
         String contextRelativePath = heikoMessage.mountPointRelativePath;
 
         driver.setValue(contextRelativePath, heikoMessage.payload);
     }
 
-    private void handleGetValue(Message<HeikoMessage> message) {
-        HeikoMessage heikoMessage = message.getData();
+    private void handleGetValue(Message<HeikoMessage> kylaMessage) {
+        HeikoMessage heikoMessage = kylaMessage.getData();
         String contextRelativePath = heikoMessage.mountPointRelativePath;
 
         Object result = driver.getValue(contextRelativePath);
-        HeikoMessage reply = new HeikoMessage<>();
-        reply.payload = result;
-        reply.type = HeikoMessage.Type.REPLY;
 
-        this.send(message.createReply(reply));
+        reply(kylaMessage, result);
     }
 
-    private void handleCall(Message<HeikoMessage> message) {
-        HeikoMessage heikoMessage = message.getData();
+    private void handleCall(Message<HeikoMessage> kylaMessage) {
+        HeikoMessage heikoMessage = kylaMessage.getData();
         String contextRelativePath = heikoMessage.mountPointRelativePath;
 
         Object result = driver.call(contextRelativePath, heikoMessage.payload);
+
+        reply(kylaMessage, result);
+    }
+
+    private void reply(Message<HeikoMessage> kylaMessage, Object result) {
         HeikoMessage reply = new HeikoMessage<>();
         reply.payload = result;
         reply.type = HeikoMessage.Type.REPLY;
 
-        this.send(message.createReply(reply));
+        this.send(kylaMessage.createReply(reply));
     }
 }
