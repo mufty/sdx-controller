@@ -4,6 +4,7 @@ import net.gabert.sdx.heiko.api.Service;
 import net.gabert.util.LogUtil;
 import org.slf4j.Logger;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import static net.gabert.util.LogUtil.sout;
@@ -21,7 +22,7 @@ public class SampleService extends Service {
 
         sout(telescope.getValue("/azimuth"));
         sout(telescope.getValue("/altitude"));
-        sout(telescope.call("/snapshot", 100, 5, 3200));
+        sout(telescope.call("/snapshot", params(100, 5, 3200)));
     }
 
     @Override

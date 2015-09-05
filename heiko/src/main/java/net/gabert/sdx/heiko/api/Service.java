@@ -24,6 +24,10 @@ public abstract class Service {
         return new Context("");
     }
 
+    protected static Object[] params(Object ... params) {
+        return params;
+    }
+
     protected Context getContext(String contextRoot) {
         return new Context(contextRoot);
     }
@@ -81,7 +85,7 @@ public abstract class Service {
                             callback);
         }
 
-        public Object call(String contextRelativePath, Object... params) {
+        public Object call(String contextRelativePath, Object[] params) {
             LOGGER.debug("CALL Value: {}{}", contextroot, contextRelativePath);
 
             return mountPoint.rpc(toAbsolutePath(contextRelativePath),
@@ -89,7 +93,7 @@ public abstract class Service {
                                   params).payload;
         }
 
-        public void call(String contextRelativePath, Callback callback, Object... params) {
+        public void call(String contextRelativePath, Object[] params, Callback callback) {
             LOGGER.debug("CALL Value: {}{}", contextroot, contextRelativePath);
 
             mountPoint.rpc(toAbsolutePath(contextRelativePath),

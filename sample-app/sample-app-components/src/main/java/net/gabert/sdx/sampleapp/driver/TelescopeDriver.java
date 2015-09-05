@@ -44,7 +44,7 @@ public class TelescopeDriver extends Driver {
     }
 
     private Object snapshot(int shutterSpeed, int aperture, int iso) {
-        return "Andromeda galaxy snapshot with shutter speed: 1/ " + shutterSpeed +
+        return "Andromeda galaxy snapshot with shutter speed: 1/" + shutterSpeed +
                ", aperture: " + aperture +
                ", iso: " + iso + ".";
     }
