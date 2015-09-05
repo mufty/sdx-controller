@@ -21,6 +21,7 @@ public class SampleService extends Service {
 
         sout(telescope.getValue("/azimuth"));
         sout(telescope.getValue("/altitude"));
+        sout(telescope.call("/snapshot", 100, 5, 3200));
     }
 
     @Override

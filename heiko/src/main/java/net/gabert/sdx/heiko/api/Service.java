@@ -72,6 +72,32 @@ public abstract class Service {
                                   null).payload;
         }
 
+        public void getValue(String contextRelativePath, Callback callback) {
+            LOGGER.debug("GET Value: {}{}", contextroot, contextRelativePath);
+
+            mountPoint.rpc(toAbsolutePath(contextRelativePath),
+                            HeikoMessage.Type.GET,
+                            null,
+                            callback);
+        }
+
+        public Object call(String contextRelativePath, Object... params) {
+            LOGGER.debug("CALL Value: {}{}", contextroot, contextRelativePath);
+
+            return mountPoint.rpc(toAbsolutePath(contextRelativePath),
+                                  HeikoMessage.Type.CALL,
+                                  params).payload;
+        }
+
+        public void call(String contextRelativePath, Callback callback, Object... params) {
+            LOGGER.debug("CALL Value: {}{}", contextroot, contextRelativePath);
+
+            mountPoint.rpc(toAbsolutePath(contextRelativePath),
+                           HeikoMessage.Type.CALL,
+                           params,
+                           callback);
+        }
+
         private String toAbsolutePath(String contextRelativePath) {
             return contextroot + contextRelativePath;
         }

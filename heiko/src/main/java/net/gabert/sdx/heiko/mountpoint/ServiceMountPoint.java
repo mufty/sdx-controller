@@ -75,7 +75,7 @@ public class ServiceMountPoint extends MountPoint {
 
     public HeikoMessage rpc(String absolutePath, HeikoMessage.Type type, Object payload) {
         Message kylaMessage = toKylaMessage(absolutePath,
-                toHeikoMessage(absolutePath, type,  payload));
+                                            toHeikoMessage(absolutePath, type,  payload));
         Exchange exchange = Exchange.createExchange(kylaMessage);
 
         LOGGER.trace("OUT => {MountPointId: {}, KylaMessage: {}} ", getDataSlotId(), kylaMessage);

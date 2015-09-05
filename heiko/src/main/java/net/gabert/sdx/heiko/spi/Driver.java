@@ -23,5 +23,5 @@ public abstract class Driver {
 
     public abstract void onListenerRegistered(String path);
 
-    public abstract Object call(String path, Object ... params);
+    public abstract Object call(String path, Object[] params);
 }

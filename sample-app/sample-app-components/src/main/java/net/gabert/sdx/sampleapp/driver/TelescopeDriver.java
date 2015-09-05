@@ -34,7 +34,18 @@ public class TelescopeDriver extends Driver {
     }
 
     @Override
-    public Object call(String path, Object... params) {
-        return null;
+    public Object call(String path, Object[] params) {
+        LOGGER.debug("Telescope Driver: CALL, Path: {}", path);
+        if (path.equals("/snapshot")) {
+            return snapshot((int)params[0], (int)params[1], (int)params[2]);
+        } else {
+            return null;
+        }
+    }
+
+    private Object snapshot(int shutterSpeed, int aperture, int iso) {
+        return "Andromeda galaxy snapshot with shutter speed: 1/ " + shutterSpeed +
+               ", aperture: " + aperture +
+               ", iso: " + iso + ".";
     }
 }

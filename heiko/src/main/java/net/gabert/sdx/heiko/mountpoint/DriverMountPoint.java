@@ -63,7 +63,7 @@ public class DriverMountPoint extends MountPoint {
             case GET: handleGetValue(kylaMessage);
                       break;
             case CALL: handleCall(kylaMessage);
-                      break;
+                       break;
         }
     }
 
@@ -96,7 +96,7 @@ public class DriverMountPoint extends MountPoint {
         HeikoMessage heikoMessage = kylaMessage.getData();
         String contextRelativePath = heikoMessage.mountPointRelativePath;
 
-        Object result = driver.call(contextRelativePath, heikoMessage.payload);
+        Object result = driver.call(contextRelativePath, (Object[]) heikoMessage.payload);
 
         reply(kylaMessage, result);
     }
