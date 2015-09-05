@@ -4,6 +4,7 @@ import net.gabert.util.Security;
 
 import java.io.Serializable;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -45,14 +46,6 @@ public abstract class Endpoint<T> {
         return dataSlotId.replace(ID_CLASSIFIER, "");
     }
 
-    public <T> Message<T> createMessage(String destinationSlotId, T data) {
-        return new Message(destinationSlotId,
-                           this.getDataSlotId(),
-                           Security.getUUID(),
-                           Security.getUUID(),
-                           data);
-    }
-
     public abstract void handle(Message<T> message);
 
     @Override
@@ -77,24 +70,30 @@ public abstract class Endpoint<T> {
         return dataSlotId != null ? dataSlotId.hashCode() : 0;
     }
 
+    private static final AtomicInteger INT_ID_GENERATOR = new AtomicInteger();
+
+    public <T> Message<T> createMessage(String destinationSlotId, T data) {
+        return new Message(destinationSlotId,
+                           this.getDataSlotId(),
+                           INT_ID_GENERATOR.incrementAndGet(),
+                           data);
+   }
+
     /**
      * Structured object representing bus message
      */
     public static class Message<T> implements Serializable {
         private final String destinationSlotId;
         private final String sourceSlotId;
-        private final UUID messageId;
-        private final UUID conversationId;
+        private final long conversationId;
         private final T data;
 
         private Message(String destinationSlotId,
                         String sourceSlotId,
-                        UUID messageId,
-                        UUID conversationId,
+                        long conversationId,
                         T data) {
             this.destinationSlotId = destinationSlotId;
             this.sourceSlotId = sourceSlotId;
-            this.messageId = Security.getUUID();
             this.conversationId = conversationId;
             this.data = data;
         }
@@ -102,8 +101,7 @@ public abstract class Endpoint<T> {
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
-            sb.append("{messageId: ").append(messageId.toString()).append(", ");
-            sb.append("conversationId: ").append(conversationId.toString()).append(", ");
+            sb.append("conversationId: ").append(String.valueOf(conversationId)).append(", ");
             sb.append("sourceSlotId: ").append(sourceSlotId).append(", ");
             sb.append("destinationSlotId: ").append(destinationSlotId.toString()).append(", ");
             sb.append("data: ").append(data).append("}");
@@ -119,11 +117,7 @@ public abstract class Endpoint<T> {
             return sourceSlotId;
         }
 
-        public UUID getMessageId() {
-            return messageId;
-        }
-
-        public UUID getConversationId() {
+        public long getConversationId() {
             return conversationId;
         }
 
@@ -133,10 +127,9 @@ public abstract class Endpoint<T> {
 
         public Message createReply(T data) {
             return new Message(this.sourceSlotId,
-                    this.destinationSlotId,
-                    Security.getUUID(),
-                    this.conversationId,
-                    data);
+                               this.destinationSlotId,
+                               this.conversationId,
+                               data);
         }
     }
 }

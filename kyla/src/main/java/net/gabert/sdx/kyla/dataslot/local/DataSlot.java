@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Robert Gallas
  */
 public abstract class DataSlot {
-    protected final CopyOnWriteArrayList<Endpoint> endpoints = new CopyOnWriteArrayList<>();
+    private final CopyOnWriteArrayList<Endpoint> endpoints = new CopyOnWriteArrayList<>();
 
     private final String dataSlotId;
 
@@ -26,5 +26,12 @@ public abstract class DataSlot {
         return endpoints;
     }
 
-    public abstract void register(Endpoint endpoint);
+    public void register(Endpoint endpoint) {
+        endpoints.addIfAbsent(endpoint);
+    }
+
+    @Override
+    public String toString() {
+        return "SubscriptionKey[" + getDataSlotId() + "]";
+    }
 }

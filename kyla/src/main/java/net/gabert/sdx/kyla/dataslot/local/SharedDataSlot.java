@@ -11,14 +11,4 @@ public class SharedDataSlot extends DataSlot {
     public SharedDataSlot(String dataSlotID) {
         super(dataSlotID);
     }
-
-    @Override
-    public void register(Endpoint endpoint) {
-        endpoints.addIfAbsent(endpoint);
-    }
-
-    @Override
-    public String toString() {
-        return "SubscriptionKey["+ getDataSlotId()+"], Subscribers["+endpoints+"]";
-    }
 }

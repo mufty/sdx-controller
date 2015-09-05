@@ -17,17 +17,11 @@ public class ParallelDataSlot extends DataSlot {
     }
 
     @Override
-    public void register(Endpoint endpoint) {
-        endpoints.addIfAbsent(endpoint);
-    }
-
-    @Override
     public List<Endpoint> getEndpoints() {
-        Endpoint ep = endpoints.get(pointer);
+        Endpoint ep = super.getEndpoints().get(pointer);
 
-        pointer = (pointer == endpoints.size() - 1) ? 0 : pointer + 1;
+        pointer = (pointer == super.getEndpoints().size() - 1) ? 0 : pointer + 1;
 
         return Arrays.asList(ep);
     }
-
 }

@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch;
  * @author Robert Gallas
  */
 public class Exchange {
-    private static final Map<UUID, Exchange> PENDING_RPC_RESPONSES = new ConcurrentHashMap<>();
+    private static final Map<Long, Exchange> PENDING_RPC_RESPONSES = new ConcurrentHashMap<>();
 
     private HeikoMessage heikoResponse;
 
