@@ -35,6 +35,7 @@ public abstract class MountPoint extends Endpoint<HeikoMessage> {
 
     public void send(Message kylaMessage, Service.Callback callback) {
         pendingResponses.put(kylaMessage.getConversationId(), callback);
+        send(kylaMessage);
     }
 
     protected void possiblyHandleCallback(Message kylaMessage) {

@@ -1,7 +1,5 @@
 package net.gabert.sdx.heiko.mountpoint;
 
-import net.gabert.sdx.heiko.core.Controller;
-import net.gabert.sdx.heiko.core.MappingService;
 import net.gabert.util.ObjectUtil;
 import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.sdx.heiko.spi.Driver;
@@ -58,7 +56,7 @@ public class DriverMountPoint extends MountPoint {
         switch (heikoMessage.type) {
             case SET: handleSetValue(kylaMessage);
                       break;
-            case SET_ACK: handleSetValueAsync(kylaMessage);
+            case SET_ACK: handleSetValueACK(kylaMessage);
                           break;
             case GET: handleGetValue(kylaMessage);
                       break;
@@ -72,15 +70,15 @@ public class DriverMountPoint extends MountPoint {
         String contextRelativePath = heikoMessage.mountPointRelativePath;
 
         driver.setValue(contextRelativePath, heikoMessage.payload);
-
-        reply(kylaMessage, null);
     }
 
-    private void handleSetValueAsync(Message<HeikoMessage> kylaMessage) {
+    private void handleSetValueACK(Message<HeikoMessage> kylaMessage) {
         HeikoMessage heikoMessage = kylaMessage.getData();
         String contextRelativePath = heikoMessage.mountPointRelativePath;
 
         driver.setValue(contextRelativePath, heikoMessage.payload);
+
+        reply(kylaMessage, null);
     }
 
     private void handleGetValue(Message<HeikoMessage> kylaMessage) {
