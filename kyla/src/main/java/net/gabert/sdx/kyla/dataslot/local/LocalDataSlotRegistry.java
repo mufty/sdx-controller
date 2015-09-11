@@ -1,7 +1,7 @@
 package net.gabert.sdx.kyla.dataslot.local;
 
 import net.gabert.sdx.kyla.api.*;
-import net.gabert.sdx.kyla.api.DataSlotRegistryProvider;
+import net.gabert.sdx.kyla.api.DataSlotRegistry;
 import net.gabert.util.LogUtil;
 import org.slf4j.Logger;
 
@@ -14,7 +14,7 @@ import java.util.Map;
  *
  * @author Robert Gallas
  */
-public class LocalDataSlotRegistryProvider implements DataSlotRegistryProvider {
+public class LocalDataSlotRegistry implements DataSlotRegistry {
     private static final Logger LOGGER = LogUtil.getLogger();
     private final Map<String, DataSlot> dataSlots = Collections.synchronizedMap(new HashMap<String, DataSlot>());
 

@@ -4,7 +4,7 @@ import com.hazelcast.config.Config;
 import com.hazelcast.config.MapConfig;
 import com.hazelcast.config.NearCacheConfig;
 import com.hazelcast.core.*;
-import net.gabert.sdx.kyla.api.DataSlotRegistryProvider;
+import net.gabert.sdx.kyla.api.DataSlotRegistry;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,7 +16,7 @@ import net.gabert.sdx.kyla.api.Endpoint.Message;
  *
  * @author Robert Gallas
  */
-public class HazelcastDataSlotRegistryProvider implements DataSlotRegistryProvider {
+public class HazelcastDataSlotRegistry implements DataSlotRegistry {
     private final static String ID_DELIMITER= ":";
 
     private final static String SHARED_DATASLOTS_ID = "SHARED_DATASLOTS";
@@ -33,7 +33,7 @@ public class HazelcastDataSlotRegistryProvider implements DataSlotRegistryProvid
     private final HazelcastInstance hazelcastInstance;
     private final String clusterMemberId;
 
-    private HazelcastDataSlotRegistryProvider() {
+    private HazelcastDataSlotRegistry() {
         Config cfg              = new Config();
         addNearCache(cfg);
 

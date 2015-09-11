@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Robert Gallas
  */
-public interface DataSlotRegistryProvider {
+public interface DataSlotRegistry {
     void register(Endpoint endpoint);
 
     void registerExclusive(Endpoint endpoint, String dataSlotId);

@@ -1,4 +1,4 @@
-package net.gabert.sdx.kyla.dataslot.local;
+package net.gabert.sdx.kyla.api;
 
 import net.gabert.sdx.kyla.api.Endpoint;
 

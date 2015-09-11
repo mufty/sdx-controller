@@ -1,5 +1,6 @@
 package net.gabert.sdx.kyla.dataslot.local;
 
+import net.gabert.sdx.kyla.api.DataSlot;
 import net.gabert.sdx.kyla.api.Endpoint;
 
 import java.util.Arrays;

@@ -58,8 +58,8 @@ public class DriverMountPoint extends MountPoint {
         switch (heikoMessage.type) {
             case SET: handleSetValue(kylaMessage);
                       break;
-            case SET_ASYNC: handleSetValueAsync(kylaMessage);
-                            break;
+            case SET_ACK: handleSetValueAsync(kylaMessage);
+                          break;
             case GET: handleGetValue(kylaMessage);
                       break;
             case CALL: handleCall(kylaMessage);
