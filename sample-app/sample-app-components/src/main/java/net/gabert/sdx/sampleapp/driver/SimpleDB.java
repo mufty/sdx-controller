@@ -2,25 +2,28 @@ package net.gabert.sdx.sampleapp.driver;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
  * @author Robert Gallas
  */
 public class SimpleDB {
-    private Map<String, Object> map = new HashMap<>();
+    private Map<String, Object> map = new ConcurrentHashMap<>();
 
     public SimpleDB(String... keys) {
         for (String key : keys) {
-            map.put(key, null);
+            map.put(key, new Object());
         }
     }
 
-    public synchronized void setValue(String key, Object value) {
-        map.replace(key, value);
+    public void setValue(String key, Object value) {
+        if (map.containsKey(key)) {
+            map.put(key, value);
+        }
     }
 
-    public synchronized Object getValue(String key) {
+    public Object getValue(String key) {
         return map.get(key);
     }
 }

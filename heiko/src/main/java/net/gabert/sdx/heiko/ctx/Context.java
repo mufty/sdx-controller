@@ -17,8 +17,8 @@ public abstract class Context {
         return new PathContext(contextRoot, sourceMountPoint);
     }
 
-    public static Context getDeviceContext(MountPoint sourceMountPoint) {
-        return new DeviceContext(sourceMountPoint);
+    public static Context getDeviceContext(String contextRoot, MountPoint sourceMountPoint) {
+        return new DeviceContext(contextRoot, sourceMountPoint);
     }
 
     protected Endpoint.Message<HeikoMessage> toKylaMessage(String dataSlotId, HeikoMessage heikoMessage) {

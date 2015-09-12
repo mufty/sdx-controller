@@ -20,8 +20,15 @@
 
   "services" : [
     {"serviceClassName": "net.gabert.sdx.sampleapp.service.SampleService",
-     "id": "ssID",
-     "initParams": {"param1" : 1}}
+     "id": "ssID1",
+     "initParams": {"param1" : 1}},
+
+    {"serviceClassName": "net.gabert.sdx.heiko.connector.http.HttpApplication",
+      "id": "heikoBrowser",
+      "initParams": {"welcomeFile" : "index.html",
+                     "contextPath" : "/browser",
+                     "guiRootPath" : "/browser",
+                     "servicePort" : 9090}}
   ],
 
   "mappings" : {

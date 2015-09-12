@@ -25,8 +25,8 @@ public class TelescopeDriver extends Driver {
 
     @Override
     public void setValue(String path, Object value) {
-        LOGGER.debug("Telescope Driver: SET, Path: {}, Value: {}", path, value);
-        db.setValue(path, value);
+//        LOGGER.debug("Telescope Driver: SET, Path: {}, Value: {}", path, value);
+//        db.setValue(path, value);
     }
 
     @Override

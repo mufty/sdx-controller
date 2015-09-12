@@ -11,7 +11,8 @@
         <relativePath>../../sdx-controller-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>sample-app-assembly</artifactId>
+    <artifactId>heiko-extensions</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -19,17 +20,12 @@
             <artifactId>heiko</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.gabert.sdx</groupId>
-            <artifactId>default-config</artifactId>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.gabert.sdx</groupId>
-            <artifactId>sample-app-components</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.gabert.sdx</groupId>
-            <artifactId>heiko-extensions</artifactId>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-rewrite</artifactId>
         </dependency>
     </dependencies>
-
 </project>

@@ -18,7 +18,7 @@ import static net.gabert.util.LogUtil.sout;
 public class SampleService extends Service {
     @Override
     public void init(Map<String, Object> initParams) {
-        Context telescope = getPathContext("/iot/telescopes/palo-alto");
+        Context telescope = getDeviceContext("/iot/telescopes/palo-alto");
 
         telescope.setValue("/azimuth", 12);
         telescope.setValue("/altitude", 25);
@@ -37,7 +37,7 @@ public class SampleService extends Service {
             }
         });
 
-//        performanceTesting(telescope);
+        performanceTesting(telescope);
     }
 
     private static void performanceTesting(Context telescope) {
@@ -54,7 +54,7 @@ public class SampleService extends Service {
 
     private static void cycleCall(Context telescope) {
         Callback cb = new Callback() {@Override public void done(Object reponse) {}};
-        for (int i=0; i<1_000_000; i++) {
+        for (int i=0; i<10_000; i++) {
             telescope.setValue("/azimuth", 12);
         }
     }
