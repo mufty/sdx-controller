@@ -16,6 +16,7 @@
 		<module>util</module>
 		<module>sample-app</module>
 		<module>default-config</module>
+		<module>heiko-services</module>
 	</modules>
 	
 </project>
