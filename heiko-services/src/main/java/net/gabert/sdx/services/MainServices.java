@@ -4,6 +4,8 @@ import static spark.Spark.*;
 
 import net.gabert.sdx.heiko.core.Controller;
 import net.gabert.sdx.heiko.core.MappingService;
+import net.gabert.sdx.heiko.mountpoint.MountService;
+import net.gabert.sdx.heiko.mountpoint.MountServiceLocal;
 import net.gabert.sdx.services.endpoints.AddDeviceService;
 import net.gabert.sdx.services.transformer.JsonTransformer;
 
@@ -17,7 +19,11 @@ public class MainServices {
         
 		post("/addDevice", (req, res) -> new AddDeviceService().call(req, res), new JsonTransformer());
 		
-		//TODO MappingService service = controller.getService(MappingService.class);
+		//mount path : /system/services/ssID1
+		//data slot id : urn:uuid:ssID1
+		//TODO
+		MountService service = controller.getService(MountService.class);
+		MountServiceLocal local = (MountServiceLocal) service;
 	}
 
 }
