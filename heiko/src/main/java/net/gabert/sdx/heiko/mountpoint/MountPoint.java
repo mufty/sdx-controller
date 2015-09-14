@@ -41,7 +41,9 @@ public abstract class MountPoint extends Endpoint<HeikoMessage> {
     protected void possiblyHandleCallback(Message kylaMessage) {
         long conversationId = kylaMessage.getConversationId();
         if (pendingResponses.containsKey(conversationId)) {
-            pendingResponses.get(conversationId).done(kylaMessage.getData());
+            HeikoMessage heikoMessage = (HeikoMessage) kylaMessage.getData();
+            Service.Callback callback = pendingResponses.remove(conversationId);
+            callback.done(heikoMessage.payload);
         }
     }
 

@@ -1,2 +1,2 @@
-{"workersCount" : 4,
+{"workersCount" : 20,
  "dataSlotProviderClassName": "net.gabert.sdx.kyla.dataslot.local.LocalDataSlotRegistry"}

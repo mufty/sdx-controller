@@ -18,15 +18,14 @@ public class TelescopeDriver extends Driver {
 
     @Override
     public Object getValue(String path) {
-        LOGGER.debug("Telescope Driver: GET, Path: {}, Returns: {}", path, db.getValue(path));
+        LOGGER.info("Telescope Driver: GET, Path: {}, Returns: {}", path, db.getValue(path));
         return db.getValue(path);
-
     }
 
     @Override
     public void setValue(String path, Object value) {
-//        LOGGER.debug("Telescope Driver: SET, Path: {}, Value: {}", path, value);
-//        db.setValue(path, value);
+        LOGGER.info("Telescope Driver: SET, Path: {}, Value: {}", path, value);
+        db.setValue(path, value);
     }
 
     @Override

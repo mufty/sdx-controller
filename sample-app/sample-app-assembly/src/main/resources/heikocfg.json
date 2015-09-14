@@ -6,32 +6,33 @@
 
   "drivers" : [
     {"driverClassName": "${telescopeDriver}",
-     "id": "tdID" ,
+     "id": "td-1" ,
      "initParams": {"param1" : 1}},
 
     {"driverClassName": "${housingDriver}",
-     "id": "hdID1" ,
+     "id": "hd-1" ,
      "initParams": {"param1" : 1}},
 
     {"driverClassName": "${housingDriver}",
-      "id": "hdID2" ,
+      "id": "hd-2" ,
       "initParams": {"param1" : 1}}
   ],
 
   "services" : [
-    {"serviceClassName": "net.gabert.sdx.sampleapp.service.SampleService",
-     "id": "ssID1",
-     "initParams": {"param1" : 1}},
-
     {"serviceClassName": "net.gabert.sdx.heiko.connector.http.HttpApplication",
       "id": "heikoBrowser",
       "initParams": {"welcomeFile" : "index.html",
                      "contextPath" : "/browser",
                      "guiRootPath" : "/browser",
-                     "servicePort" : 9090}}
+                     "servicePort" : 9090}},
+
+    {"serviceClassName": "net.gabert.sdx.heiko.connector.http.HttpConnector",
+      "id": "httpConnector",
+      "initParams": {"contextPath" : "/connector",
+                     "servicePort" : 9091}}
   ],
 
   "mappings" : {
-    "/system/devices/tdID": "/iot/telescopes/palo-alto"
+    "/system/devices/td-1": "/iot/telescopes/palo-alto"
   }
 }
