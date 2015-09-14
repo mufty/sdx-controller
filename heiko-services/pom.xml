@@ -17,5 +17,21 @@
 			<groupId>net.gabert.sdx</groupId>
 			<artifactId>util</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>net.gabert.sdx</groupId>
+			<artifactId>heiko</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.gabert.sdx</groupId>
+			<artifactId>default-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.gabert.sdx</groupId>
+			<artifactId>sample-app-components</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.gabert.sdx</groupId>
+			<artifactId>heiko-extensions</artifactId>
+		</dependency>
 	</dependencies>
 </project>
