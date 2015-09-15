@@ -99,8 +99,8 @@ public class HttpConnector extends HttpService {
     private void handleGet(JsonRequest jsonRequest,
                            final Request request,
                            final HttpServletResponse response) {
-
         CountDownLatch latch = new CountDownLatch(1);
+
         ctx.getValue(jsonRequest.path, new Callback() {
             @Override
             public void done(Object data)  {

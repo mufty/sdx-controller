@@ -1,6 +1,6 @@
 package net.gabert.sdx.heiko.ctx;
 
-import net.gabert.sdx.heiko.api.Service;
+import net.gabert.sdx.heiko.component.Service;
 import net.gabert.sdx.heiko.core.Controller;
 import net.gabert.sdx.heiko.core.HeikoMessage;
 import net.gabert.sdx.heiko.core.MappingService;

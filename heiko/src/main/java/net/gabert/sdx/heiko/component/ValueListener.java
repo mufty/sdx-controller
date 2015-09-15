@@ -1,4 +1,4 @@
-package net.gabert.sdx.heiko.api;
+package net.gabert.sdx.heiko.component;
 
 /**
  *

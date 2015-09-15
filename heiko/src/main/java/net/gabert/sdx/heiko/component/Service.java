@@ -1,9 +1,7 @@
-package net.gabert.sdx.heiko.api;
+package net.gabert.sdx.heiko.component;
 
 import net.gabert.sdx.heiko.ctx.Context;
 import net.gabert.sdx.heiko.mountpoint.ServiceMountPoint;
-import net.gabert.util.LogUtil;
-import org.slf4j.Logger;
 
 import java.util.Map;
 
@@ -11,15 +9,15 @@ import java.util.Map;
  *
  * @author Robert Gallas
  */
-public abstract class Service {
+public abstract class Service implements Component {
     private ServiceMountPoint mountPoint;
-
-    public abstract void init(Map<String, Object> initParams);
-
-    public abstract void close();
 
     protected Context getPathContext(String contextRoot) {
         return Context.getPathContext(contextRoot, mountPoint);
+    }
+
+    protected Context getPathContext() {
+        return getPathContext("");
     }
 
     protected Context getDeviceContext(String deviceMountPoint) {

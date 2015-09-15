@@ -1,12 +1,9 @@
 package net.gabert.sdx.sampleapp.service;
 
-import net.gabert.sdx.heiko.api.Service;
+import net.gabert.sdx.heiko.component.Service;
 import net.gabert.sdx.heiko.ctx.Context;
-import net.gabert.util.LogUtil;
 import net.gabert.util.TimeStat;
-import org.slf4j.Logger;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import static net.gabert.util.LogUtil.sout;
@@ -40,6 +37,9 @@ public class SampleService extends Service {
 //        performanceTesting(telescope);
     }
 
+    @Override
+    public void close() {}
+
     private static void performanceTesting(Context telescope) {
         sout("Warming up ...");
         cycleCall(telescope);
@@ -59,8 +59,4 @@ public class SampleService extends Service {
         }
     }
 
-    @Override
-    public void close() {
-
-    }
 }

@@ -1,11 +1,10 @@
 package net.gabert.sdx.heiko.mountpoint;
 
-import net.gabert.sdx.heiko.api.Service;
+import net.gabert.sdx.heiko.component.Service;
 import net.gabert.sdx.heiko.configuration.schema.ServiceConfig;
 import net.gabert.sdx.heiko.core.Controller;
 import net.gabert.sdx.heiko.core.HeikoMessage;
 import net.gabert.sdx.heiko.core.MappingService;
-import net.gabert.sdx.kyla.api.Endpoint;
 import net.gabert.sdx.kyla.core.BusProxy;
 import net.gabert.util.LogUtil;
 import net.gabert.util.ObjectUtil;
@@ -13,9 +12,6 @@ import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
 
 /**
  *

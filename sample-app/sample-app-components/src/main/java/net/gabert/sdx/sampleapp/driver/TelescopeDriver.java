@@ -1,8 +1,10 @@
 package net.gabert.sdx.sampleapp.driver;
 
-import net.gabert.sdx.heiko.spi.Driver;
+import net.gabert.sdx.heiko.component.Driver;
 import net.gabert.util.LogUtil;
 import org.slf4j.Logger;
+
+import java.util.Map;
 
 /**
  *
@@ -15,6 +17,14 @@ public class TelescopeDriver extends Driver {
     private int altitude;
 
     private final SimpleDB db = new SimpleDB("/azimuth", "/altitude");
+
+    @Override
+    public void init(Map<String, Object> initParams) {
+
+    }
+
+    @Override
+    public void close() {}
 
     @Override
     public Object getValue(String path) {
@@ -47,4 +57,5 @@ public class TelescopeDriver extends Driver {
                ", aperture: " + aperture +
                ", iso: " + iso + ".";
     }
+
 }

@@ -1,6 +1,7 @@
 package net.gabert.sdx.heiko.connector.http;
 
-import net.gabert.sdx.heiko.api.Service;
+import net.gabert.sdx.heiko.component.Connector;
+import net.gabert.sdx.heiko.component.Service;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -10,7 +11,7 @@ import java.util.Map;
 /**
  * @author Robert Gallas
  */
-public abstract class HttpService extends Service {
+public abstract class HttpService extends Connector {
     private static String SERVICE_PORT_KEY = "servicePort";
 
     private int servicePortNumber;
