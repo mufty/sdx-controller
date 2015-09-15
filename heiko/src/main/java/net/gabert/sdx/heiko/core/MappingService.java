@@ -1,6 +1,6 @@
 package net.gabert.sdx.heiko.core;
 
-import net.gabert.sdx.heiko.mountpoint.MountPoint;
+import net.gabert.sdx.heiko.mountpoint.ComponentMountPoint;
 import net.gabert.util.LogUtil;
 import net.gabert.util.PathMap;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ public class MappingService {
 
     private static final String PATH_SEPARATOR = "/";
 
-    private final List<MountPoint> mountPointRegistry = new ArrayList<>();
+    private final List<ComponentMountPoint> mountPointRegistry = new ArrayList<>();
 
     private final PathMap<String> mountPathReducer = new PathMap<>(PATH_SEPARATOR);
     private final Map<String, String> mountPathToDtaSlotId = new HashMap<>();

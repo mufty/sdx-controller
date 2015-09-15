@@ -1,5 +1,6 @@
 package net.gabert.sdx.sampleapp.service;
 
+import net.gabert.sdx.heiko.component.Callback;
 import net.gabert.sdx.heiko.component.Service;
 import net.gabert.sdx.heiko.ctx.Context;
 import net.gabert.util.TimeStat;
@@ -14,7 +15,7 @@ import static net.gabert.util.LogUtil.sout;
  */
 public class SampleService extends Service {
     @Override
-    public void init(Map<String, Object> initParams) {
+    public void start(Map<String, Object> initParams) {
         Context telescope = getPathContext("");
 
         telescope.setValue("/iot/telescopes/palo-alto/azimuth", 12);
@@ -38,7 +39,7 @@ public class SampleService extends Service {
     }
 
     @Override
-    public void close() {}
+    public void stop() {}
 
     private static void performanceTesting(Context telescope) {
         sout("Warming up ...");

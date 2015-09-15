@@ -6,7 +6,7 @@ import java.util.Map;
  * @author Robert Gallas
  */
 public interface Component {
-    void init(Map<String, Object> initParams);
+    void start(Map<String, Object> initParams);
 
-    void close();
+    void stop();
 }

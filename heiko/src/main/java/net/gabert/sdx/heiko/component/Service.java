@@ -23,8 +23,4 @@ public abstract class Service implements Component {
     protected Context getDeviceContext(String deviceMountPoint) {
         return Context.getPathContext(deviceMountPoint, mountPoint);
     }
-
-    public static interface Callback {
-        void done(Object reponse);
-    }
 }

@@ -19,12 +19,12 @@ public class TelescopeDriver extends Driver {
     private final SimpleDB db = new SimpleDB("/azimuth", "/altitude");
 
     @Override
-    public void init(Map<String, Object> initParams) {
+    public void start(Map<String, Object> initParams) {
 
     }
 
     @Override
-    public void close() {}
+    public void stop() {}
 
     @Override
     public Object getValue(String path) {

@@ -11,12 +11,12 @@ import java.util.Map;
  */
 public class HousingDriver extends Driver {
     @Override
-    public void init(Map<String, Object> initParams) {
+    public void start(Map<String, Object> initParams) {
 
     }
 
     @Override
-    public void close() {
+    public void stop() {
 
     }
 

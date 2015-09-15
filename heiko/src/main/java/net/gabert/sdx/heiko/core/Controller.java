@@ -1,6 +1,7 @@
 package net.gabert.sdx.heiko.core;
 
 import net.gabert.sdx.heiko.configuration.ConfigurationLoader;
+import net.gabert.sdx.heiko.configuration.schema.ConnectorConfig;
 import net.gabert.sdx.heiko.configuration.schema.DriverConfig;
 import net.gabert.sdx.heiko.configuration.schema.ServiceConfig;
 import net.gabert.sdx.heiko.configuration.schema.HeikoConfiguration;
@@ -34,6 +35,7 @@ public class Controller {
         startBus();
         initializeHeikoServices();
         mountDevices();
+        mountConnectors();
         mountServices();
         createStaticMappings();
         startMountPoints();
@@ -63,8 +65,17 @@ public class Controller {
         }
     }
 
+    private void mountConnectors() {
+        LOGGER.info("PHASE[4]: Mount connectors.");
+
+        MountService mountService = getService(MountService.class);
+        for (ConnectorConfig connector : this.config.connectors) {
+             mountService.mount(connector);
+        }
+    }
+
     private void mountServices() {
-        LOGGER.info("PHASE[4]: Mount services.");
+        LOGGER.info("PHASE[5]: Mount services.");
 
         MountService mountService = getService(MountService.class);
         for (ServiceConfig serviceCfg : this.config.services) {
@@ -73,14 +84,14 @@ public class Controller {
     }
 
     private void createStaticMappings() {
-        LOGGER.info("PHASE[5]: Create static mappings.");
+        LOGGER.info("PHASE[6]: Create static mappings.");
         for (Map.Entry<String, String> mapping : this.config.mappings.entrySet()) {
             Controller.getService(MappingService.class).link(mapping.getKey(), mapping.getValue());
         }
     }
 
     private void startMountPoints() {
-        LOGGER.info("PHASE[6]: Start mount points.");
+        LOGGER.info("PHASE[7]: Start mount points.");
         getService(MountService.class).startMontPoints();
     }
 
