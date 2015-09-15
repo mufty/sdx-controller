@@ -1,8 +1,7 @@
 package net.gabert.sdx.heiko.mountpoint;
 
-import net.gabert.util.ObjectUtil;
 import net.gabert.sdx.kyla.core.BusProxy;
-import net.gabert.sdx.heiko.spi.Driver;
+import net.gabert.sdx.heiko.component.Driver;
 import net.gabert.sdx.heiko.configuration.schema.DriverConfig;
 import net.gabert.sdx.heiko.core.HeikoMessage;
 import net.gabert.util.LogUtil;
@@ -12,41 +11,28 @@ import org.slf4j.Logger;
  *
  * @author Robert Gallas
  */
-public class DriverMountPoint extends MountPoint {
+public class DriverMountPoint extends ComponentMountPoint<Driver> {
     private static final Logger LOGGER = LogUtil.getLogger();
 
-    //TODO: Collections.unmodifiableMap(driverConfig.initParams)
-    private final Driver driver;
+    private DriverMountPoint(BusProxy busProxy,
+                             DriverConfig driverConfig) {
+        super(busProxy, driverConfig.driverClass, driverConfig);
+
+        LOGGER.info("Initializing device: {}", getPlainDataSlotId());
+    }
 
     private DriverMountPoint(String dataSlotId,
                              BusProxy busProxy,
                              DriverConfig driverConfig) {
-        super(dataSlotId, busProxy);
+        super(dataSlotId, busProxy, driverConfig.driverClass, driverConfig);
 
         LOGGER.info("Initializing device: {}", getPlainDataSlotId());
-        this.driver = ObjectUtil.newInstance(driverConfig.driverClassName);
-    }
-
-    private DriverMountPoint(BusProxy busProxy,
-                             DriverConfig driverConfig) {
-        super(busProxy);
-
-        LOGGER.info("Initializing device: {}", getPlainDataSlotId());
-        this.driver = ObjectUtil.newInstance(driverConfig.driverClassName);
     }
 
     public static DriverMountPoint newInstance(BusProxy busProxy, DriverConfig driverConfig) {
         return driverConfig.id == null ? new DriverMountPoint(busProxy, driverConfig)
                                        : new DriverMountPoint(driverConfig.id, busProxy, driverConfig);
     }
-
-    public void init() {
-        super.init();
-        ObjectUtil.injectByType(driver, this);
-    }
-
-    @Override
-    public void start() {}
 
     @Override
     public void handle(Message<HeikoMessage> kylaMessage) {
@@ -69,14 +55,14 @@ public class DriverMountPoint extends MountPoint {
         HeikoMessage heikoMessage = kylaMessage.getData();
         String contextRelativePath = heikoMessage.mountPointRelativePath;
 
-        driver.setValue(contextRelativePath, heikoMessage.payload);
+        getComponent().setValue(contextRelativePath, heikoMessage.payload);
     }
 
     private void handleSetValueACK(Message<HeikoMessage> kylaMessage) {
         HeikoMessage heikoMessage = kylaMessage.getData();
         String contextRelativePath = heikoMessage.mountPointRelativePath;
 
-        driver.setValue(contextRelativePath, heikoMessage.payload);
+        getComponent().setValue(contextRelativePath, heikoMessage.payload);
 
         reply(kylaMessage, null);
     }
@@ -85,7 +71,7 @@ public class DriverMountPoint extends MountPoint {
         HeikoMessage heikoMessage = kylaMessage.getData();
         String contextRelativePath = heikoMessage.mountPointRelativePath;
 
-        Object result = driver.getValue(contextRelativePath);
+        Object result = getComponent().getValue(contextRelativePath);
 
         reply(kylaMessage, result);
     }
@@ -94,7 +80,7 @@ public class DriverMountPoint extends MountPoint {
         HeikoMessage heikoMessage = kylaMessage.getData();
         String contextRelativePath = heikoMessage.mountPointRelativePath;
 
-        Object result = driver.call(contextRelativePath, (Object[]) heikoMessage.payload);
+        Object result = getComponent().call(contextRelativePath, (Object[]) heikoMessage.payload);
 
         reply(kylaMessage, result);
     }

@@ -14,6 +14,8 @@ public class HeikoConfiguration {
 
     public List<DriverConfig> drivers;
 
+    public List<ConnectorConfig> connectors;
+
     public List<ServiceConfig> services;
 
     public Map<String, String> mappings;

@@ -1,4 +1,4 @@
-package net.gabert.sdx.heiko.spi;
+package net.gabert.sdx.heiko.component;
 
 import net.gabert.sdx.heiko.mountpoint.DriverMountPoint;
 import net.gabert.sdx.kyla.api.Bus;
@@ -9,9 +9,8 @@ import java.util.Map;
  *
  * @author Robert Gallas
  */
-public abstract class Driver {
+public abstract class Driver implements Component {
     private DriverMountPoint mountPoint;
-    private Map<String, Object> initParams;
 
     protected void publish(String path, Object value) {
         mountPoint.send(null);

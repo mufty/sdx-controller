@@ -5,31 +5,33 @@
   "bus" : {"configUrl" : "classpath:kylacfg.json"},
 
   "drivers" : [
-    {"driverClassName": "${telescopeDriver}",
+    {"driverClass": "${telescopeDriver}",
      "id": "td-1" ,
      "initParams": {"param1" : 1}},
 
-    {"driverClassName": "${housingDriver}",
+    {"driverClass": "${housingDriver}",
      "id": "hd-1" ,
      "initParams": {"param1" : 1}},
 
-    {"driverClassName": "${housingDriver}",
+    {"driverClass": "${housingDriver}",
       "id": "hd-2" ,
       "initParams": {"param1" : 1}}
   ],
 
+  "connectors" : [
+    {"connectorClass": "net.gabert.sdx.heiko.component.http.HttpConnector",
+     "id": "httpConnector",
+     "initParams": {"contextPath" : "/connector",
+                    "servicePort" : 9091}}
+  ],
+
   "services" : [
-    {"serviceClassName": "net.gabert.sdx.heiko.connector.http.HttpApplication",
+    {"serviceClass": "net.gabert.sdx.heiko.component.http.HttpApplication",
       "id": "heikoBrowser",
       "initParams": {"welcomeFile" : "index.html",
                      "contextPath" : "/browser",
                      "guiRootPath" : "/browser",
-                     "servicePort" : 9090}},
-
-    {"serviceClassName": "net.gabert.sdx.heiko.connector.http.HttpConnector",
-      "id": "httpConnector",
-      "initParams": {"contextPath" : "/connector",
-                     "servicePort" : 9091}}
+                     "servicePort" : 9090}}
   ],
 
   "mappings" : {

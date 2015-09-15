@@ -16,10 +16,14 @@ public final class ObjectUtil {
         }
     }
 
-    public static <T> void injectByType(Object target, Object value) {
-        setValue(getFieldByClassName(target, value.getClass()),
-                 target,
-                 value);
+    public static void injectByType(Object target, Object value) {
+        Field field = getFieldByClassName(target, value.getClass());
+
+        if (field != null) {
+            setValue(getFieldByClassName(target, value.getClass()),
+                    target,
+                    value);
+        }
     }
 
     private static <T> Field getFieldByClassName(Object instance, Class<T> classToLookup) {

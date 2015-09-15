@@ -1,43 +1,89 @@
-package net.gabert.sdx.heiko.connector.http;
+package net.gabert.sdx.heiko.component.http;
 
+import net.gabert.sdx.heiko.component.Callback;
+import net.gabert.sdx.heiko.component.Connector;
 import net.gabert.sdx.heiko.ctx.Context;
 import net.gabert.util.JsonFileReader;
-import net.gabert.util.JsonTransformation;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Robert Gallas
  */
-public class HttpConnector extends HttpService {
+public class HttpConnector extends Connector {
     private static String CONTEXT_PATH_KEY = "contextPath";
 
+    private static String SERVICE_PORT_KEY = "servicePort";
+
+    private int servicePortNumber;
+
+    private HandlerList handlers = new HandlerList();
+    private Server serverInstance;
     private String connectorContextPath;
 
     private Context ctx;
 
     @Override
-    public void init(Map<String, Object> initParams) {
-        super.init(initParams);
-
+    public void start(Map<String, Object> initParams) {
+        this.servicePortNumber = ((Double)getParam(initParams, SERVICE_PORT_KEY)).intValue();
         this.connectorContextPath = (String)initParams.get(CONTEXT_PATH_KEY);
 
         addHandler(configureServiceContextHandler());
 
         start();
 
-        this.ctx  = getPathContext("");
+        this.ctx  = getPathContext();
+    }
+
+    private void start() {
+        if (this.serverInstance != null) return;
+
+        this.serverInstance = getServer();
+        try {
+            this.serverInstance.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Server getServer() {
+        Server server = new Server(this.servicePortNumber);
+        server.setHandler(this.handlers);
+        return server;
+    }
+
+    protected Object getParam(Map<String, Object> initParams, String paramName) {
+        if (initParams.containsKey(paramName) == false) {
+            throw new IllegalArgumentException("Missing initialization parameter: " + paramName);
+        } else {
+            return initParams.get(paramName);
+        }
+    }
+
+    protected void addHandler(Handler handler) {
+        this.handlers.addHandler(handler);
+    }
+
+    @Override
+    public void stop() {
+        try {
+            this.serverInstance.stop();
+            this.serverInstance.join();
+            this.serverInstance = null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Handler configureServiceContextHandler() {
@@ -51,6 +97,9 @@ public class HttpConnector extends HttpService {
         return context;
     }
 
+    // -------------------------------
+    // ------ Bussiness handling -----
+    // -------------------------------
     private class ServiceHandler extends AbstractHandler {
         @Override
         public void handle(String target,
@@ -67,10 +116,6 @@ public class HttpConnector extends HttpService {
                 case "GET": handleGet(jsonRequest, baseRequest, response);
                             break;
             }
-
-
-
-
         }
 
         private String toJsonString(HttpServletRequest httpServletRequest) throws IOException {
@@ -99,8 +144,8 @@ public class HttpConnector extends HttpService {
     private void handleGet(JsonRequest jsonRequest,
                            final Request request,
                            final HttpServletResponse response) {
-
         CountDownLatch latch = new CountDownLatch(1);
+
         ctx.getValue(jsonRequest.path, new Callback() {
             @Override
             public void done(Object data)  {

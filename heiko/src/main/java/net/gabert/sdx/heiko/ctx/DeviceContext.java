@@ -1,10 +1,11 @@
 package net.gabert.sdx.heiko.ctx;
 
-import net.gabert.sdx.heiko.api.Service;
+import net.gabert.sdx.heiko.component.Callback;
+import net.gabert.sdx.heiko.component.Service;
 import net.gabert.sdx.heiko.core.Controller;
 import net.gabert.sdx.heiko.core.HeikoMessage;
 import net.gabert.sdx.heiko.core.MappingService;
-import net.gabert.sdx.heiko.mountpoint.MountPoint;
+import net.gabert.sdx.heiko.mountpoint.ComponentMountPoint;
 import net.gabert.sdx.kyla.api.Endpoint;
 import net.gabert.util.LogUtil;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ final class DeviceContext extends Context {
 
     private final String dataSlotId;
 
-    DeviceContext(String contextRoot, MountPoint mountPoint) {
+    DeviceContext(String contextRoot, ComponentMountPoint mountPoint) {
         super(mountPoint);
         this.contextRoot = contextRoot;
         this.mappingService = Controller.getService(MappingService.class);
@@ -40,17 +41,17 @@ final class DeviceContext extends Context {
     }
 
     @Override
-    public void setValue(String contextRelativePath, Object value, Service.Callback callback) {
+    public void setValue(String contextRelativePath, Object value, Callback callback) {
 
     }
 
     @Override
-    public void getValue(String contextRelativePath, Service.Callback callback) {
+    public void getValue(String contextRelativePath, Callback callback) {
 
     }
 
     @Override
-    public void call(String contextRelativePath, Object[] params, Service.Callback callback) {
+    public void call(String contextRelativePath, Object[] params, Callback callback) {
 
     }
 
