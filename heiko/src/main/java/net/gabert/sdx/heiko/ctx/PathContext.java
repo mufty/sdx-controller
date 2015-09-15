@@ -27,7 +27,7 @@ final class PathContext extends Context {
 
     @Override
     public void setValue(String contextRelativePath, Object value) {
-        LOGGER.debug("SET Value Async: {}{} -> {}", contextRoot, contextRelativePath, value);
+        LOGGER.debug("SET Value: {}{} -> {}", contextRoot, contextRelativePath, value);
 
         String absolutePath = toAbsolutePath(contextRelativePath);
 
@@ -41,7 +41,7 @@ final class PathContext extends Context {
 
     @Override
     public void setValue(String contextRelativePath, Object value, Service.Callback callback) {
-        LOGGER.debug("SET Value Async: {}{} -> {}", contextRoot, contextRelativePath, value);
+        LOGGER.debug("SET Value: {}{} -> {}", contextRoot, contextRelativePath, value);
 
         String absolutePath = toAbsolutePath(contextRelativePath);
 
