@@ -1,31 +1,40 @@
 {
   "aliases" : {"telescopeDriver": "net.gabert.sdx.sampleapp.driver.TelescopeDriver",
-               "housingDriver": "net.gabert.sdx.sampleapp.driver.HousingDriver" },
+               "thermometerDriver": "net.gabert.sdx.sampleapp.driver.Thermometer",
+               "climaDriver": "net.gabert.sdx.sampleapp.driver.Climatization"},
 
   "bus" : {"configUrl" : "classpath:kylacfg.json"},
 
   "drivers" : [
     {"driverClass": "${telescopeDriver}",
-     "id": "td-1" ,
-     "initParams": {"param1" : 1}},
+     "id": "td-1"},
 
-    {"driverClass": "${housingDriver}",
-     "id": "hd-1" ,
-     "initParams": {"param1" : 1}},
+    {"driverClass": "${climaDriver}",
+     "id": "clima-1"},
 
-    {"driverClass": "${housingDriver}",
-      "id": "hd-2" ,
-      "initParams": {"param1" : 1}}
+    {"driverClass": "${climaDriver}",
+     "id": "clima-2"},
+
+    {"driverClass": "${thermometerDriver}",
+     "id": "thermo-1"},
+
+    {"driverClass": "${thermometerDriver}",
+      "id": "thermo-2"}
   ],
 
   "connectors" : [
     {"connectorClass": "net.gabert.sdx.heiko.component.http.HttpConnector",
      "id": "httpConnector",
      "initParams": {"contextPath" : "/connector",
-                    "servicePort" : 9091}}
+                    "servicePort" : 9091,
+                    "adapterClass" : "net.gabert.sdx.heiko.component.http.RawPostJsonAdapter"}}
   ],
 
   "services" : [
+    {"serviceClass": "net.gabert.sdx.sampleapp.service.ClimatizationControlService",
+      "id": "ccs-1",
+      "initParams": {"param1" : 1}},
+
     {"serviceClass": "net.gabert.sdx.heiko.component.http.HttpApplication",
       "id": "heikoBrowser",
       "initParams": {"welcomeFile" : "index.html",
@@ -35,6 +44,10 @@
   ],
 
   "mappings" : {
-    "/system/devices/td-1": "/iot/telescopes/palo-alto"
+    "/system/devices/td-1": "/iot/telescopes/palo-alto",
+    "/system/devices/clima-1": "/las-vegas/big-house/clima",
+    "/system/devices/clima-2": "/toronto/apartment/clima",
+    "/system/devices/thermo-1": "/las-vegas/big-house/thermometer",
+    "/system/devices/thermo-2": "/toronto/apartment/thermometer"
   }
 }

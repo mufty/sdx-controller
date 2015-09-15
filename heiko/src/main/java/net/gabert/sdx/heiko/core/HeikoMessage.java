@@ -6,7 +6,7 @@ package net.gabert.sdx.heiko.core;
  */
 public class HeikoMessage<T> {
     public static enum Type {
-        GET, SET, SET_ACK, CALL, REPLY
+        GET, SET, SET_ACK, CALL, REPLY, PUBLISH;
     }
 
     public String mountPointRelativePath;

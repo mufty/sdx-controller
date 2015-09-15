@@ -33,6 +33,10 @@ public class ServiceMountPoint extends ComponentMountPoint<Service> {
 
     @Override
     public void handle(Message<HeikoMessage> kylaMessage) {
-        possiblyHandleCallback(kylaMessage);
+        if (kylaMessage.getData().type == HeikoMessage.Type.REPLY) {
+            possiblyHandleCallback(kylaMessage);
+        } else if (kylaMessage.getData().type == HeikoMessage.Type.PUBLISH) {
+            publishValue(kylaMessage);
+        }
     }
 }

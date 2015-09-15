@@ -13,9 +13,6 @@ import java.util.Map;
 public class TelescopeDriver extends Driver {
     private static final Logger LOGGER = LogUtil.getLogger();
 
-    private int azimuth;
-    private int altitude;
-
     private final SimpleDB db = new SimpleDB("/azimuth", "/altitude");
 
     @Override
@@ -36,6 +33,7 @@ public class TelescopeDriver extends Driver {
     public void setValue(String path, Object value) {
         LOGGER.info("Telescope Driver: SET, Path: {}, Value: {}", path, value);
         db.setValue(path, value);
+        publish(path, value);
     }
 
     @Override

@@ -5,10 +5,7 @@ import net.gabert.sdx.kyla.api.DataSlotRegistry;
 import net.gabert.util.LogUtil;
 import org.slf4j.Logger;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -75,7 +72,11 @@ public class LocalDataSlotRegistry implements DataSlotRegistry {
 
     @Override
     public List<Endpoint> getEndpoints(String dataSlotId) {
-        return dataSlots.get(dataSlotId).getEndpoints();
+        if (dataSlots.get(dataSlotId) == null) {
+            return Collections.emptyList();
+        } else {
+            return dataSlots.get(dataSlotId).getEndpoints();
+        }
     }
 
     @Override
