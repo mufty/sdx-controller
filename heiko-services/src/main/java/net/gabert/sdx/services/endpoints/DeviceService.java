@@ -4,7 +4,7 @@ import net.gabert.sdx.model.DeviceModel;
 import spark.Request;
 import spark.Response;
 
-public class DeviceService implements ServiceIntreface {
+public class DeviceService implements ServiceInterface {
 	
 	private DeviceModel model;
 	

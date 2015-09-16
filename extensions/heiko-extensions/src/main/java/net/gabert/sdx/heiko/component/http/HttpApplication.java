@@ -90,7 +90,8 @@ public class HttpApplication extends Service {
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirectoriesListed(false);
         resourceHandler.setWelcomeFiles(welcomeFiles());
-        resourceHandler.setResourceBase(this.guiRootPath);
+        String folder = this.getClass().getClassLoader().getResource(this.guiRootPath).toExternalForm();
+        resourceHandler.setResourceBase(folder);
 
         context.setHandler(resourceHandler);
 

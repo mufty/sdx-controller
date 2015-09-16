@@ -13,17 +13,10 @@ public class MainServices {
 
 	public static void main(String[] args) {
 		Controller controller = Controller.boot();
-        controller.shutDown();
+        //controller.shutDown();
         
         // port(5678); set different port then 4567
-        
-		post("/addDevice", (req, res) -> new AddDeviceService().call(req, res), new JsonTransformer());
-		
-		//mount path : /system/services/ssID1
-		//data slot id : urn:uuid:ssID1
-		//TODO
-		MountService service = controller.getService(MountService.class);
-		MountServiceLocal local = (MountServiceLocal) service;
+		//post("/addDevice", (req, res) -> new AddDeviceService().call(req, res), new JsonTransformer());
 	}
 
 }

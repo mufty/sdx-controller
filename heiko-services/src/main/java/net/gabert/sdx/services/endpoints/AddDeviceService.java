@@ -9,7 +9,7 @@ import net.gabert.util.LogUtil;
 import spark.Request;
 import spark.Response;
 
-public class AddDeviceService implements ServiceIntreface {
+public class AddDeviceService implements ServiceInterface {
 	
 	private static final Logger LOGGER = LogUtil.getLogger();
 	

@@ -5,33 +5,36 @@
   "bus" : {"configUrl" : "classpath:kylacfg.json"},
 
   "drivers" : [
-    {"driverClassName": "${telescopeDriver}",
-     "id": "tdID" ,
+    {"driverClass": "${telescopeDriver}",
+     "id": "td-1" ,
      "initParams": {"param1" : 1}},
 
-    {"driverClassName": "${housingDriver}",
-     "id": "hdID1" ,
+    {"driverClass": "${housingDriver}",
+     "id": "hd-1" ,
      "initParams": {"param1" : 1}},
 
-    {"driverClassName": "${housingDriver}",
-      "id": "hdID2" ,
+    {"driverClass": "${housingDriver}",
+      "id": "hd-2" ,
       "initParams": {"param1" : 1}}
   ],
 
-  "services" : [
-    {"serviceClassName": "net.gabert.sdx.sampleapp.service.SampleService",
-     "id": "ssID1",
-     "initParams": {"param1" : 1}},
+  "connectors" : [
+    {"connectorClass": "net.gabert.sdx.services.WebServiceConnector",
+     "id": "httpConnector",
+     "initParams": {"servicePort" : 4567,
+     	"rootPath" : "/web/interface/device"}}
+  ],
 
-    {"serviceClassName": "net.gabert.sdx.heiko.connector.http.HttpApplication",
+  "services" : [
+    {"serviceClass": "net.gabert.sdx.heiko.component.http.HttpApplication",
       "id": "heikoBrowser",
       "initParams": {"welcomeFile" : "index.html",
                      "contextPath" : "/browser",
-                     "guiRootPath" : "/browser",
+                     "guiRootPath" : "webapp",
                      "servicePort" : 9090}}
   ],
 
   "mappings" : {
-    "/system/devices/tdID": "/iot/telescopes/palo-alto"
+    "/system/devices/td-1": "/iot/telescopes/palo-alto"
   }
 }
