@@ -95,21 +95,11 @@ public class BusProxy implements Bus, DataSlotRegistry {
 
     @Override
     public void registerShared(Endpoint endpoint, String dataSlotId) {
-        if (dataSlotId.startsWith(Endpoint.ID_CLASSIFIER)) {
-            throw new IllegalArgumentException("Shared registration with dataSlotId starting with endpoint " +
-                                               "classifier not allowed");
-        }
-
         dataSlotRegistry.registerShared(endpoint, dataSlotId);
     }
 
     @Override
     public void registerParallel(Endpoint endpoint, String dataSlotId) {
-        if (dataSlotId.startsWith(Endpoint.ID_CLASSIFIER)) {
-            throw new IllegalArgumentException("Parallel registration with dataSlotId starting with endpoint " +
-                                               "classifier not allowed");
-        }
-
         dataSlotRegistry.registerParallel(endpoint, dataSlotId);
     }
 

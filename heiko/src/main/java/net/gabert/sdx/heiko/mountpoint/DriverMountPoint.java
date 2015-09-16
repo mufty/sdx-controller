@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 public class DriverMountPoint extends ComponentMountPoint<Driver> {
     private static final Logger LOGGER = LogUtil.getLogger();
 
+    private String publishSlot;
+
     private DriverMountPoint(BusProxy busProxy,
                              DriverConfig driverConfig) {
         super(busProxy, driverConfig.driverClass, driverConfig);
@@ -32,6 +34,16 @@ public class DriverMountPoint extends ComponentMountPoint<Driver> {
     public static DriverMountPoint newInstance(BusProxy busProxy, DriverConfig driverConfig) {
         return driverConfig.id == null ? new DriverMountPoint(busProxy, driverConfig)
                                        : new DriverMountPoint(driverConfig.id, busProxy, driverConfig);
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        publishSlot = asPublishDataslot(getDataSlotId());
+    }
+
+    public static String asPublishDataslot(String dataSlotId) {
+        return dataSlotId + ":publish";
     }
 
     @Override
@@ -91,5 +103,9 @@ public class DriverMountPoint extends ComponentMountPoint<Driver> {
         reply.type = HeikoMessage.Type.REPLY;
 
         this.send(kylaMessage.createReply(reply));
+    }
+
+    public String getPublishSlot() {
+        return publishSlot;
     }
 }
