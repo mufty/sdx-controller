@@ -27,7 +27,8 @@
      "id": "httpConnector",
      "initParams": {"contextPath" : "/connector",
                     "servicePort" : 9091,
-                    "adapterClass" : "net.gabert.sdx.heiko.component.http.RawPostJsonAdapter"}}
+                    "adapterClass" : "net.gabert.sdx.heiko.component.http.RawPostJsonAdapter",
+                    "headerAllowOrigin": "http://localhost:9090"}}
   ],
 
   "services" : [
@@ -39,7 +40,7 @@
       "id": "heikoBrowser",
       "initParams": {"welcomeFile" : "index.html",
                      "contextPath" : "/browser",
-                     "guiRootPath" : "/browser",
+                     "guiRootPath" : "webapp",
                      "servicePort" : 9090}}
   ],
 

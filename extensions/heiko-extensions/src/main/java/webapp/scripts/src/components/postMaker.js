@@ -17,11 +17,30 @@ var PostMaker = React.createClass({
     		data.path = this.state.path;
     	if(this.state.type)
     		data.type = this.state.type;
-    	if(this.state.value)
-    		data.value = this.state.value;
-    	$.post(url, data, function(r){
-    		console.log(r);
+    	if(this.state.value){
+    		if(isNaN(this.state.value))
+    			data.value = this.state.value;
+    		else
+    			data.value = parseInt(this.state.value);
+    	}
+    	
+    	$.ajax(url,{
+    	    data: JSON.stringify(data),
+    	    type: 'POST',
+    	    processData: false,
+    	    //dataType: "json",
+    	    //contentType: 'application/json',
+    	    success: function(r){
+    	    	var newState = this.state;
+    	    	newState.postResponse = r;
+    	    	this.setState(newState);
+    	    	console.log(r);
+    	    }.bind(this)
     	});
+    	
+    	/*$.post(url, data, function(r){
+    		console.log(r);
+    	});*/
     },
 	render: function(){
 		return (<div className='postMaker'>
@@ -36,6 +55,8 @@ var PostMaker = React.createClass({
 			</select></div>
 			<div><label htmlFor='dataValue'>Value: </label><input id='dataValue' type="text" valueLink={this.linkState('value')}/></div>
 			<div><button onClick={this.post.bind(this)}>SEND</button></div>
+			<div>Response: </div>
+			<div>{this.state.postResponse}</div>
 		</div>);
 	}
 });

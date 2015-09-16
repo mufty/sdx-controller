@@ -2,14 +2,18 @@ package net.gabert.sdx.sampleapp.driver;
 
 
 import net.gabert.sdx.heiko.component.Driver;
+import net.gabert.util.LogUtil;
 
 import java.util.Map;
+
+import org.slf4j.Logger;
 
 /**
  *
  * @author Robert Gallas
  */
 public class Thermometer extends Driver {
+	private static final Logger LOGGER = LogUtil.getLogger();
     private final SimpleDB db = new SimpleDB("/temperature");
 
     @Override
@@ -29,6 +33,7 @@ public class Thermometer extends Driver {
 
     @Override
     public void setValue(String path, Object value) {
+    	LOGGER.info("Setting thermometer to: {}", value);
         db.setValue(path, value);
         publish(path, value);
     }

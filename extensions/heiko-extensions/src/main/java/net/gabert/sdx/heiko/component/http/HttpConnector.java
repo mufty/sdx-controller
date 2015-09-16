@@ -25,12 +25,15 @@ public class HttpConnector extends Connector {
     private static String CONTEXT_PATH_KEY = "contextPath";
 
     private static String SERVICE_PORT_KEY = "servicePort";
+    
+    private static String HEADER_ALLOW_ORIGIN_KEY = "headerAllowOrigin";
 
     private int servicePortNumber;
 
     private HandlerList handlers = new HandlerList();
     private Server serverInstance;
     private String connectorContextPath;
+    private String headerAllowOrigin;
 
     private Context ctx;
 
@@ -38,6 +41,7 @@ public class HttpConnector extends Connector {
     public void start(Map<String, Object> initParams) {
         this.servicePortNumber = ((Double)getParam(initParams, SERVICE_PORT_KEY)).intValue();
         this.connectorContextPath = (String)initParams.get(CONTEXT_PATH_KEY);
+        this.headerAllowOrigin = (String) initParams.get(HEADER_ALLOW_ORIGIN_KEY);
 
         addHandler(configureServiceContextHandler());
 
@@ -96,6 +100,10 @@ public class HttpConnector extends Connector {
         context.setHandler(serviceHandler);
         return context;
     }
+    
+    protected void addHeaders(HttpServletResponse response){
+    	response.setHeader("Access-Control-Allow-Origin", this.headerAllowOrigin);
+    }
 
     // -------------------------------
     // ------ Bussiness handling -----
@@ -106,6 +114,8 @@ public class HttpConnector extends Connector {
                            Request baseRequest,
                            HttpServletRequest request,
                            HttpServletResponse response) throws IOException, ServletException {
+        	
+        	addHeaders(response);
 
             String jsonString = toJsonString(request);
             JsonRequest jsonRequest = JsonFileReader.fromString(jsonString, JsonRequest.class);
